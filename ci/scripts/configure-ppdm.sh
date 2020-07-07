@@ -33,7 +33,7 @@ REQUEST=$(set_configuration ${TOKEN} ${CONFIGURATION_ID} ${CONFIGURATION})
   
 
 printf "Appliance Config State: "
-get_config_state
+get_config_state $TOKEN $CONFIGURATION_ID
 echo "Waiting for appliance to reach Config State Success"
 printf "0%%"
 
