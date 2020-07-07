@@ -22,4 +22,5 @@ echo "Trusting DDVE ${DDVE_FQDN} certificate $CERTIFICATE"
 trust_certificate "${TOKEN}" "${CERTIFICATE}" "${CERT_ID}"
 
 echo "Adding DDVE ${DDVE_FQDN} to inventory"
-create_inventory_source $TOKEN EXTERNALDATADOMAIN ddve1 ddve1.home.labbuildr.com $CREDENTIALS_ID
+DDVE_NAME=$(echo ${DDVE_FQDN} | cut -d '.' -f-1  )
+create_inventory_source $TOKEN EXTERNALDATADOMAIN ${DDVE_NAME} "${DDVE_FQDN}" $CREDENTIALS_ID
