@@ -42,6 +42,7 @@ function set_configuration {
     --header "content-type: application/json" \
     --header "Authorization: Bearer ${token}" \
     --data "$configuration")
+    echo $request
 }
 
 function get_config_state {

@@ -28,8 +28,8 @@ printf "Appliance Config State complete: "
 
 STATE=$(get_config_completionstate $TOKEN $CONFIGURATION_ID)
 echo "${STATE}%"
-
-REQUEST=$(set_configuration ${TOKEN} ${CONFIGURATION_ID} ${CONFIGURATION})
+echo "Setting Appliance"
+set_configuration ${TOKEN} ${CONFIGURATION_ID} ${CONFIGURATION}
   
 
 printf "Appliance Config State: "
