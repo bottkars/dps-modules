@@ -16,7 +16,7 @@ params:
   
 
 run:
-  path: dps_modules/ci/scripts/set-ppdm-dve.sh
+  path: dps_modules/ci/scripts/set-ppdm-ddve.sh
 
 
 # test with 
