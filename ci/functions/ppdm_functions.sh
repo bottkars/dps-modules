@@ -51,7 +51,7 @@ function get_config_state {
     curl -ks  \
     --header "Authorization: Bearer ${TOKEN}" \
     --fail \
-    --url "https://${PPDM_FQDN}:8443/api/v2/configurations/${CONFIGURATION_ID}/config-status" | jq -r ".status"
+    --url "https://${PPDM_FQDN}:8443/api/v2/configurations/${configuration_id}/config-status" | jq -r ".status"
     )
     echo $state
 }
