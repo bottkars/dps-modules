@@ -17,6 +17,9 @@ CERTIFICATE=$(get_host_certificate $TOKEN $DDVE_FQDN)
 CERTIFICATE=$(echo $CERTIFICATE | jq -r '.[]' )
 CERTIFICATE=$(echo $CERTIFICATE | jq '(.state |= "ACCEPTED")' )
 CERT_ID=$(echo $CERTIFICATE | jq -r '.id')
+
+echo "Trusting DDVE ${DDVE_FQDN} certificate $CERTIFICATE"
 trust_certificate "${TOKEN}" "${CERTIFICATE}" "${CERT_ID}"
 
+echo "Adding DDVE ${DDVE_FQDN} to inventory"
 create_inventory_source $TOKEN EXTERNALDATADOMAIN ddve1 ddve1.home.labbuildr.com $CREDENTIALS_ID

@@ -119,7 +119,6 @@ function trust_certificate {
     local token=${1}
     local certificate=${2}
     local cert_id=${3}
-    echo "setting certificate for $cert_id at https://${PPDM_FQDN}:8443/api/v2/certificates/${cert_id}}"
     request=$(curl -ks --request PUT \
     --url "https://${PPDM_FQDN}:8443/api/v2/certificates/$cert_id" \
     --header "content-type: application/json" \
