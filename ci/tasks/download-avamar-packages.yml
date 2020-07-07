@@ -2,7 +2,7 @@
 platform: linux
 
 inputs:
- - name: azs-concourse
+ - name: dps_modules
 
 params:
   avamar: 
@@ -19,4 +19,4 @@ outputs:
   - name: AVE
   - name: AZURE-AVE
 run:
-  path: azs-concourse/ci/scripts/download-avamar-packages.sh
+  path: dps_modules/ci/scripts/download-avamar-packages.sh
