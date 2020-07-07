@@ -38,7 +38,7 @@ echo "Waiting for appliance to reach Config State Success"
 printf "0%%"
 
 while [[ "SUCCESS" != $(get_config_state $TOKEN $CONFIGURATION_ID)  ]]; do
-    printf "\r$(gget_config_state $TOKEN $CONFIGURATION_ID)%%"
+    printf "\r$(get_config_state $TOKEN $CONFIGURATION_ID)%%"
 done
 printf "\r100%%\n"
 echo "You can now login to the Appliance https://${PPDM_FQDN} with your Username and Password"
