@@ -6,21 +6,11 @@ DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 
 echo "requesting API token"
 
-TOKEN=$(curl -k -sS --request POST \
-    --connect-timeout 10 \
-    --max-time 10 \
-    --retry 3 \
-    --retry-delay 5 \
-    --retry-max-time 40 \
-    --url "https://${PPDM_FQDN}:8443/api/v2/login" -k \
-    --header 'content-type: application/json' \
-    --data '{"username":"admin","password":"'${PPDM_SETUP_PASSWORD}'"}' | jq -r .access_token )
-
+source dps_modules/ci/functions/ppdm_functions.sh
+TOKEN=$(get_token ${PPDM_SETUP_PASSWORD})
 
 echo "Retrieving initial appliance configuration Template"
-CONFIGURATION=$(curl -k -sS --request GET \
-    --header "Authorization: Bearer ${TOKEN}" \
-    --url "https://${PPDM_FQDN}:8443/api/v2/configurations" | jq -r ".content[0]" )
+CONFIGURATION=$(get_configuration "${TOKEN}")
 NODE_ID=$(echo $CONFIGURATION | jq -r .nodeId)  
 CONFIGURATION_ID=$(echo $CONFIGURATION | jq -r .id)
 
@@ -34,33 +24,21 @@ CONFIGURATION=$(echo $CONFIGURATION | jq --arg timezone "Europe/Berlin - Central
 CONFIGURATION=$(echo $CONFIGURATION | jq --arg ntpservers "192.168.1.1" '.ntpServers |= [$ntpservers]')
 CONFIGURATION=$(echo $CONFIGURATION | jq 'del(._links)')
 printf "Appliance Config State complete: "
-STATE=$(curl -ks  \
-  --header "Authorization: Bearer ${TOKEN}" \
-  --url "https://${PPDM_FQDN}:8443/api/v2/configurations/${CONFIGURATION_ID}/config-status" | jq -r ".percentageCompleted")
-echo "${STATE} %"
 
-REQUEST=$(curl -k -s --request PUT \
-  --url "https://${PPDM_FQDN}:8443/api/v2/configurations/${CONFIGURATION_ID}" \
-  --header "content-type: application/json" \
-  --header "Authorization: Bearer ${TOKEN}" \
-  --data "$CONFIGURATION")
+
+STATE=$(get_config_completionstate $TOKEN $CONFIGURATION_ID)
+echo "${STATE}%"
+
+REQUEST=$(set_configuration ${TOKEN} ${CONFIGURATION_ID} ${CONFIGURATION})
   
 
 printf "Appliance Config State: "
-curl -ks  \
-  --header "Authorization: Bearer ${TOKEN}" \
-  --fail \
-  --url "https://${PPDM_FQDN}:8443/api/v2/configurations/${CONFIGURATION_ID}/config-status" | jq -r ".status"
+get_config_state
 echo "Waiting for appliance to reach Config State Success"
 printf "0%%"
 
-while [[ "SUCCESS" != $(curl -ks  \
-  --header "Authorization: Bearer ${TOKEN}" \
-  --fail \
-  --url "https://${PPDM_FQDN}:8443/api/v2/configurations/${CONFIGURATION_ID}/config-status" | jq -r ".status")  ]]; do
-    printf "\r$(curl -ks  \
-  --header "Authorization: Bearer ${TOKEN}" \
-  --url "https://${PPDM_FQDN}:8443/api/v2/configurations/${CONFIGURATION_ID}/config-status" | jq -r ".percentageCompleted")%%"
+while [[ "SUCCESS" != $(get_config_state $TOKEN $CONFIGURATION_ID)  ]]; do
+    printf "\r$(gget_config_state $TOKEN $CONFIGURATION_ID)%%"
 done
 printf "\r100%%\n"
 echo "You can now login to the Appliance https://${PPDM_FQDN} with your Username and Password"
