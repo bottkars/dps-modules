@@ -1,0 +1,22 @@
+---
+platform: linux
+
+inputs:
+ - name: azs-concourse
+
+params:
+  avamar: 
+  packages:
+  extension: ova
+  AV_LOCATION:
+  AV_RELEASE:
+outputs:
+  - name: AvamarUpgrade
+  - name: UpgradeAvinstaller
+  - name: UpgradeClientDownloads
+  - name: UpgradeClientPluginCatalog 
+  - name: ChangeNetworkSettings
+  - name: AVE
+  - name: AZURE-AVE
+run:
+  path: azs-concourse/ci/scripts/download-avamar-packages.sh
