@@ -9,9 +9,9 @@ outputs:
 
 params:
   PPDM_FQDN: 
-  PPDM_PASSWORD: "Password123!"
-  DDVE_USERNAME: sysadmin
-  DDVE_PASSWORD: Change_Me12345_
+  PPDM_PASSWORD: 
+  DDVE_USERNAME: 
+  DDVE_PASSWORD: 
   DDVE_FQDN:
   
 
