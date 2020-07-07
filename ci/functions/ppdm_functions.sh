@@ -135,3 +135,23 @@ function get_certificates {
         --header "Authorization: Bearer ${token}" )
     echo $request
 }
+
+function delete_credentials {
+    local token=${1}
+    local credentials_id=${2}
+    local request=$(curl -ks --request DELETE \
+    --url "https://${PPDM_FQDN}:8443/api/v2/credentials/${credentials_id}" \
+    --header "content-type: application/json" \
+    --header "Authorization: Bearer ${token}" )
+    echo $request
+    }  
+function delete_certificate {
+    local token=${1}
+    local certificates_id=${2}
+    local request=$(curl -ks --request DELETE \
+    --url "https://${PPDM_FQDN}:8443/api/v2/certificates/${certificates_id}" \
+    --header "content-type: application/json" \
+    --header "Authorization: Bearer ${token}" )
+    echo $request
+    }  
+

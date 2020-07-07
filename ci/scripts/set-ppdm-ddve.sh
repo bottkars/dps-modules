@@ -11,7 +11,7 @@ TOKEN=$(get_token ${PPDM_PASSWORD})
 
 echo "Creating DDVE Credentials for ${DDVE_USERNAME}"
 CREDENTIALS=$(create_credentials ${TOKEN} DATADOMAIN ${DDVE_USERNAME} ${DDVE_PASSWORD})
-CREDENTIALS_ID=$(echo $credentials | jq -r '.id')
+CREDENTIALS_ID=$(echo $CREDENTIALS | jq -r '.id')
 
 CERTIFICATE=$(get_host_certificate $TOKEN $DDVE_FQDN)
 CERTIFICATE=$(echo $CERTIFICATE | jq -r '.[]' )
