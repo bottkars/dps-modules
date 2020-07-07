@@ -49,7 +49,7 @@ function get_config_state {
     local configuration_id=${2}
     local state=$(    
     curl -ks  \
-    --header "Authorization: Bearer ${TOKEN}" \
+    --header "Authorization: Bearer ${token}" \
     --fail \
     --url "https://${PPDM_FQDN}:8443/api/v2/configurations/${configuration_id}/config-status" | jq -r ".status"
     )
