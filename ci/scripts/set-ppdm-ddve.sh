@@ -7,7 +7,7 @@ source dps_modules/ci/functions/ppdm_functions.sh
 echo "requesting API token"
 
 
-TOKEN=$(get_token ${PPDM_SETUP_PASSWORD})
+TOKEN=$(get_token ${PPDM_PASSWORD})
 
 echo "Creating DDVE Credentials for ${DDVE_USERNAME}"
 CREDENTIALS=$(create_credentials ${TOKEN} DATADOMAIN ${DDVE_USERNAME} ${DDVE_PASSWORD})
