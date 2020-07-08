@@ -8,10 +8,12 @@ function ppdm_curl {
     local result=""
     while [[ -z $result || $retry -gt 5 ]]
         do
+        echo $url ${ppdm_curl_args[@]} >&2
         result=$(curl -ks "$url" \
         "${ppdm_curl_args[@]}" "$@"
         )
         echo $result >&2
+        echo $retry >&2
         ((retry++))
         if [[ $(echo $result | jq -r 'select(.code != null)') ]]
             ### eval section for return code will be added here
@@ -51,7 +53,6 @@ function get_ppdm_token {
 
 
 
-
 function get_ppdm_configuration {
     local token=${1}
     ppdm_curl_args=(
@@ -78,7 +79,8 @@ function set_ppdm_configuration {
     -XPUT
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
-    -D "$configuration")
+    -d "${configuration}"
+    )
     ppdm_curl "configurations/${configuration_id}" 
 }
 
@@ -89,7 +91,7 @@ function get_ppdm_config_state {
     -XGET       
     -H "Authorization: Bearer ${token}"
     )
-    ppdm_curl "configurations/${configuration_id}/config-status"  | jq -r
+    ppdm_curl "configurations/${configuration_id}/config-status"  | jq -r '.status'
 }
 
 
@@ -102,7 +104,7 @@ function create_ppdm_credentials {
     -XPOST    
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
-    -D '{
+    -d '{
         "type":'"${type}"',
         "name": '"${name}"',
         "username": '"${name}"',
@@ -146,7 +148,7 @@ function create_ppdm_inventory_source {
     -XPOST
     -H 'content-type: application/json'
     -H "Authorization: Bearer ${token}"
-    -D "${data}"
+    -d "${data}"
     )  
     ppdm_curl inventory-sources  | jq -r
 }
@@ -192,7 +194,7 @@ function trust_ppdm_host_certificate {
     -XPUT
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
-    -D"${certificate}"
+    -d "${certificate}"
     )
     ppdm_curl "certificates/$cert_id"  | jq -r
     }

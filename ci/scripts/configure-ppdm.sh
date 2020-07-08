@@ -40,6 +40,7 @@ printf "0%%"
 
 while [[ "SUCCESS" != $(get_ppdm_config_state $TOKEN $CONFIGURATION_ID)  ]]; do
     printf "\r$(get_ppdm_config_completionstate $TOKEN $CONFIGURATION_ID)%%"
+    sleep 10
 done
 printf "\r100%%\n"
 echo "You can now login to the Appliance https://${PPDM_FQDN} with your Username and Password"
