@@ -27,6 +27,7 @@ function ppdm_curl {
                     423)
                     echo "user locked, waiting for 5 Minutes " >&2
                     sleep 300
+                    ;;
                     *)
                 esac    
                 result=""
