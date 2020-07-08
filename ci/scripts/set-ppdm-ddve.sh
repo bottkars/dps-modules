@@ -19,7 +19,7 @@ CERTIFICATE=$(echo $CERTIFICATE | jq '(.state |= "ACCEPTED")' )
 CERT_ID=$(echo $CERTIFICATE | jq -r '.id')
 
 echo "Trusting DDVE ${DDVE_FQDN} certificate $CERTIFICATE"
-trust_certificate "${TOKEN}" "${CERTIFICATE}" "${CERT_ID}"
+trust_ppdm_host_certificate "${TOKEN}" "${CERTIFICATE}" "${CERT_ID}"
 
 echo "Adding DDVE ${DDVE_FQDN} to inventory"
 DDVE_NAME=$(echo ${DDVE_FQDN} | cut -d '.' -f-1  )

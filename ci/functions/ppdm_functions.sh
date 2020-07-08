@@ -105,7 +105,7 @@ function create_ppdm_inventory_source {
     echo $request 
 }
 
-function get_host_certificate {
+function get_ppdm_host_certificate {
     local token=${1}
     local port=3009
     local host=${2}
@@ -116,7 +116,7 @@ function get_host_certificate {
     echo $request
 }
 
-function trust_host_certificate {
+function trust_ppdm_host_certificate {
     local token=${1}
     local certificate=${2}
     local cert_id=${3}
