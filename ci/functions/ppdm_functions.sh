@@ -105,10 +105,10 @@ function create_ppdm_credentials {
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
     -d '{
-        "type":'"${type}"',
-        "name": '"${name}"',
-        "username": '"${name}"',
-        "password": '"${password}"'
+        "type":"'${type}'",
+        "name": "'${name}'",
+        "username": "'${name}'",
+        "password": "'${password}'"
          }'
     )     
     ppdm_curl "credentials"  | jq -r
