@@ -46,7 +46,7 @@ function get_ppdm_token {
     -XPOST    
     -H 'content-type: application/json' 
     -d '{"username":"admin","password":"'${password}'"}')
-    ppdm_curl login $ppdm_curl_args | jq -r '.access_token'
+    ppdm_curl login "$ppdm_curl_args" | jq -r '.access_token'
 
 }
 
