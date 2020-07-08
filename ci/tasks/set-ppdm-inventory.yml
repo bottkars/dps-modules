@@ -8,12 +8,14 @@ inputs:
 params:
   PPDM_FQDN: 
   PPDM_PASSWORD: 
-  DDVE_USERNAME: 
-  DDVE_PASSWORD: 
-  DDVE_FQDN:
+  INVENTORY_USERNAME: 
+  INVENTORY_PASSWORD: 
+  INVENTORY_FQDN:
+  INVENTORY_TYPE:
+  INVENTORY_CREDENTIAL_TYPE:
 
 run:
-  path: dps_modules/ci/scripts/set-ppdm-ddve.sh
+  path: dps_modules/ci/scripts/set-ppdm-inventory.sh
 
 
 # test with 
