@@ -9,7 +9,7 @@ function ppdm_curl {
     while [[ -z $result || $retry -gt 5 ]]
         do
         result=$(curl -ks "$url" \
-        "${ppdm_curl_args[@]}"  "$@"
+        "${ppdm_curl_args[@]}" "$@"
         )
         echo $result >&2
         ((retry++))
@@ -67,7 +67,7 @@ function get_ppdm_config_completionstate {
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" )
-    ppdm_curl "configurations/${configuration_id}/config-status" | jq -r 
+    ppdm_curl "configurations/${configuration_id}/config-status" | jq -r '.percentageCompleted'
 }
 
 function set_ppdm_configuration {
