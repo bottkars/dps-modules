@@ -1,4 +1,4 @@
-#!/bin/bah
+#!/bin/bash
 function ppdm_curl {
     local url
     local ppdm_curl_args=${2}
@@ -7,25 +7,29 @@ function ppdm_curl {
     local sleep_seconds=10
     local retry=0
     local result=""
-    while [[ -z $result ]]
+    while [[ -z $result || $retry -gt 5 ]]
         do
         result=$(curl -ks "$url" \
-        --connect-timeout 10 \
-        --max-time 10 \
-        --retry 5 \
-        --retry-delay 5 \
         "${ppdm_curl_args[@]}"  "$@"
         )
         echo $result >&2
         ((retry++))
         if [[ $(echo $result | jq -r 'select(.code != null)') ]]
             ### eval section for return code will be added here
-            then result=""
-            if [[ $retry -ge 5 ]]
             then
-                echo "giving up after $retry retries" >&2
-                break
-            fi
+                local errorlevel=$(echo $result | jq -r '.code') 
+                echo $errorlevel >&2
+                case $errorlevel in 
+                    401)
+                    echo "access denied" >&2
+                    break
+                    ;;
+                    423)
+                    echo "user locked, waiting for 5 Minutes " >&2
+                    sleep 300
+                    *)
+                esac    
+                result=""
             echo "sleeping for $sleep_seconds seconds" >&2
             sleep $sleep_seconds    
         fi
