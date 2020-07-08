@@ -12,8 +12,8 @@ function ppdm_curl {
         result=$(curl -ks "$url" \
         "${ppdm_curl_args[@]}" "$@"
         )
-        echo $result >&2
-        echo $retry >&2
+        [[ "${DEBUG}" == "TRUE" ]] && echo $result >&2
+        [[ "${DEBUG}" == "TRUE" ]] && echo $retry >&2
         ((retry++))
         if [[ $(echo $result | jq -r 'select(.code != null)') ]]
             ### eval section for return code will be added here
