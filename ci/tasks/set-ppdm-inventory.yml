@@ -13,7 +13,7 @@ params:
   INVENTORY_FQDN:
   INVENTORY_TYPE:
   INVENTORY_CREDENTIAL_TYPE:
-
+  INVENTORY_PORT:
 run:
   path: dps_modules/ci/scripts/set-ppdm-inventory.sh
 

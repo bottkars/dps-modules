@@ -88,7 +88,7 @@ function create_ppdm_inventory_source {
     local name=${3}
     local address=${4}
     local credentials_id=${5}
-    local port=3009
+    local port=${6}
     local request=$(curl -ks --request POST \
     --url "https://${PPDM_FQDN}:8443/api/v2/inventory-sources" \
     --header "content-type: application/json" \
@@ -107,7 +107,7 @@ function create_ppdm_inventory_source {
 
 function get_ppdm_host_certificate {
     local token=${1}
-    local port=3009
+    local port=${3}
     local host=${2}
     local type=host    
     request=$(curl -ks --request GET \

@@ -13,7 +13,7 @@ echo "Creating INVENTORY Credentials for ${INVENTORY_USERNAME}"
 CREDENTIALS=$(create_ppdm_credentials ${TOKEN} ${INVENTORY_CREDENTIAL_TYPE} ${INVENTORY_USERNAME} ${INVENTORY_PASSWORD})
 CREDENTIALS_ID=$(echo $CREDENTIALS | jq -r '.id')
 
-CERTIFICATE=$(get_ppdm_host_certificate $TOKEN $INVENTORY_FQDN)
+CERTIFICATE=$(get_ppdm_host_certificate $TOKEN "${INVENTORY_FQDN}" ${INVENTORY_PORT})
 CERTIFICATE=$(echo $CERTIFICATE | jq -r '.[]' )
 CERTIFICATE=$(echo $CERTIFICATE | jq '(.state |= "ACCEPTED")' )
 CERT_ID=$(echo $CERTIFICATE | jq -r '.id')
@@ -28,4 +28,4 @@ type: $INVENTORY_TYPE
 ddve_name: ${DDVE_NAME}
 ddve_fqdn: ${DDVE_FQDN} 
 cred_id: $CREDENTIALS_ID"
-create_ppdm_inventory_source $TOKEN $INVENTORY_TYPE ${DDVE_NAME} "${DDVE_FQDN}" $CREDENTIALS_ID
+create_ppdm_inventory_source $TOKEN $INVENTORY_TYPE ${DDVE_NAME} "${DDVE_FQDN}" $CREDENTIALS_ID ${INVENTORY_PORT}
