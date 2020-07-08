@@ -25,6 +25,10 @@ function ppdm_curl {
                     echo "access denied" >&2
                     break
                     ;;
+                    404)
+                    echo "resource does not exist or is deleted" >&2
+                    break
+                    ;;
                     423)
                     echo "user locked, waiting for 5 Minutes " >&2
                     sleep 300
@@ -111,7 +115,7 @@ function create_ppdm_credentials {
         "password": "'${password}'"
          }'
     )     
-    ppdm_curl "credentials"  | jq -r
+    ppdm_curl "credentials"  | jq -r .
     }
 
 function get_ppdm_credentials {
@@ -132,12 +136,12 @@ function create_ppdm_inventory_source {
     local credentials_id=${5}
     local port=${6}
     local data='{
-        "name": '"${name}"',
-        "type": '"${type}"',
-        "address": '"${address}"',
-        "port": $port,
+        "name": "'${name}'",
+        "type": "'${type}'",
+        "address": "'${address}'",
+        "port": '$port',
         "credentials": {
-            "id": '"${credentials_id}"' 
+            "id": "'${credentials_id}'" 
             }
     }'
     if [[ "$type" == "VCENTER" ]]
@@ -217,7 +221,8 @@ function delete_ppdm_credentials {
     -H "Authorization: Bearer ${token}"
     )
     ppdm_curl "credentials/${credentials_id}" 
-    }  
+    } 
+
 function delete_ppdm_certificate {
     local token=${1}
     local certificates_id=${2}
