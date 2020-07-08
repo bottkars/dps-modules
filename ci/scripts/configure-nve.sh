@@ -1,5 +1,7 @@
 #!/bin/bash
 # set -eu
+[[ "${DEBUG}" == "TRUE" ]] && set -x
+
 DEBIAN_FRONTEND=noninteractive apt-get install -qq sshpass < /dev/null > /dev/null
 
 echo "waiting for DELLEMC Networker Workflow NveConfig to be ready"

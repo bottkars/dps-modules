@@ -1,5 +1,7 @@
 #!/bin/bash
 set -eu
+[[ "${DEBUG}" == "TRUE" ]] && set -x
+
 NVE_VERSION=$(cat networker/version)
 echo "preparing networker ${NVE_VERSION} nve"
 

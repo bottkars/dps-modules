@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-set -ex
+set -e
+[[ "${DEBUG}" == "TRUE" ]] && set -x
+
 function retryop()
 {
   retry=0

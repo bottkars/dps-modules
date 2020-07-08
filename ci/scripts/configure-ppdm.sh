@@ -1,5 +1,6 @@
 #!/bin/bash
 set -eu
+[[ "${DEBUG}" == "TRUE" ]] && set -x
 
 echo "installing jq...."
 DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null

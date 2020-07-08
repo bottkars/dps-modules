@@ -1,5 +1,6 @@
 #!/bin/bash
 set -eu
+[[ "${DEBUG}" == "TRUE" ]] && set -x
 PPDM_VERSION=$(cat powerprotect/version)
 echo "preparing powerprotect ${PPDM_VERSION} base install"
 
