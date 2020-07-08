@@ -89,11 +89,7 @@ function create_ppdm_inventory_source {
     local address=${4}
     local credentials_id=${5}
     local port=${6}
-    local request=$(curl -ks --request POST \
-    --url "https://${PPDM_FQDN}:8443/api/v2/inventory-sources" \
-    --header "content-type: application/json" \
-    --header "Authorization: Bearer ${token}" \
-    --data "{
+    local data="{
         \"name\": \"${name}\",
         \"type\": \"${type}\",
         \"address\": \"${address}\",
@@ -101,10 +97,41 @@ function create_ppdm_inventory_source {
         \"credentials\": {
             \"id\": \"${credentials_id}\" 
             }
-    }" )  
+    }"
+    if [[ "$type" == "VCENTER" ]]
+        then
+        local data=$(echo $data | jq -r '.details.vCenter.vSphereUiIntegration |= true')
+    fi 
+    echo $data | jq -r    
+    local request=$(curl -ks --request POST \
+    --url "https://${PPDM_FQDN}:8443/api/v2/inventory-sources" \
+    --header "content-type: application/json" \
+    --header "Authorization: Bearer ${token}" \
+    --data "${data}" \
+    )  
     echo $request 
 }
 
+function get_ppdm_inventory_sources {
+    local token=${1}
+    local request=$(curl -ks --request GET \
+    --url "https://${PPDM_FQDN}:8443/api/v2/inventory-sources" \
+    --header "content-type: application/json" \
+    --header "Authorization: Bearer ${token}" \
+    )  
+    echo $request 
+}
+
+function delete_ppdm_inventory_source {
+    local token=${1}
+    local inventory_id=${2}
+    local request=$(curl -ks --request DELETE \
+    --url "https://${PPDM_FQDN}:8443/api/v2/inventory-sources/${inventory_id}" \
+    --header "content-type: application/json" \
+    --header "Authorization: Bearer ${token}" \
+    )  
+    echo $request 
+}
 function get_ppdm_host_certificate {
     local token=${1}
     local port=${3}

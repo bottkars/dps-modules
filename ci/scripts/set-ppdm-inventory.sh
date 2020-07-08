@@ -25,6 +25,7 @@ echo "Adding INVENTORY ${INVENTORY_FQDN} to inventory"
 INVENTORY_NAME=$(echo ${INVENTORY_FQDN} | cut -d '.' -f-1  )
 echo "token: $(echo $TOKEN | base64 ) 
 type: $INVENTORY_TYPE 
+port: $INVENTORY_PORT
 INVENTORY_name: ${INVENTORY_NAME}
 INVENTORY_fqdn: ${INVENTORY_FQDN} 
 cred_id: $CREDENTIALS_ID"
