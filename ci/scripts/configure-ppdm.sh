@@ -10,7 +10,7 @@ source dps_modules/ci/functions/ppdm_functions.sh
 TOKEN=$(get_token ${PPDM_SETUP_PASSWORD})
 
 echo "Retrieving initial appliance configuration Template"
-CONFIGURATION=$(get_configuration "${TOKEN}")
+CONFIGURATION=$(get_ppdm_configuration "${TOKEN}")
 NODE_ID=$(echo $CONFIGURATION | jq -r .nodeId)  
 CONFIGURATION_ID=$(echo $CONFIGURATION | jq -r .id)
 
@@ -26,19 +26,19 @@ CONFIGURATION=$(echo $CONFIGURATION | jq 'del(._links)')
 printf "Appliance Config State complete: "
 
 
-STATE=$(get_config_completionstate $TOKEN $CONFIGURATION_ID)
+STATE=$(get_ppdm_config_completionstate $TOKEN $CONFIGURATION_ID)
 echo "${STATE}%"
 echo "Setting Appliance"
-CONFIGURATION_REQUEST=$(set_configuration ${TOKEN} ${CONFIGURATION_ID} "${CONFIGURATION}")
+CONFIGURATION_REQUEST=$(set_ppdm_configuration ${TOKEN} ${CONFIGURATION_ID} "${CONFIGURATION}")
   
 
 printf "Appliance Config State: "
-get_config_state $TOKEN $CONFIGURATION_ID
+get_ppdm_config_state $TOKEN $CONFIGURATION_ID
 echo "Waiting for appliance to reach Config State Success"
 printf "0%%"
 
-while [[ "SUCCESS" != $(get_config_state $TOKEN $CONFIGURATION_ID)  ]]; do
-    printf "\r$(get_config_completionstate $TOKEN $CONFIGURATION_ID)%%"
+while [[ "SUCCESS" != $(get_ppdm_config_state $TOKEN $CONFIGURATION_ID)  ]]; do
+    printf "\r$(get_ppdm_config_completionstate $TOKEN $CONFIGURATION_ID)%%"
 done
 printf "\r100%%\n"
 echo "You can now login to the Appliance https://${PPDM_FQDN} with your Username and Password"

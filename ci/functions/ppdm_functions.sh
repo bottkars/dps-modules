@@ -1,6 +1,6 @@
 #!/bin/bah
 
-function get_token {
+function get_ppdm_token {
     local password=$1
     local token=$(curl -k -sS --request POST \
     --connect-timeout 10 \
@@ -15,7 +15,7 @@ function get_token {
 }
 
 
-function get_configuration {
+function get_ppdm_configuration {
     local token=${1}
     local configuration=$(curl -k -sS --request GET \
     --header "Authorization: Bearer ${token}" \
@@ -24,7 +24,7 @@ function get_configuration {
 }
 
 
-function get_config_completionstate {
+function get_ppdm_config_completionstate {
     local token=${1}
     local configuration_id=${2}
     local completionstate=$(curl -ks  \
@@ -33,7 +33,7 @@ function get_config_completionstate {
     echo ${completionstate}
 }
 
-function set_configuration {
+function set_ppdm_configuration {
     local token=${1}
     local configuration_id=${2}
     local configuration=${3}
@@ -45,7 +45,7 @@ function set_configuration {
     echo $request
 }
 
-function get_config_state {
+function get_ppdm_config_state {
     local token=${1}
     local configuration_id=${2}
     local state=$(    
@@ -60,7 +60,7 @@ function get_config_state {
 
 
 
-function create_credentials {
+function create_ppdm_credentials {
     local token=${1}
     local type=${2}
     local name=${3}
@@ -73,7 +73,7 @@ function create_credentials {
     echo $request
     }
 
-function get_credentials {
+function get_ppdm_credentials {
     local token=${1}
     local request=$(curl -ks --request GET \
     --url "https://${PPDM_FQDN}:8443/api/v2/credentials" \
@@ -82,7 +82,7 @@ function get_credentials {
     echo $request
     }    
 
-function create_inventory_source {
+function create_ppdm_inventory_source {
     local token=${1}
     local type=${2}
     local name=${3}
@@ -116,7 +116,7 @@ function get_host_certificate {
     echo $request
 }
 
-function trust_certificate {
+function trust_host_certificate {
     local token=${1}
     local certificate=${2}
     local cert_id=${3}
@@ -128,7 +128,7 @@ function trust_certificate {
     echo $request
 }
 
-function get_certificates {
+function get_ppdm_certificates {
     local token=${1}
     request=$(curl -ks --request GET \
         --url "https://${PPDM_FQDN}:8443/api/v2/certificates" \
@@ -136,7 +136,7 @@ function get_certificates {
     echo $request
 }
 
-function delete_credentials {
+function delete_ppdm_credentials {
     local token=${1}
     local credentials_id=${2}
     local request=$(curl -ks --request DELETE \
@@ -145,7 +145,7 @@ function delete_credentials {
     --header "Authorization: Bearer ${token}" )
     echo $request
     }  
-function delete_certificate {
+function delete_ppdm_certificate {
     local token=${1}
     local certificates_id=${2}
     local request=$(curl -ks --request DELETE \

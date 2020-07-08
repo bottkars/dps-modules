@@ -13,7 +13,6 @@ params:
   DDVE_USERNAME: 
   DDVE_PASSWORD: 
   DDVE_FQDN:
-  
 
 run:
   path: dps_modules/ci/scripts/set-ppdm-ddve.sh
