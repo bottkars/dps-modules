@@ -4,8 +4,6 @@ platform: linux
 
 inputs:
  - name: dps_modules
-outputs:
-
 
 params:
   PPDM_FQDN: 
