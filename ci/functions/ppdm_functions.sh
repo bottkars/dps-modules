@@ -5,9 +5,8 @@ function get_ppdm_token {
     local token=$(curl -k -sS --request POST \
     --connect-timeout 10 \
     --max-time 10 \
-    --retry 3 \
+    --retry 5 \
     --retry-delay 5 \
-    --retry-max-time 40 \
     --url "https://${PPDM_FQDN}:8443/api/v2/login" -k \
     --header 'content-type: application/json' \
     --data '{"username":"admin","password":"'${password}'"}' | jq -r .access_token )
@@ -20,9 +19,8 @@ function get_ppdm_configuration {
     local configuration=$(curl -k -sS --request GET \
     --connect-timeout 10 \
     --max-time 10 \
-    --retry 3 \
+    --retry 5 \
     --retry-delay 5 \
-    --retry-max-time 40 \
     --header "Authorization: Bearer ${token}" \
     --url "https://${PPDM_FQDN}:8443/api/v2/configurations" | jq -r ".content[0]" )
     echo $configuration
@@ -35,9 +33,8 @@ function get_ppdm_config_completionstate {
     local completionstate=$(curl -ks  \
     --connect-timeout 10 \
     --max-time 10 \
-    --retry 3 \
+    --retry 5 \
     --retry-delay 5 \
-    --retry-max-time 40 \
     --header "Authorization: Bearer ${token}" \
     --url "https://${PPDM_FQDN}:8443/api/v2/configurations/${configuration_id}/config-status" | jq -r ".percentageCompleted")
     echo ${completionstate}
@@ -62,9 +59,8 @@ function get_ppdm_config_state {
     curl -ks  \
     --connect-timeout 10 \
     --max-time 10 \
-    --retry 3 \
+    --retry 5 \
     --retry-delay 5 \
-    --retry-max-time 40 \
     --header "Authorization: Bearer ${token}" \
     --fail \
     --url "https://${PPDM_FQDN}:8443/api/v2/configurations/${configuration_id}/config-status" | jq -r ".status"
@@ -83,9 +79,8 @@ function create_ppdm_credentials {
     local request=$(curl -ks --request POST \
     --connect-timeout 10 \
     --max-time 10 \
-    --retry 3 \
+    --retry 5 \
     --retry-delay 5 \
-    --retry-max-time 40 \
     --url "https://${PPDM_FQDN}:8443/api/v2/credentials" \
     --header "content-type: application/json" \
     --header "Authorization: Bearer ${token}" \
@@ -98,9 +93,8 @@ function get_ppdm_credentials {
     local request=$(curl -ks --request GET \
     --connect-timeout 10 \
     --max-time 10 \
-    --retry 3 \
+    --retry 5 \
     --retry-delay 5 \
-    --retry-max-time 40 \
     --url "https://${PPDM_FQDN}:8443/api/v2/credentials" \
     --header "content-type: application/json" \
     --header "Authorization: Bearer ${token}" )
@@ -131,9 +125,8 @@ function create_ppdm_inventory_source {
     local request=$(curl -ks --request POST \
     --connect-timeout 10 \
     --max-time 10 \
-    --retry 3 \
+    --retry 5 \
     --retry-delay 5 \
-    --retry-max-time 40 \
     --url "https://${PPDM_FQDN}:8443/api/v2/inventory-sources" \
     --header "content-type: application/json" \
     --header "Authorization: Bearer ${token}" \
@@ -147,9 +140,8 @@ function get_ppdm_inventory_sources {
     local request=$(curl -ks --request GET \
     --connect-timeout 10 \
     --max-time 10 \
-    --retry 3 \
+    --retry 5 \
     --retry-delay 5 \
-    --retry-max-time 40 \
     --url "https://${PPDM_FQDN}:8443/api/v2/inventory-sources" \
     --header "content-type: application/json" \
     --header "Authorization: Bearer ${token}" \
@@ -163,9 +155,8 @@ function delete_ppdm_inventory_source {
     local request=$(curl -ks --request DELETE \
     --connect-timeout 10 \
     --max-time 10 \
-    --retry 3 \
+    --retry 5 \
     --retry-delay 5 \
-    --retry-max-time 40 \
     --url "https://${PPDM_FQDN}:8443/api/v2/inventory-sources/${inventory_id}" \
     --header "content-type: application/json" \
     --header "Authorization: Bearer ${token}" \
@@ -180,9 +171,8 @@ function get_ppdm_host_certificate {
     request=$(curl -ks --request GET \
     --connect-timeout 10 \
     --max-time 10 \
-    --retry 3 \
+    --retry 5 \
     --retry-delay 5 \
-    --retry-max-time 40 \
     --url "https://${PPDM_FQDN}:8443/api/v2/certificates?host=${host}&port=$port&type=Host" \
     --header "Authorization: Bearer ${token}" )
     echo $request
@@ -195,9 +185,8 @@ function trust_ppdm_host_certificate {
     request=$(curl -ks --request PUT \
     --connect-timeout 10 \
     --max-time 10 \
-    --retry 3 \
+    --retry 5 \
     --retry-delay 5 \
-    --retry-max-time 40 \
     --url "https://${PPDM_FQDN}:8443/api/v2/certificates/$cert_id" \
     --header "content-type: application/json" \
     --header "Authorization: Bearer ${token}" \
@@ -210,9 +199,8 @@ function get_ppdm_certificates {
     request=$(curl -ks --request GET \
     --connect-timeout 10 \
     --max-time 10 \
-    --retry 3 \
+    --retry 5 \
     --retry-delay 5 \
-    --retry-max-time 40 \
         --url "https://${PPDM_FQDN}:8443/api/v2/certificates" \
         --header "Authorization: Bearer ${token}" )
     echo $request
@@ -224,9 +212,8 @@ function delete_ppdm_credentials {
     local request=$(curl -ks --request DELETE \
     --connect-timeout 10 \
     --max-time 10 \
-    --retry 3 \
+    --retry 5 \
     --retry-delay 5 \
-    --retry-max-time 40 \
     --url "https://${PPDM_FQDN}:8443/api/v2/credentials/${credentials_id}" \
     --header "content-type: application/json" \
     --header "Authorization: Bearer ${token}" )
@@ -238,9 +225,8 @@ function delete_ppdm_certificate {
     local request=$(curl -ks --request DELETE \
     --connect-timeout 10 \
     --max-time 10 \
-    --retry 3 \
+    --retry 5 \
     --retry-delay 5 \
-    --retry-max-time 40 \
     --url "https://${PPDM_FQDN}:8443/api/v2/certificates/${certificates_id}" \
     --header "content-type: application/json" \
     --header "Authorization: Bearer ${token}" )
