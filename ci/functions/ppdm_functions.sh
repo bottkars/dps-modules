@@ -1,7 +1,6 @@
 #!/bin/bash
 function ppdm_curl {
     local url
-    local ppdm_curl_args=${2}
     url="https://${PPDM_FQDN}:8443/api/v2/${1#/}"
     shift || return # function should fail if we weren't passed at least one argument
     local sleep_seconds=10
@@ -46,7 +45,7 @@ function get_ppdm_token {
     -XPOST    
     -H 'content-type: application/json' 
     -d '{"username":"admin","password":"'${password}'"}')
-    ppdm_curl login "$ppdm_curl_args" | jq -r '.access_token'
+    ppdm_curl login  | jq -r '.access_token'
 
 }
 
