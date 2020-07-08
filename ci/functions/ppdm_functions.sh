@@ -154,4 +154,3 @@ function delete_ppdm_certificate {
     --header "Authorization: Bearer ${token}" )
     echo $request
     }  
-

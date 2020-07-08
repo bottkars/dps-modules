@@ -23,4 +23,9 @@ trust_ppdm_host_certificate "${TOKEN}" "${CERTIFICATE}" "${CERT_ID}"
 
 echo "Adding DDVE ${DDVE_FQDN} to inventory"
 DDVE_NAME=$(echo ${DDVE_FQDN} | cut -d '.' -f-1  )
+echo "token: $(echo $TOKEN | base64 ) 
+type:EXTERNALDATADOMAIN 
+ddve_name: ${DDVE_NAME}
+ddve_fqdn: ${DDVE_FQDN} 
+cred_id: $CREDENTIALS_ID"
 create_ppdm_inventory_source $TOKEN EXTERNALDATADOMAIN ${DDVE_NAME} "${DDVE_FQDN}" $CREDENTIALS_ID
