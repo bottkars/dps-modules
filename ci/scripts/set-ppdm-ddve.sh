@@ -10,7 +10,7 @@ echo "requesting API token"
 TOKEN=$(get_ppdm_token ${PPDM_PASSWORD})
 
 echo "Creating DDVE Credentials for ${DDVE_USERNAME}"
-CREDENTIALS=$(create_credentials ${TOKEN} DATADOMAIN ${DDVE_USERNAME} ${DDVE_PASSWORD})
+CREDENTIALS=$(create_ppdm_credentials ${TOKEN} DATADOMAIN ${DDVE_USERNAME} ${DDVE_PASSWORD})
 CREDENTIALS_ID=$(echo $CREDENTIALS | jq -r '.id')
 
 CERTIFICATE=$(get_ppdm_host_certificate $TOKEN $DDVE_FQDN)
