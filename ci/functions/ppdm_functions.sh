@@ -64,7 +64,7 @@ function get_ppdm_configuration {
 function get_ppdm_config_completionstate {
     local token=${1}
     local configuration_id=${2}
-    local ppdm_curl_args=(
+    ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" )
     ppdm_curl "configurations/${configuration_id}/config-status" | jq -r 
@@ -74,7 +74,7 @@ function set_ppdm_configuration {
     local token=${1}
     local configuration_id=${2}
     local configuration=${3}
-    local ppdm_curl_args=(
+    ppdm_curl_args=(
     -XPUT
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
@@ -85,7 +85,7 @@ function set_ppdm_configuration {
 function get_ppdm_config_state {
     local token=${1}
     local configuration_id=${2}
-    local ppdm_curl_args=( 
+    ppdm_curl_args=( 
     -XGET       
     -H "Authorization: Bearer ${token}"
     )
@@ -98,7 +98,7 @@ function create_ppdm_credentials {
     local type=${2}
     local name=${3}
     local password=${4}
-    local ppdm_curl_args=(
+    ppdm_curl_args=(
     -XPOST    
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
@@ -114,7 +114,7 @@ function create_ppdm_credentials {
 
 function get_ppdm_credentials {
     local token=${1}
-    local ppdm_curl_args=(
+    ppdm_curl_args=(
     -XGET
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
@@ -142,7 +142,7 @@ function create_ppdm_inventory_source {
         then
         local data=$(echo $data | jq -r '.details.vCenter.vSphereUiIntegration |= true')
     fi 
-    local ppdm_curl_args=(
+    ppdm_curl_args=(
     -XPOST
     -H 'content-type: application/json'
     -H "Authorization: Bearer ${token}"
@@ -153,7 +153,7 @@ function create_ppdm_inventory_source {
 
 function get_ppdm_inventory_sources {
     local token=${1}
-    local ppdm_curl_args=(
+    ppdm_curl_args=(
     -XGET
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
@@ -164,7 +164,7 @@ function get_ppdm_inventory_sources {
 function delete_ppdm_inventory_source {
     local token=${1}
     local inventory_id=${2}
-    local ppdm_curl_args=(
+    ppdm_curl_args=(
     -XDELETE
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
@@ -177,7 +177,7 @@ function get_ppdm_host_certificate {
     local port=${3}
     local host=${2}
     local type=host    
-    local ppdm_curl_args=(
+    ppdm_curl_args=(
     -XGET 
     -H "Authorization: Bearer ${token}" 
     )
@@ -188,7 +188,7 @@ function trust_ppdm_host_certificate {
     local token=${1}
     local certificate=${2}
     local cert_id=${3}
-    local ppdm_curl_args=(
+    ppdm_curl_args=(
     -XPUT
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
@@ -199,7 +199,7 @@ function trust_ppdm_host_certificate {
 
 function get_ppdm_certificates {
     local token=${1}
-    local ppdm_curl_args=(
+    ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" 
     )
@@ -209,7 +209,7 @@ function get_ppdm_certificates {
 function delete_ppdm_credentials {
     local token=${1}
     local credentials_id=${2}
-    local ppdm_curl_args=(
+    ppdm_curl_args=(
     -XDELETE
     -H "content-type: application/json" 
     -H "Authorization: Bearer ${token}"
@@ -219,7 +219,7 @@ function delete_ppdm_credentials {
 function delete_ppdm_certificate {
     local token=${1}
     local certificates_id=${2}
-    local ppdm_curl_args=(
+    ppdm_curl_args=(
     -XDELETE
     -H "content-type: application/json" 
     -H "Authorization: Bearer ${token}"
