@@ -8,7 +8,7 @@ function ppdm_curl {
     local result=""
     while [[ -z $result || $retry -gt 5 ]]
         do
-        echo $url ${ppdm_curl_args[@]} >&2
+        [[ "${DEBUG}" == "TRUE" ]] && echo $url ${ppdm_curl_args[@]} >&2
         result=$(curl -ks "$url" \
         "${ppdm_curl_args[@]}" "$@"
         )
@@ -36,7 +36,7 @@ function ppdm_curl {
                     *)
                 esac    
                 result=""
-            echo "sleeping for $sleep_seconds seconds" >&2
+            [[ "${DEBUG}" == "TRUE" ]] && echo "sleeping for $sleep_seconds seconds" >&2
             sleep $sleep_seconds    
         fi
     done    
