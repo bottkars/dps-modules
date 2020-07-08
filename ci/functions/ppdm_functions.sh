@@ -19,7 +19,6 @@ function ppdm_curl {
             ### eval section for return code will be added here
             then
                 local errorlevel=$(echo $result | jq -r '.code') 
-                echo $errorlevel >&2
                 case $errorlevel in 
                     401)
                     echo "access denied" >&2
@@ -34,6 +33,8 @@ function ppdm_curl {
                     sleep 300
                     ;;
                     *)
+                    echo "current State $errorlevel" >&2
+                    ;;
                 esac    
                 result=""
             [[ "${DEBUG}" == "TRUE" ]] && echo "sleeping for $sleep_seconds seconds" >&2

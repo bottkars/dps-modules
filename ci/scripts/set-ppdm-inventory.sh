@@ -25,7 +25,6 @@ trust_ppdm_host_certificate "${TOKEN}" "${CERTIFICATE}" "${CERT_ID}"
 
 echo "Adding INVENTORY ${INVENTORY_FQDN} to inventory"
 INVENTORY_NAME=$(echo ${INVENTORY_FQDN} | cut -d '.' -f-1  )
-echo "token: $(echo $TOKEN | base64 ) 
 type: $INVENTORY_TYPE 
 port: $INVENTORY_PORT
 INVENTORY_name: ${INVENTORY_NAME}

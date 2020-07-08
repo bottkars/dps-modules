@@ -35,7 +35,7 @@ CONFIGURATION_REQUEST=$(set_ppdm_configuration ${TOKEN} ${CONFIGURATION_ID} "${C
 
 printf "Appliance Config State: "
 get_ppdm_config_state $TOKEN $CONFIGURATION_ID
-echo "Waiting for appliance to reach Config State Success"
+echo "Waiting for Appliance to reach config_state Success"
 printf "0%%"
 
 while [[ "SUCCESS" != $(get_ppdm_config_state $TOKEN $CONFIGURATION_ID)  ]]; do
