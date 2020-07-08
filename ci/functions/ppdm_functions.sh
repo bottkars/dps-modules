@@ -16,7 +16,7 @@ function get_ppdm_token {
 
 function get_ppdm_configuration {
     local token=${1}
-    local configuration=$(curl -k -sS --request GET \
+    local configuration=$(curl -k -s --request GET \
     --connect-timeout 10 \
     --max-time 10 \
     --retry 5 \
