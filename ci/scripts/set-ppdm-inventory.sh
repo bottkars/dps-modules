@@ -25,4 +25,5 @@ trust_ppdm_host_certificate  "${CERTIFICATE}" "${CERT_ID}"
 
 echo "Adding INVENTORY ${INVENTORY_FQDN} to inventory"
 INVENTORY_NAME=$(echo ${INVENTORY_FQDN} | cut -d '.' -f-1  )
-create_ppdm_inventory-source $INVENTORY_TYPE ${INVENTORY_NAME} "${INVENTORY_FQDN}" $CREDENTIALS_ID ${INVENTORY_PORT}
+result=$(create_ppdm_inventory-source $INVENTORY_TYPE ${INVENTORY_NAME} "${INVENTORY_FQDN}" $CREDENTIALS_ID ${INVENTORY_PORT})
+echo $result 
