@@ -221,7 +221,7 @@ function get_ppdm_sdr-settings {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl common-settings/SDR_CONFIGURATION_SETTING  | jq -r
+    ppdm_curl common-settings/SDR_CONFIGURATION_SETTING  # | jq -r .
 }
 
 function set_ppdm_sdr-settings {
