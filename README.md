@@ -7,7 +7,7 @@ Requires jq to be installed in the calling shell
 
 ## usecase
 
-functions from [./ci/functions] can be sourced locally for testing purposes, and provide Wrappe(s) around curl and ReST API(s)
+[functions from](./ci/functions) can be sourced locally for testing purposes, and provide Wrappe(s) around curl and ReST API(s)
 
 Currently, parameters are ordered an not checked ( will be part of a later release)
 
