@@ -21,8 +21,8 @@ CERTIFICATE=$(echo $CERTIFICATE | jq '(.state |= "ACCEPTED")' )
 CERT_ID=$(echo $CERTIFICATE | jq -r '.id')
 
 echo "Trusting INVENTORY ${INVENTORY_FQDN} certificate $CERTIFICATE"
-trust_ppdm_host_certificate "" "${CERTIFICATE}" "${CERT_ID}"
+trust_ppdm_host_certificate  "${CERTIFICATE}" "${CERT_ID}"
 
 echo "Adding INVENTORY ${INVENTORY_FQDN} to inventory"
 INVENTORY_NAME=$(echo ${INVENTORY_FQDN} | cut -d '.' -f-1  )
-create_ppdm_inventory-source  $INVENTORY_TYPE ${INVENTORY_NAME} "${INVENTORY_FQDN}" $CREDENTIALS_ID ${INVENTORY_PORT}
+create_ppdm_inventory-source $INVENTORY_TYPE ${INVENTORY_NAME} "${INVENTORY_FQDN}" $CREDENTIALS_ID ${INVENTORY_PORT}

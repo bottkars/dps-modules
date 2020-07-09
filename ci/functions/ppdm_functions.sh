@@ -20,7 +20,7 @@ function ppdm_curl {
             then
                 local errorlevel=$(echo $result | jq -r '.code') 
                 case $errorlevel in 
-                    401)
+                    400|401)
                     echo "access denied" >&2
                     break
                     ;;
@@ -67,6 +67,30 @@ function get_ppdm_configuration {
     ppdm_curl configurations | jq -r ".content[0]" 
 }
 
+
+function get_ppdm_assets {
+    local token=${1:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "Authorization: Bearer ${token}" )
+    ppdm_curl assets | jq -r # ".content[0]" 
+}
+
+function get_ppdm_hosts {
+    local token=${1:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "Authorization: Bearer ${token}" )
+    ppdm_curl hosts | jq -r # ".content[0]" 
+}
+
+function get_ppdm_agent-registration-status {
+    local token=${1:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "Authorization: Bearer ${token}" )
+    ppdm_curl agent-registration-status | jq -r #".content[0]" 
+}
 
 function get_ppdm_config_completionstate {
     local token=${2:-$PPDM_TOKEN}

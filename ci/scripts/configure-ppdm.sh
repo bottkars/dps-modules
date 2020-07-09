@@ -11,7 +11,7 @@ source dps_modules/ci/functions/ppdm_functions.sh
 export PPDM_TOKEN=$(get_ppdm_token ${PPDM_SETUP_PASSWORD})
 
 echo "Retrieving initial appliance configuration Template"
-CONFIGURATION=$(get_ppdm_configuration "")
+CONFIGURATION=$(get_ppdm_configuration)
 NODE_ID=$(echo $CONFIGURATION | jq -r .nodeId)  
 CONFIGURATION_ID=$(echo $CONFIGURATION | jq -r .id)
 
