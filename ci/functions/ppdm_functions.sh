@@ -240,7 +240,7 @@ function set_ppdm_sdr-settings {
     -XPUT
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
-    -d $data
+    -d "$data"
     )  
     ppdm_curl common-settings/SDR_CONFIGURATION_SETTING  | jq -r
 }
