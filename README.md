@@ -1,19 +1,19 @@
 # dps_modules
 
-This Repo contains Task and Functions that can be used in Concourse CI/CD, or any other Automation Solution, in bash
+This Repo contains Task and Functions that can be used in Concourse CI/CD, or any other Automation Solution, from bash
 
 ## Requirements
-Requires jq to be installed in the calling shell
+Requires jq to be installed in the calling shell / task /container
 
 ## usecase
 
-[functions from](./ci/functions) can be sourced locally for testing purposes, and provide Wrappe(s) around curl and ReST API(s)
+[functions](./ci/functions) can be sourced locally for testing purposes, and provide Wrappe(s) around curl and ReST API(s)
 
 Currently, parameters are ordered an not checked ( will be part of a later release)
 
 ## Examples
 
-Here are Some Examples for local testing
+Here are some examples for local testing
 
 ### PPDM
 
@@ -39,4 +39,4 @@ get_ppdm_configuration
 
 ### example scripts
 
-example scripts can be found in [./ci/scripts]
+here are some [example scripts](./ci/scripts) leveraging the modules
