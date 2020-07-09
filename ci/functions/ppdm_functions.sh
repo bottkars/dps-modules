@@ -242,7 +242,7 @@ function set_ppdm_sdr-settings {
     -H "Authorization: Bearer ${token}" \
     -d "$data"
     )  
-    ppdm_curl common-settings/SDR_CONFIGURATION_SETTING  | jq -r
+    ppdm_curl common-settings/SDR_CONFIGURATION_SETTING 
 }
 
 function get_ppdm_components {
