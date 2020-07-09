@@ -8,10 +8,10 @@ DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 echo "requesting API token"
 
 source dps_modules/ci/functions/ppdm_functions.sh
-TOKEN=$(get_ppdm_token ${PPDM_SETUP_PASSWORD})
+export TOKEN=$(get_ppdm_token ${PPDM_SETUP_PASSWORD})
 
 echo "Retrieving initial appliance configuration Template"
-CONFIGURATION=$(get_ppdm_configuration "${TOKEN}")
+CONFIGURATION=$(get_ppdm_configuration "")
 NODE_ID=$(echo $CONFIGURATION | jq -r .nodeId)  
 CONFIGURATION_ID=$(echo $CONFIGURATION | jq -r .id)
 
@@ -27,19 +27,19 @@ CONFIGURATION=$(echo $CONFIGURATION | jq 'del(._links)')
 printf "Appliance Config State complete: "
 
 
-STATE=$(get_ppdm_config_completionstate $TOKEN $CONFIGURATION_ID)
+STATE=$(get_ppdm_config_completionstate  $CONFIGURATION_ID)
 echo "${STATE}%"
 echo "Setting Appliance"
-CONFIGURATION_REQUEST=$(set_ppdm_configuration ${TOKEN} ${CONFIGURATION_ID} "${CONFIGURATION}")
+CONFIGURATION_REQUEST=$(set_ppdm_configurations ${CONFIGURATION_ID} "${CONFIGURATION}")
   
 
 printf "Appliance Config State: "
-get_ppdm_config_state $TOKEN $CONFIGURATION_ID
-echo "Waiting for Appliance to reach config_state Success"
+get_ppdm_config-status  $CONFIGURATION_ID
+echo "Waiting for Appliance to reach config-status Success"
 printf "0%%"
 
-while [[ "SUCCESS" != $(get_ppdm_config_state $TOKEN $CONFIGURATION_ID)  ]]; do
-    printf "\r$(get_ppdm_config_completionstate $TOKEN $CONFIGURATION_ID)%%"
+while [[ "SUCCESS" != $(get_ppdm_config-status  $CONFIGURATION_ID)  ]]; do
+    printf "\r$(get_ppdm_config_completionstate  $CONFIGURATION_ID)%%"
     sleep 10
 done
 printf "\r100%%\n"
