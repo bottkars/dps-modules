@@ -262,7 +262,7 @@ function get_ppdm_components {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl components  | jq -r .
+    ppdm_curl components
 }
 
 
@@ -273,7 +273,7 @@ function get_ppdm_server-disaster-recovery-hosts {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl server-disaster-recovery-hosts  | jq -r .
+    ppdm_curl server-disaster-recovery-hosts
 }
 
 function get_ppdm_storage-systems {
@@ -294,8 +294,7 @@ function delete_ppdm_inventory-source {
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
     )  
-    ppdm_curl "inventory-sources/${inventory_id}"  | jq -r .
-}
+    ppdm_curl "inventory-sources/${inventory_id}"
 
 
 
@@ -308,7 +307,7 @@ function get_ppdm_host_certificate {
     -XGET 
     -H "Authorization: Bearer ${token}" 
     )
-    ppdm_curl "certificates?host=${host}&port=$port&type=Host"  | jq .
+    ppdm_curl "certificates?host=${host}&port=$port&type=Host"
 }
 
 function trust_ppdm_host_certificate {
@@ -321,7 +320,7 @@ function trust_ppdm_host_certificate {
     -H "Authorization: Bearer ${token}"
     -d "${certificate}"
     )
-    ppdm_curl "certificates/$cert_id"  | jq -r
+    ppdm_curl "certificates/$cert_id"  
     }
 
 function get_ppdm_certificates {
@@ -330,7 +329,7 @@ function get_ppdm_certificates {
     -XGET
     -H "Authorization: Bearer ${token}" 
     )
-    ppdm_curl certificates   | jq -r
+    ppdm_curl certificates
 }
 
 function delete_ppdm_credentials {
