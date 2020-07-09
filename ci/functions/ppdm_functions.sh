@@ -240,7 +240,7 @@ function set_ppdm_sdr-settings {
     -XPUT
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
-    -d "$data"
+    -d "${data}" \
     )  
     ppdm_curl common-settings/SDR_CONFIGURATION_SETTING 
 }
@@ -252,7 +252,7 @@ function get_ppdm_components {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl components  | jq -r
+    ppdm_curl components  | jq -r .
 }
 
 function get_ppdm_components {
@@ -262,7 +262,7 @@ function get_ppdm_components {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl components  | jq -r
+    ppdm_curl components  | jq -r .
 }
 
 
@@ -273,7 +273,7 @@ function get_ppdm_server-disaster-recovery-hosts {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl server-disaster-recovery-hosts  | jq -r
+    ppdm_curl server-disaster-recovery-hosts  | jq -r .
 }
 
 function get_ppdm_storage-systems {
@@ -294,7 +294,7 @@ function delete_ppdm_inventory-source {
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
     )  
-    ppdm_curl "inventory-sources/${inventory_id}"  | jq -r
+    ppdm_curl "inventory-sources/${inventory_id}"  | jq -r .
 }
 
 
