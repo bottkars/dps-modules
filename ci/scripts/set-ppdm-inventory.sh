@@ -9,7 +9,7 @@ source dps_modules/ci/functions/ppdm_functions.sh
 echo "requesting API token"
 
 
-export TOKEN=$(get_ppdm_token ${PPDM_PASSWORD})
+export PPDM_TOKEN=$(get_ppdm_token ${PPDM_PASSWORD})
 
 echo "Creating INVENTORY Credentials for ${INVENTORY_USERNAME}"
 CREDENTIALS=$(create_ppdm_credentials  ${INVENTORY_CREDENTIAL_TYPE} ${INVENTORY_USERNAME} ${INVENTORY_PASSWORD})

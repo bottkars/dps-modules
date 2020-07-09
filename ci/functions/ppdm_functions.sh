@@ -59,7 +59,7 @@ function get_ppdm_token {
 
 
 function get_ppdm_configuration {
-    local token=${1:-$TOKEN}
+    local token=${1:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" )
@@ -68,7 +68,7 @@ function get_ppdm_configuration {
 
 
 function get_ppdm_config_completionstate {
-    local token=${2:-$TOKEN}
+    local token=${2:-$PPDM_TOKEN}
     local configuration_id=${1}
     ppdm_curl_args=(
     -XGET
@@ -77,7 +77,7 @@ function get_ppdm_config_completionstate {
 }
 
 function set_ppdm_configurations {
-    local token=${3:-$TOKEN}
+    local token=${3:-$PPDM_TOKEN}
     local configuration_id=${1}
     local configuration=${2}
     ppdm_curl_args=(
@@ -90,7 +90,7 @@ function set_ppdm_configurations {
 }
 
 function get_ppdm_config-status {
-    local token=${2:-$TOKEN}
+    local token=${2:-$PPDM_TOKEN}
     local configuration_id=${1}
     ppdm_curl_args=( 
     -XGET       
@@ -101,7 +101,7 @@ function get_ppdm_config-status {
 
 
 function create_ppdm_credentials {
-    local token=${4:-$TOKEN}
+    local token=${4:-$PPDM_TOKEN}
     local type=${1}
     local name=${2}
     local password=${3}
@@ -120,7 +120,7 @@ function create_ppdm_credentials {
     }
 
 function get_ppdm_credentials {
-    local token=${1:-$TOKEN}
+    local token=${1:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "content-type: application/json"
@@ -130,7 +130,7 @@ function get_ppdm_credentials {
     }    
 
 function create_ppdm_inventory-source {
-    local token=${6:-$TOKEN}
+    local token=${6:-$PPDM_TOKEN}
     local type=${1}
     local name=${2}
     local address=${3}
@@ -159,7 +159,7 @@ function create_ppdm_inventory-source {
 }
 
 function get_ppdm_inventory-sources {
-    local token=${1:-$TOKEN}
+    local token=${1:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "content-type: application/json" \
@@ -169,7 +169,7 @@ function get_ppdm_inventory-sources {
 }
 
 function get_ppdm_locations {
-    local token=${1:-$TOKEN}
+    local token=${1:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "content-type: application/json" \
@@ -179,7 +179,7 @@ function get_ppdm_locations {
 }
 
 function get_ppdm_common-settings {
-    local token=${1:-$TOKEN}
+    local token=${1:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "content-type: application/json" \
@@ -188,7 +188,7 @@ function get_ppdm_common-settings {
     ppdm_curl common-settings  | jq -r
 }
 function get_ppdm_components {
-    local token=${1:-$TOKEN}
+    local token=${1:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "content-type: application/json" \
@@ -198,7 +198,7 @@ function get_ppdm_components {
 }
 
 function get_ppdm_components {
-    local token=${1:-$TOKEN}
+    local token=${1:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "content-type: application/json" \
@@ -208,7 +208,7 @@ function get_ppdm_components {
 }
 
 function get_ppdm_storage-systems {
-    local token=${1:-$TOKEN}
+    local token=${1:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "content-type: application/json" \
@@ -218,7 +218,7 @@ function get_ppdm_storage-systems {
 }
 
 function delete_ppdm_inventory-source {
-    local token=${2:-$TOKEN}
+    local token=${2:-$PPDM_TOKEN}
     local inventory_id=${1}
     ppdm_curl_args=(
     -XDELETE
@@ -231,7 +231,7 @@ function delete_ppdm_inventory-source {
 
 
 function get_ppdm_host_certificate {
-    local token=${3:-$TOKEN}
+    local token=${3:-$PPDM_TOKEN}
     local port=${2}
     local host=${1}
     local type=host    
@@ -243,7 +243,7 @@ function get_ppdm_host_certificate {
 }
 
 function trust_ppdm_host_certificate {
-    local token=${3:-$TOKEN}
+    local token=${3:-$PPDM_TOKEN}
     local certificate=${1}
     local cert_id=${2}
     ppdm_curl_args=(
@@ -256,7 +256,7 @@ function trust_ppdm_host_certificate {
     }
 
 function get_ppdm_certificates {
-    local token=${1:-$TOKEN}
+    local token=${1:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" 
@@ -265,7 +265,7 @@ function get_ppdm_certificates {
 }
 
 function delete_ppdm_credentials {
-    local token=${2:-$TOKEN}
+    local token=${2:-$PPDM_TOKEN}
     local credentials_id=${1}
     ppdm_curl_args=(
     -XDELETE
@@ -276,7 +276,7 @@ function delete_ppdm_credentials {
     } 
 
 function delete_ppdm_certificate {
-    local token=${2:-$TOKEN}
+    local token=${2:-$PPDM_TOKEN}
     local certificates_id=${1}
     ppdm_curl_args=(
     -XDELETE
