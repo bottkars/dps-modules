@@ -64,7 +64,7 @@ function get_ppdm_configuration {
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" )
-    ppdm_curl configurations | jq -r ".content[0]" 
+    ppdm_curl configurations | jq -r ".content[]" 
 }
 
 
@@ -73,7 +73,7 @@ function get_ppdm_assets {
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" )
-    ppdm_curl assets | jq -r # ".content[0]" 
+    ppdm_curl assets | jq '.content[]'
 }
 
 function get_ppdm_hosts {
@@ -81,7 +81,7 @@ function get_ppdm_hosts {
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" )
-    ppdm_curl hosts | jq -r # ".content[0]" 
+    ppdm_curl hosts | jq '.content[]'
 }
 
 function get_ppdm_agent-registration-status {
@@ -151,7 +151,7 @@ function get_ppdm_credentials {
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
     )
-    ppdm_curl credentials  | jq -r .content
+    ppdm_curl credentials  | jq '.content[]'
     }    
 
 function create_ppdm_inventory-source {
@@ -190,7 +190,7 @@ function get_ppdm_inventory-sources {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl inventory-sources  | jq -r .content
+    ppdm_curl inventory-sources  | jq -r '.content[]'
 }
 
 function get_ppdm_locations {
@@ -212,6 +212,39 @@ function get_ppdm_common-settings {
     )  
     ppdm_curl common-settings  | jq -r
 }
+
+
+function get_ppdm_sdr-settings {
+    local token=${10:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "content-type: application/json" \
+    -H "Authorization: Bearer ${token}" \
+    )  
+    ppdm_curl common-settings/SDR_CONFIGURATION_SETTING  | jq -r
+}
+
+function set_ppdm_sdr-settings {
+    local token=${10:-$PPDM_TOKEN}
+    local repositoryHost=${1}
+    local repositoryPath=${2}
+    local repositoryType=${3}
+    local backupsEnabled=${4}
+    local data=$(get_ppdm_sdr-settings)
+    data=$(echo $data | jq 'del(._links)')
+    data=$(echo $data | jq --arg repositoryHost ${repositoryHost} '(.properties[] | select(.name == "repositoryHost").value) |= $repositoryHost')
+    data=$(echo $data | jq --arg repositoryPath ${repositoryPath} '(.properties[] | select(.name == "repositoryPath").value) |= $repositoryPath')
+    data=$(echo $data | jq --arg repositoryType ${repositoryType} '(.properties[] | select(.name == "type").value) |= $repositoryType')
+    data=$(echo $data | jq --arg backupsEnabled ${backupsEnabled} '(.properties[] | select(.name == "backupsEnabled").value) |= $backupsEnabled')
+    ppdm_curl_args=(
+    -XPUT
+    -H "content-type: application/json" \
+    -H "Authorization: Bearer ${token}" \
+    -d $data
+    )  
+    ppdm_curl common-settings/SDR_CONFIGURATION_SETTING  | jq -r
+}
+
 function get_ppdm_components {
     local token=${1:-$PPDM_TOKEN}
     ppdm_curl_args=(
@@ -230,6 +263,17 @@ function get_ppdm_components {
     -H "Authorization: Bearer ${token}" \
     )  
     ppdm_curl components  | jq -r
+}
+
+
+function get_ppdm_server-disaster-recovery-hosts {
+    local token=${1:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "content-type: application/json" \
+    -H "Authorization: Bearer ${token}" \
+    )  
+    ppdm_curl server-disaster-recovery-hosts  | jq -r
 }
 
 function get_ppdm_storage-systems {
@@ -239,7 +283,7 @@ function get_ppdm_storage-systems {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl storage-systems  | jq -r .content
+    ppdm_curl storage-systems  | jq '.content[]'
 }
 
 function delete_ppdm_inventory-source {
