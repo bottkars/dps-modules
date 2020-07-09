@@ -48,10 +48,11 @@ function ppdm_curl {
 
 function get_ppdm_token {
     local password=$1
+    local ppdm_adminuser=${PPDM_ADMINUSER:-admin}
     ppdm_curl_args=(
     -XPOST    
     -H 'content-type: application/json' 
-    -d '{"username":"admin","password":"'${password}'"}')
+    -d '{"username":"'${ppdm_adminuser}'","password":"'${password}'"}')
     ppdm_curl login  | jq -r '.access_token'
 
 }
