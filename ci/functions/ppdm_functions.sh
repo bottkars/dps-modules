@@ -15,7 +15,7 @@ function ppdm_curl {
         [[ "${DEBUG}" == "TRUE" ]] && echo $result >&2
         [[ "${DEBUG}" == "TRUE" ]] && echo $retry >&2
         ((retry++))
-        if [[ $(echo $result | jq -r 'select(.code != null)') ]]
+        if [[ $(echo $result | jq -r 'select(.code != null)' 2> /dev/null) ]]
             ### eval section for return code will be added here
             then
                 local errorlevel=$(echo $result | jq -r '.code') 
@@ -127,7 +127,7 @@ function get_ppdm_credentials {
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
     )
-    ppdm_curl credentials  | jq -r
+    ppdm_curl credentials  | jq -r .content
     }    
 
 function create_ppdm_inventory-source {
