@@ -93,7 +93,6 @@ function get_ppdm_agent-registration-status {
 }
 
 function get_ppdm_config_completionstate {
-    shift || return # fail if we weren't passed at least x args
     local token=${99:-$PPDM_TOKEN}
     local configuration_id=${1}
     ppdm_curl_args=(
@@ -116,7 +115,6 @@ function set_ppdm_configurations {
 }
 
 function get_ppdm_config-status {
-    shift || return # fail if we weren't passed at least x args
     local token=${2:-$PPDM_TOKEN}
     local configuration_id=${1}
     ppdm_curl_args=( 
@@ -128,7 +126,6 @@ function get_ppdm_config-status {
 
 
 function create_ppdm_credentials {
-    shift 3 || return # fail if we weren't passed at least x args
     local token=${99:-$PPDM_TOKEN}
     local type=${1}
     local name=${2}
@@ -227,7 +224,6 @@ function get_ppdm_sdr-settings {
 }
 
 function set_ppdm_sdr-settings {
-    shift 4 || return # fail if we weren't passed at least x args
     local token=${99:-$PPDM_TOKEN}
     local repositoryHost=${1}
     local repositoryPath=${2}
@@ -292,7 +288,6 @@ function get_ppdm_storage-systems {
 }
 
 function delete_ppdm_inventory-source {
-    shift || return # fail if we weren't passed at least x args
     local token=${2:-$PPDM_TOKEN}
     local inventory_id=${1}
     ppdm_curl_args=(
@@ -304,7 +299,6 @@ function delete_ppdm_inventory-source {
 }
 
 function get_ppdm_host_certificate {
-    shift 2 || return # fail if we weren't passed at least x args
     local token=${3:-$PPDM_TOKEN}
     local port=${2}
     local host=${1}
