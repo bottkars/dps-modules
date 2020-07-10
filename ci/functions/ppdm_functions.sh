@@ -186,7 +186,8 @@ function create_ppdm_inventory-source {
     -H "Authorization: Bearer ${token}"
     -d "${data}"
     )  
-    ppdm_curl inventory-sources  | jq -r
+    local response=$(ppdm_curl inventory-sources  | jq -r . )
+    echo $response
 }
 
 function get_ppdm_inventory-sources {
@@ -196,7 +197,8 @@ function get_ppdm_inventory-sources {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl inventory-sources  | jq -r '.content[]'
+    local response=$(ppdm_curl inventory-sources  | jq -r '.content[]')
+    echo $response
 }
 
 function get_ppdm_locations {
@@ -206,7 +208,8 @@ function get_ppdm_locations {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl locations  | jq -r 
+    local response=$(ppdm_curl locations  | jq -r .)
+    echo $response
 }
 
 function get_ppdm_common-settings {
@@ -216,7 +219,8 @@ function get_ppdm_common-settings {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl common-settings  | jq -r
+    local response=$(ppdm_curl common-settings  | jq -r .)
+    echo $response
 }
 
 function get_ppdm_sdr-settings {
@@ -226,7 +230,8 @@ function get_ppdm_sdr-settings {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl common-settings/SDR_CONFIGURATION_SETTING  # | jq -r .
+    local response=$(ppdm_curl common-settings/SDR_CONFIGURATION_SETTING  | jq -r .)
+    echo $response
 }
 
 function set_ppdm_sdr-settings {
@@ -249,7 +254,8 @@ function set_ppdm_sdr-settings {
     -H "Authorization: Bearer ${token}" \
     -d "${data}" \
     )  
-    ppdm_curl server-disaster-recovery-configurations/${id}
+    local response=$(ppdm_curl server-disaster-recovery-configurations/${id})
+    echo $response
 }
 
 function get_ppdm_components {
@@ -259,7 +265,8 @@ function get_ppdm_components {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl components  | jq -r .
+    local response=$(ppdm_curl components  | jq -r .)
+    echo $response
 }
 
 function get_ppdm_components {
@@ -269,7 +276,8 @@ function get_ppdm_components {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl components  | jq -r .
+    local response=$(ppdm_curl components  | jq -r .)
+    ech $response
 }
 
 
@@ -326,7 +334,8 @@ function trust_ppdm_host_certificate {
     -H "Authorization: Bearer ${token}"
     -d "${certificate}"
     )
-    ppdm_curl "certificates/$cert_id" | jq -r . 
+    local response=$(ppdm_curl "certificates/$cert_id" | jq -r .)
+    echo $response
     }
 
 function get_ppdm_certificates {
@@ -335,7 +344,8 @@ function get_ppdm_certificates {
     -XGET
     -H "Authorization: Bearer ${token}" 
     )
-    ppdm_curl certificates
+    local response=$(ppdm_curl certificates)
+    echo $response
 }
 
 function delete_ppdm_credentials {
