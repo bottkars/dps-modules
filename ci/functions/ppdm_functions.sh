@@ -59,7 +59,8 @@ function get_ppdm_token {
     -XPOST    
     -H 'content-type: application/json' 
     -d '{"username":"'${ppdm_adminuser}'","password":"'${password}'"}')
-    ppdm_curl login  | jq -r '.access_token'
+    local response=$(ppdm_curl login  | jq -r '.access_token')
+    echo $response
 
 }
 
@@ -70,7 +71,8 @@ function get_ppdm_configuration {
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" )
-    ppdm_curl configurations | jq -r ".content[]" 
+    local response=$(ppdm_curl configurations | jq -r ".content[]" )
+    echo $response
 }
 
 
@@ -79,7 +81,8 @@ function get_ppdm_assets {
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" )
-    ppdm_curl assets | jq '.content[]'
+    local response=$(ppdm_curl assets | jq '.content[]')
+    echo $response
 }
 
 function get_ppdm_hosts {
@@ -87,7 +90,8 @@ function get_ppdm_hosts {
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" )
-    ppdm_curl hosts | jq '.content[]'
+    local response=$(ppdm_curl hosts | jq '.content[]')
+    echo $response
 }
 
 function get_ppdm_agent-registration-status {
@@ -95,7 +99,8 @@ function get_ppdm_agent-registration-status {
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" )
-    ppdm_curl agent-registration-status | jq -r #".content[0]" 
+    local response=$(ppdm_curl agent-registration-status | jq -r .) #".content[0]"
+    echo $response 
 }
 
 function get_ppdm_config_completionstate {
@@ -104,7 +109,8 @@ function get_ppdm_config_completionstate {
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" )
-    ppdm_curl "configurations/${configuration_id}/config-status" | jq -r '.percentageCompleted'
+    local response=$(ppdm_curl "configurations/${configuration_id}/config-status" | jq -r '.percentageCompleted' )
+    echo $response
 }
 
 function set_ppdm_configurations {
@@ -117,7 +123,8 @@ function set_ppdm_configurations {
     -H "Authorization: Bearer ${token}"
     -d "${configuration}"
     )
-    ppdm_curl "configurations/${configuration_id}" 
+    local response=$(ppdm_curl "configurations/${configuration_id}" )
+    echo $response
 }
 
 function get_ppdm_config-status {
@@ -127,7 +134,8 @@ function get_ppdm_config-status {
     -XGET       
     -H "Authorization: Bearer ${token}"
     )
-    ppdm_curl "configurations/${configuration_id}/config-status"  | jq -r '.status'
+    local response=$(ppdm_curl "configurations/${configuration_id}/config-status"  | jq -r '.status' )
+    echo $response
 }
 
 
@@ -147,7 +155,8 @@ function create_ppdm_credentials {
         "password": "'${password}'"
          }'
     )     
-    ppdm_curl "credentials"  | jq -r .
+    local response=$(ppdm_curl "credentials"  | jq -r . )
+    echo $response
     }
 
 function get_ppdm_credentials {
@@ -157,7 +166,8 @@ function get_ppdm_credentials {
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
     )
-    ppdm_curl credentials  | jq '.content[]'
+    local response=$(ppdm_curl credentials  | jq '.content[]')
+    echo $response
     }    
 
 function create_ppdm_inventory-source {
@@ -288,7 +298,8 @@ function get_ppdm_server-disaster-recovery-hosts {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl server-disaster-recovery-hosts  | jq -r .
+    local response=$(ppdm_curl server-disaster-recovery-hosts  | jq -r .)
+    echo $response
 }
 
 function get_ppdm_storage-systems {
@@ -298,7 +309,8 @@ function get_ppdm_storage-systems {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl storage-systems  | jq '.content[]'
+    local response=$(ppdm_curl storage-systems  | jq '.content[]')
+    echo $response
 }
 
 function delete_ppdm_inventory-source {
@@ -309,7 +321,8 @@ function delete_ppdm_inventory-source {
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
     )  
-    ppdm_curl "inventory-sources/${inventory_id}" 
+    local response=$(ppdm_curl "inventory-sources/${inventory_id}" )
+    echo $response
 }
 
 function get_ppdm_host_certificate {
@@ -321,7 +334,8 @@ function get_ppdm_host_certificate {
     -XGET 
     -H "Authorization: Bearer ${token}" 
     )
-    ppdm_curl "certificates?host=${host}&port=$port&type=Host"
+    local response=$(ppdm_curl "certificates?host=${host}&port=$port&type=Host")
+    echo $response
 }
 
 function trust_ppdm_host_certificate {
@@ -356,7 +370,8 @@ function delete_ppdm_credentials {
     -H "content-type: application/json" 
     -H "Authorization: Bearer ${token}"
     )
-    ppdm_curl "credentials/${credentials_id}" 
+    local response=$(ppdm_curl "credentials/${credentials_id}" )
+    echo $response
     } 
 
 function delete_ppdm_certificate {
@@ -367,5 +382,6 @@ function delete_ppdm_certificate {
     -H "content-type: application/json" 
     -H "Authorization: Bearer ${token}"
     )
-    ppdm_curl "certificates/${certificates_id}"  
+    local response=$(ppdm_curl "certificates/${certificates_id}" )
+    echo $response 
     }  
