@@ -213,7 +213,6 @@ function get_ppdm_common-settings {
     ppdm_curl common-settings  | jq -r
 }
 
-
 function get_ppdm_sdr-settings {
     local token=${10:-$PPDM_TOKEN}
     ppdm_curl_args=(
@@ -230,19 +229,21 @@ function set_ppdm_sdr-settings {
     local repositoryPath=${2}
     local repositoryType=${3}
     local backupsEnabled=${4}
-    local data=$(get_ppdm_sdr-settings)
-    data=$(echo $data | jq 'del(._links)')
-    data=$(echo $data | jq --arg repositoryHost ${repositoryHost} '(.properties[] | select(.name == "repositoryHost").value) |= $repositoryHost')
-    data=$(echo $data | jq --arg repositoryPath ${repositoryPath} '(.properties[] | select(.name == "repositoryPath").value) |= $repositoryPath')
-    data=$(echo $data | jq --arg repositoryType ${repositoryType} '(.properties[] | select(.name == "type").value) |= $repositoryType')
-    data=$(echo $data | jq --arg backupsEnabled ${backupsEnabled} '(.properties[] | select(.name == "backupsEnabled").value) |= $backupsEnabled')
+    local id=$(get_ppdm_sdr-settings | jq -r '(.properties[] | select(.name == "configId").value)')
+    local data='{
+    "backupsEnabled": '$backupsEnabled',
+    "id": "'${id}'",
+    "repositoryHost": "'${repositoryHost}'",
+    "repositoryPath": "'${repositoryPath}'",
+    "type": "'${repositoryType}'" 
+    }'
     ppdm_curl_args=(
     -XPUT
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     -d "${data}" \
     )  
-    ppdm_curl common-settings/SDR_CONFIGURATION_SETTING 
+    ppdm_curl server-disaster-recovery-configurations/${id}
 }
 
 function get_ppdm_components {
@@ -262,7 +263,7 @@ function get_ppdm_components {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl components
+    ppdm_curl components  | jq -r .
 }
 
 
@@ -273,7 +274,7 @@ function get_ppdm_server-disaster-recovery-hosts {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    ppdm_curl server-disaster-recovery-hosts
+    ppdm_curl server-disaster-recovery-hosts  | jq -r .
 }
 
 function get_ppdm_storage-systems {
@@ -294,9 +295,8 @@ function delete_ppdm_inventory-source {
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
     )  
-    ppdm_curl "inventory-sources/${inventory_id}"
-
-
+    ppdm_curl "inventory-sources/${inventory_id}" 
+}
 
 function get_ppdm_host_certificate {
     local token=${3:-$PPDM_TOKEN}
