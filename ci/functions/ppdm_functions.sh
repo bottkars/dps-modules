@@ -5,9 +5,15 @@ function ppdm_curl {
     shift || return # fail if we weren't passed at least x args
     local sleep_seconds=10
     local retry=0
+    local retries=5
     local result=""
-    while [[ -z $result || $retry -gt 5 ]]
+    while [[ -z $result ]]
         do
+        if [[ $result -gt $retries ]]
+            then
+            echo "exceeded max retries of $retries" >&2
+            break
+            fi
         [[ "${DEBUG}" == "TRUE" ]] && echo $url ${ppdm_curl_args[@]} >&2
         result=$(curl -ks "$url" \
         "${ppdm_curl_args[@]}" "$@"
