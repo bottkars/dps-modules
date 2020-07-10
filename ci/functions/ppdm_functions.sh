@@ -2,7 +2,7 @@
 function ppdm_curl {
     local url
     url="https://${PPDM_FQDN}:8443/api/v2/${1#/}"
-    shift || return # function should fail if we weren't passed at least one argument
+    shift || return # fail if we weren't passed at least x args
     local sleep_seconds=10
     local retry=0
     local result=""
@@ -60,7 +60,7 @@ function get_ppdm_token {
 
 
 function get_ppdm_configuration {
-    local token=${1:-$PPDM_TOKEN}
+    local token=${99:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" )
@@ -69,7 +69,7 @@ function get_ppdm_configuration {
 
 
 function get_ppdm_assets {
-    local token=${1:-$PPDM_TOKEN}
+    local token=${99:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" )
@@ -77,7 +77,7 @@ function get_ppdm_assets {
 }
 
 function get_ppdm_hosts {
-    local token=${1:-$PPDM_TOKEN}
+    local token=${99:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" )
@@ -85,7 +85,7 @@ function get_ppdm_hosts {
 }
 
 function get_ppdm_agent-registration-status {
-    local token=${1:-$PPDM_TOKEN}
+    local token=${99:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" )
@@ -93,7 +93,8 @@ function get_ppdm_agent-registration-status {
 }
 
 function get_ppdm_config_completionstate {
-    local token=${2:-$PPDM_TOKEN}
+    shift || return # fail if we weren't passed at least x args
+    local token=${99:-$PPDM_TOKEN}
     local configuration_id=${1}
     ppdm_curl_args=(
     -XGET
@@ -115,6 +116,7 @@ function set_ppdm_configurations {
 }
 
 function get_ppdm_config-status {
+    shift || return # fail if we weren't passed at least x args
     local token=${2:-$PPDM_TOKEN}
     local configuration_id=${1}
     ppdm_curl_args=( 
@@ -126,7 +128,8 @@ function get_ppdm_config-status {
 
 
 function create_ppdm_credentials {
-    local token=${4:-$PPDM_TOKEN}
+    shift 3 || return # fail if we weren't passed at least x args
+    local token=${99:-$PPDM_TOKEN}
     local type=${1}
     local name=${2}
     local password=${3}
@@ -145,7 +148,7 @@ function create_ppdm_credentials {
     }
 
 function get_ppdm_credentials {
-    local token=${1:-$PPDM_TOKEN}
+    local token=${99:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "content-type: application/json"
@@ -184,7 +187,7 @@ function create_ppdm_inventory-source {
 }
 
 function get_ppdm_inventory-sources {
-    local token=${1:-$PPDM_TOKEN}
+    local token=${99:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "content-type: application/json" \
@@ -194,7 +197,7 @@ function get_ppdm_inventory-sources {
 }
 
 function get_ppdm_locations {
-    local token=${1:-$PPDM_TOKEN}
+    local token=${99:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "content-type: application/json" \
@@ -204,7 +207,7 @@ function get_ppdm_locations {
 }
 
 function get_ppdm_common-settings {
-    local token=${1:-$PPDM_TOKEN}
+    local token=${99:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "content-type: application/json" \
@@ -214,7 +217,7 @@ function get_ppdm_common-settings {
 }
 
 function get_ppdm_sdr-settings {
-    local token=${10:-$PPDM_TOKEN}
+    local token=${99:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "content-type: application/json" \
@@ -224,7 +227,8 @@ function get_ppdm_sdr-settings {
 }
 
 function set_ppdm_sdr-settings {
-    local token=${10:-$PPDM_TOKEN}
+    shift 4 || return # fail if we weren't passed at least x args
+    local token=${99:-$PPDM_TOKEN}
     local repositoryHost=${1}
     local repositoryPath=${2}
     local repositoryType=${3}
@@ -247,7 +251,7 @@ function set_ppdm_sdr-settings {
 }
 
 function get_ppdm_components {
-    local token=${1:-$PPDM_TOKEN}
+    local token=${99:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "content-type: application/json" \
@@ -257,7 +261,7 @@ function get_ppdm_components {
 }
 
 function get_ppdm_components {
-    local token=${1:-$PPDM_TOKEN}
+    local token=${99:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "content-type: application/json" \
@@ -268,7 +272,7 @@ function get_ppdm_components {
 
 
 function get_ppdm_server-disaster-recovery-hosts {
-    local token=${1:-$PPDM_TOKEN}
+    local token=${99:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "content-type: application/json" \
@@ -278,7 +282,7 @@ function get_ppdm_server-disaster-recovery-hosts {
 }
 
 function get_ppdm_storage-systems {
-    local token=${1:-$PPDM_TOKEN}
+    local token=${99:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "content-type: application/json" \
@@ -288,6 +292,7 @@ function get_ppdm_storage-systems {
 }
 
 function delete_ppdm_inventory-source {
+    shift || return # fail if we weren't passed at least x args
     local token=${2:-$PPDM_TOKEN}
     local inventory_id=${1}
     ppdm_curl_args=(
@@ -299,6 +304,7 @@ function delete_ppdm_inventory-source {
 }
 
 function get_ppdm_host_certificate {
+    shift 2 || return # fail if we weren't passed at least x args
     local token=${3:-$PPDM_TOKEN}
     local port=${2}
     local host=${1}
@@ -320,11 +326,11 @@ function trust_ppdm_host_certificate {
     -H "Authorization: Bearer ${token}"
     -d "${certificate}"
     )
-    ppdm_curl "certificates/$cert_id"  
+    ppdm_curl "certificates/$cert_id" | jq -r . 
     }
 
 function get_ppdm_certificates {
-    local token=${1:-$PPDM_TOKEN}
+    local token=${99:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" 
