@@ -9,11 +9,11 @@ function ppdm_curl {
     local result=""
     while [[ -z $result ]]
         do
-        if [[ $result -gt $retries ]]
+        if [[ $retry -gt $retries ]]
             then
             echo "exceeded max retries of $retries" >&2
             break
-            fi
+        fi
         [[ "${DEBUG}" == "TRUE" ]] && echo $url ${ppdm_curl_args[@]} >&2
         result=$(curl -ks "$url" \
         "${ppdm_curl_args[@]}" "$@"
@@ -170,6 +170,44 @@ function get_ppdm_credentials {
     echo $response
     }    
 
+function get_ppdm_server-disaster-recovery-backups
+ {
+    local token=${99:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "content-type: application/json"
+    -H "Authorization: Bearer ${token}"
+    )
+    local response=$(ppdm_curl server-disaster-recovery-backups  | jq '.content[]')
+    echo $response
+    }    
+
+
+
+function get_ppdm_protection-engines {
+    local token=${99:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "content-type: application/json"
+    -H "Authorization: Bearer ${token}"
+    )
+    local response=$(ppdm_curl protection-engines  | jq '.content[]')
+    echo $response
+    }
+
+ 
+
+function get_ppdm_cloud-dr-accounts {
+    local token=${99:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "content-type: application/json"
+    -H "Authorization: Bearer ${token}"
+    )
+    local response=$(ppdm_curl cloud-dr-accounts  | jq '.content[]')
+    echo $response
+    }
+
 function create_ppdm_inventory-source {
     local token=${6:-$PPDM_TOKEN}
     local type=${1}
@@ -287,7 +325,7 @@ function get_ppdm_components {
     -H "Authorization: Bearer ${token}" \
     )  
     local response=$(ppdm_curl components  | jq -r .)
-    ech $response
+    echo $response
 }
 
 
@@ -373,7 +411,18 @@ function delete_ppdm_credentials {
     local response=$(ppdm_curl "credentials/${credentials_id}" )
     echo $response
     } 
-
+function start_ppdm-cdr {
+    local token=${2:-$PPDM_TOKEN}
+    local id=${1}
+    ppdm_curl_args=(
+    -XPOST    
+    -H "content-type: application/json"
+    -H "Authorization: Bearer ${token}"
+    -d '{"operation":"start"}'
+    )  
+    local response=$(ppdm_curl "components/${id}/management" )
+    echo $response
+}
 function delete_ppdm_certificate {
     local token=${2:-$PPDM_TOKEN}
     local certificates_id=${1}
