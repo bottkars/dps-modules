@@ -11,7 +11,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 govc import.spec ddve/ddve-${DDVE_VERSION}.ova > ddve.json
 source dps_modules/ci/functions/govc_functions.sh
 
-echo "configuring appliance (vami) settings"
+echo "configuring appliance (vami) settings for a ${DDVE_TYPE} PowerProtect DDVE"
 jq  '(.DiskProvisioning |= "thin")' ddve.json  > "tmp" && mv "tmp" ddve.json
 jq  '(.Deployment |= env.DDVE_TYPE)' ddve.json  > "tmp" && mv "tmp" ddve.json
 jq  '(.NetworkMapping[].Name |= env.DDVE_NETWORK)' ddve.json  > "tmp" && mv "tmp" ddve.json
