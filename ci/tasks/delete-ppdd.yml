@@ -4,9 +4,6 @@ platform: linux
 
 inputs:
  - name: dps_modules
- - name: ddve
-outputs:
-
 
 params:
   GOVC_INSECURE: 
@@ -16,18 +13,12 @@ params:
   GOVC_RESOURCE_POOL: 
   GOVC_DATASTORE: 
   GOVC_DATACENTER:   
-  GOVC_NETWORK: 
-  DDVE_NETWORK: 
-  DDVE_ADDRESS: 
-  DDVE_GATEWAY: 
-  DDVE_NETMASK: 
-  DDVE_FQDN: 
   DDVE_VMNAME:
-  DDVE_DNS: 
+
   
 
 run:
-  path: dps_modules/ci/scripts/deploy-ddve.sh
+  path: dps_modules/ci/scripts/delete-ppdd.sh
 
 
 # test with 
