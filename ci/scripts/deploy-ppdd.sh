@@ -19,7 +19,7 @@ jq  '(.NetworkMapping[].Name |= env.DDVE_NETWORK)' ddve.json  > "tmp" && mv "tmp
 echo "importing ddve ${DDVE_VERSION} template"
 govc import.ova -name ${DDVE_VMNAME} -folder=${DDVE_FOLDER} -options=./ddve.json ddve/ddve-${DDVE_VERSION}.ova
 govc vm.network.change -vm ${DDVE_VMNAME} -net=VLAN250 ethernet-0
-govc vm.change -vm ${DDVE_VMNAME} -m=32768
+govc vm.change -vm ${DDVE_VMNAME} -m=32768 -mem.reservation=32768
 create_disk local_tier 200G
 create_disk cloud_tier 1T
 govc vm.power -on=true ${DDVE_VMNAME}
