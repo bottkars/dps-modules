@@ -9,7 +9,7 @@ echo "requesting API token"
 
 source dps_modules/ci/functions/ppdd_functions.sh
 
-export GOVC_VM_IPATH=${GOVC_DATACENTER}/${DDVE_FOLDER}/${DDVE_VMNAME}
+export GOVC_VM_IPATH=${GOVC_DATACENTER}/vm/${DDVE_FOLDER}/${DDVE_VMNAME}
 
 export DDVE_DOMAIN=$(echo $DDVE_FQDN | cut -d'.' -f2-)
 ddsh net config ${DDVE_INTERFACE} dhcp no
