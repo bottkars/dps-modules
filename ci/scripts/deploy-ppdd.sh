@@ -14,7 +14,7 @@ export GOVC_VM_IPATH=${GOVC_DATACENTER}/${DDVE_FOLDER}/${DDVE_VMNAME}
 
 echo "configuring appliance (vami) settings"
 jq  '(.DiskProvisioning |= "thin")' ddve.json  > "tmp" && mv "tmp" ddve.json
-jq  args '(.Deployment |= env.DDVE_TYPE)' ddve.json  > "tmp" && mv "tmp" ddve.json
+jq  '(.Deployment |= env.DDVE_TYPE)' ddve.json  > "tmp" && mv "tmp" ddve.json
 jq  '(.NetworkMapping[].Name |= env.DDVE_NETWORK)' ddve.json  > "tmp" && mv "tmp" ddve.json
 echo "importing ddve ${DDVE_VERSION} template"
 govc import.ova -name ${DDVE_VMNAME} -folder ${DDVE_FOLDER} -options=ddve.json ddve/ddve-${DDVE_VERSION}.ova
