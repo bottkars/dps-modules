@@ -10,12 +10,14 @@ echo "installing jq...."
 DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 govc import.spec ddve/ddve-${DDVE_VERSION}.ova > ddve.json
 source dps_modules/ci/functions/govc_functions.sh
-export GOVC_VM_IPATH=${GOVC_DATACENTER}/${DDVE_FOLDER}/${DDVE_VMNAME}
+export GOVC_VM_IPATH=${GOVC_DATACENTER}/vm/${DDVE_FOLDER}/${DDVE_VMNAME}
 
 echo "configuring appliance (vami) settings"
 jq  '(.DiskProvisioning |= "thin")' ddve.json  > "tmp" && mv "tmp" ddve.json
 jq  '(.Deployment |= env.DDVE_TYPE)' ddve.json  > "tmp" && mv "tmp" ddve.json
 jq  '(.NetworkMapping[].Name |= env.DDVE_NETWORK)' ddve.json  > "tmp" && mv "tmp" ddve.json
+jq  '(.NetworkMapping[].Network |= env.DDVE_NETWORK)' ddve.json  > "tmp" && mv "tmp" ddve.json
+
 echo "importing ddve ${DDVE_VERSION} template"
 govc import.ova -name ${DDVE_VMNAME} -folder ${DDVE_FOLDER} -options=ddve.json ddve/ddve-${DDVE_VERSION}.ova
 govc vm.network.change -vm ${DDVE_VMNAME} -net=VLAN250 ethernet-0
