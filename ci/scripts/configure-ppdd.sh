@@ -7,7 +7,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 
 echo "requesting API token"
 
-source dps_modules/ci/functions/ppdd_functions.sh
+source dps_modules/ci/functions/ddsh_functions.sh
 
 
 
