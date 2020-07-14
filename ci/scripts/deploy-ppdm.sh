@@ -18,10 +18,10 @@ jq  '(.PropertyMapping[] | select(.Key == "vami.fqdn.brs") | .Value) |= env.PPDM
 jq  '(.DiskProvisioning |= "thin")' powerprotect.json  > "tmp" && mv "tmp" powerprotect.json
 jq  '(.NetworkMapping[].Name |= env.PPDM_NETWORK)' powerprotect.json  > "tmp" && mv "tmp" powerprotect.json
 echo "importing powerprotect ${PPDM_VERSION} template"
-govc import.ova -name ${PPDM_VMNAME}  -options=powerprotect.json powerprotect/dellemc-ppdm-sw-${PPDM_VERSION}.ova
-govc vm.network.change -vm ${PPDM_VMNAME} -net=VLAN250 ethernet-0
+govc import.ova -name ${PPDM_VMNAME} -folder=${PPDM_FOLDER} -options=powerprotect.json powerprotect/dellemc-ppdm-sw-${PPDM_VERSION}.ova
+govc vm.network.change -vm.ipath ${GOVC_VM_IPATH} -net=VLAN250 ethernet-0
 
-govc vm.power -on=true ${PPDM_VMNAME}
+govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
 echo "finished DELLEMC PowerProtect ${PPDM_VERSION} base install"
 echo "Waiting for Appliance Fresh Install to become ready, this can take up to 10 Minutes"
 until [[ 200 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${PPDM_FQDN}:443/#/fresh") ]] ; do

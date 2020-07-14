@@ -18,13 +18,13 @@ jq  '(.NetworkMapping[].Name |= env.DDVE_NETWORK)' ddve.json  > "tmp" && mv "tmp
 
 echo "importing ddve ${DDVE_VERSION} template"
 govc import.ova -name ${DDVE_VMNAME} -folder=${DDVE_FOLDER} -options=./ddve.json ddve/ddve-${DDVE_VERSION}.ova
-govc vm.network.change -vm ${DDVE_VMNAME} -net=VLAN250 ethernet-0
-govc vm.change -vm ${DDVE_VMNAME} -m=32768 -mem.reservation=32768
+govc vm.network.change -vm.ipath ${GOVC_VM_IPATH} -net=VLAN250 ethernet-0
+govc vm.change -vm.ipath ${GOVC_VM_IPATH} -m=32768 -mem.reservation=32768
 create_disk local_tier 200G
 create_disk cloud_tier 1T
-govc vm.power -on=true ${DDVE_VMNAME}
+govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
 echo "finished DELLEMC PowerProtectDD ${DDVE_VERSION} base install"
-export DDVE_ININTIAL_IP=$(govc vm.ip $DDVE_VMNAME)
+export DDVE_ININTIAL_IP=$(govc vm.ip -vm.ipath ${GOVC_VM_IPATH})
 echo "Waiting for Appliance Fresh Install to become ready, this can take up to 10 Minutes"
 until [[ 301 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${DDVE_ININTIAL_IP}:443/ddem") ]] ; do
     printf '.'
