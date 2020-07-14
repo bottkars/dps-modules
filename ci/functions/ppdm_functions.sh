@@ -61,7 +61,6 @@ function get_ppdm_token {
     -d '{"username":"'${ppdm_adminuser}'","password":"'${password}'"}')
     local response=$(ppdm_curl login  | jq -r '.access_token')
     echo $response
-
 }
 
 
