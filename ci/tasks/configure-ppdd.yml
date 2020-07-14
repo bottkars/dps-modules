@@ -20,7 +20,7 @@ params:
   DDVE_TYPE:
   DDVE_USERNAME:
   DDVE_PASSWORD:
-  
+  DDVE_NFS_PATH:
 
 run:
   path: dps_modules/ci/scripts/configure-ppdd.sh

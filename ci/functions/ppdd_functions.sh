@@ -89,3 +89,53 @@ function get_ppdd_vdisks {
     curl -ks "https://${PPDD_FQDN}:3009/rest/v2.0/dd-systems/${systemid}/protocols/vdisk/devices" $ppdd_curl_args
 }
 
+function get_ppdd_ddboost {
+    local token=${1-$PPDD_TOKEN}
+    local systemid=${2-$PPDD_SYSTEM_ID}
+    systemid=${systemid//:/%3A}
+    ppdd_curl_args=(
+    -XGET    
+    -H 'content-type: application/json' 
+    -H $token
+    )
+    curl -ks "https://${PPDD_FQDN}:3009/rest/v2.0/dd-systems/${systemid}/protocols/ddboost" $ppdd_curl_args
+}
+
+function set_ppdd_ddboost {
+    local token=${1-$PPDD_TOKEN}
+    local systemid=${2-$PPDD_SYSTEM_ID}
+    systemid=${systemid//:/%3A}
+    ppdd_curl_args=(
+    -XPUT    
+    -H 'content-type: application/json' 
+    -H $token
+    -d '{ "operation": "enable"
+    }'  
+    )
+    curl -ks "https://${PPDD_FQDN}:3009/rest/v1.0/dd-systems/${systemid}/protocols/ddboost" $ppdd_curl_args
+}
+
+
+function set_ppdd_cloudprovider {
+    local primary_key=${1}
+    local seconds=${2}
+    local token=${3-$PPDD_TOKEN}
+    local systemid=${4-$PPDD_SYSTEM_ID}
+    systemid=${systemid//:/%3A}
+    ppdd_curl_args=(
+    -XPOST    
+    -H 'content-type: application/json' 
+    -H $token
+    -d '{ "cloud_provider": "azure",
+    "name": "localstems",
+    "azure": {
+        "account_name": "localstems",
+        "primary_key": "'${primary_key}'",
+        "secondary_key": "'${secondary_key}"
+        }
+    }'  
+    )
+    curl -ks "https://${PPDD_FQDN}:3009/rest/v2.0/dd-systems/${systemid}/cloud-profiles" $ppdd_curl_args
+}
+
+

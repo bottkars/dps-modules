@@ -22,5 +22,9 @@ ddsh elicense reset restore-evaluation
 ddsh disk rescan
 ddsh storage add tier active dev3
 ddsh storage add tier cloud dev4
-
+ddsh filesys create
+ddsh filesys enable
+ddsh cloud enable
+ddsh mtree create ${DDVE_NFS_PATH}
+ddsh nfs export create path ${DDVE_NFS_PATH} clients ${DDVE_NFS_CLIENT}
 
