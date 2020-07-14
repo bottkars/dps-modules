@@ -59,6 +59,33 @@ function get_ppdd_token {
     -XPOST    
     -H 'content-type: application/json' 
     -d '{"username":"'${ppdd_adminuser}'","password":"'${password}'"}')
-    local response=$(ppdd_curl auth)#  | jq -r '.access_token')
-    echo $response
+    local response=$(
+        curl -ks -i "https://${PPDD_FQDN}:3009/rest/v1.0/auth" $ppdd_curl_args
+        ) 
+    local token=$(echo $response | grep "X-DD-AUTH-TOKEN:")
+    echo $token
 }
+
+
+function get_ppdd_system_id {
+    local token=${1-$PPDD_TOKEN}
+    ppdd_curl_args=(
+    -XGET    
+    -H 'content-type: application/json' 
+    -H $token
+    )
+    curl -ks "https://${PPDD_FQDN}:3009/rest/v1.0/system" $ppdd_curl_args | jq -r .uuid
+}
+
+function get_ppdd_vdisks {
+    local token=${1-$PPDD_TOKEN}
+    local systemid=${2-$PPDD_SYSTEM_ID}
+    systemid=${systemid//:/%3A}
+    ppdd_curl_args=(
+    -XGET    
+    -H 'content-type: application/json' 
+    -H $token
+    )
+    curl -ks "https://${PPDD_FQDN}:3009/rest/v2.0/dd-systems/${systemid}/protocols/vdisk/devices" $ppdd_curl_args
+}
+
