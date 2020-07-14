@@ -23,7 +23,7 @@ params:
   
 
 run:
-  path: dps_modules/ci/scripts/configure-ppdm.sh
+  path: dps_modules/ci/scripts/configure-ppdd.sh
 
 
 # test with 
