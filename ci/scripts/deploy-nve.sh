@@ -27,10 +27,10 @@ jq  '(.NetworkMapping[].Name |= env.NVE_NETWORK)' networker.json  > "tmp" && mv 
 jq  '(.InjectOvfEnv |= true)' networker.json  > "tmp" && mv "tmp" networker.json
 
 echo "importing networker ${NVE_VERSION} NVE template"
-govc import.ova -name ${NVE_VMNAME}  -options=networker.json networker/NVE-${NVE_VERSION}.ova
-govc vm.network.change -vm ${NVE_VMNAME} -net=VLAN250 ethernet-0
+govc import.ova -name ${NVE_VMNAME} -folder=${NVE_FOLDER}  -options=networker.json networker/NVE-${NVE_VERSION}.ova
+govc vm.network.change -vm.ipath ${GOVC_VM_IPATH} -net=VLAN250 ethernet-0
 
-govc vm.power -on=true ${NVE_VMNAME}
+govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
 echo "finished DELLEMC Networker  ${NVE_VERSION} NVE install"
 echo "Waiting for NVE avi-installer to bevome ready, this can take up to 5 Minutes"
 until [[ 200 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${NVE_FQDN}:443/avi/avigui.html") ]] ; do

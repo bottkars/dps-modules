@@ -9,6 +9,7 @@ echo "waiting for DELLEMC Networker Workflow NveConfig to be ready"
 until [[ ! -z $NVE_PACKAGE ]]
 do
 NVE_PACKAGE=$(echo $(govc guest.run -l=admin:changeme \
+-vm.ipath ${GOVC_VM_IPATH} \
  /usr/bin/avi-cli --user root --password "changeme" \
  --listbycategory 'SW\ Releases' localhost 2> /dev/null ) \
  | grep NveConfig | awk  '{print $8}')
@@ -22,6 +23,7 @@ then
     echo  "Configuring Networker without DataDomain"
     set -eu
     START_PID=$(govc guest.start -i=false -l=root:changeme \
+    -vm.ipath ${GOVC_VM_IPATH} \
     /usr/bin/avi-cli --user root --password "changeme" --install ${NVE_PACKAGE} \
     --input timezone_name="${NVE_TIMEZONE}" \
     --input admin_password_os=${NVE_ADMIN_PASSWORD_OS} \
@@ -36,6 +38,7 @@ else
     #    sshpass -p "changeme" /usr/bin/ssh -o "StrictHostKeyChecking no"  \
     #  admin@nve-dr.home.labbuildr.com \
     START_PID=$(govc guest.start -i=false -l=root:changeme \
+    -vm.ipath ${GOVC_VM_IPATH} \
     /usr/bin/avi-cli --user root --password "changeme" --user root --password "changeme" --install ${NVE_PACKAGE} \
     --input timezone_name="${NVE_TIMEZONE}" \
     --input admin_password_os=${NVE_ADMIN_PASSWORD_OS} \

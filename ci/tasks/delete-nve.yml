@@ -17,8 +17,6 @@ params:
   GOVC_DATACENTER:   
   NVE_VMNAME:
 
-  
-
 run:
   path: dps_modules/ci/scripts/delete-nve.sh
 
