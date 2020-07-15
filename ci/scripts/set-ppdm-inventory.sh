@@ -21,7 +21,13 @@ CERTIFICATE=$(echo $CERTIFICATE | jq '(.state |= "ACCEPTED")' )
 CERT_ID=$(echo $CERTIFICATE | jq -r '.id')
 
 echo "Trusting INVENTORY ${INVENTORY_FQDN} certificate"
-trust_ppdm_host_certificate "${CERTIFICATE}" "${CERT_ID}"
+# lazy retry timer until we got it .......
+until ( [[ ! -z $(trust_ppdm_host_certificate "${CERTIFICATE}" "${CERT_ID}" | jq -r '. | select(.state=="ACCEPTED")') ]]  )
+    do
+    sleep 5
+    printf "."
+    done
+echo
 
 echo "Adding INVENTORY ${INVENTORY_FQDN} to inventory"
 INVENTORY_NAME=$(echo ${INVENTORY_FQDN} | cut -d '.' -f-1  )
