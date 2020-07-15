@@ -101,6 +101,40 @@ function get_ppdd_ddboost {
     curl -ks "https://${PPDD_FQDN}:3009/rest/v2.0/dd-systems/${systemid}/protocols/ddboost" $ppdd_curl_args
 }
 
+function get_ppdd_users {
+    local token=${1-$PPDD_TOKEN}
+    local systemid=${2-$PPDD_SYSTEM_ID}
+    systemid=${systemid//:/%3A}
+    ppdd_curl_args=(
+    -XGET    
+    -H 'content-type: application/json' 
+    -H $token
+    )
+    curl -ks "https://${PPDD_FQDN}:3009/rest/v1.0/dd-systems/${systemid}/users" $ppdd_curl_args
+}
+
+
+
+
+function set_ppdd_user_password {
+    local user_id=${1}
+    local current_password=${2}
+    local new_password=${3}
+    local token=${4-$PPDD_TOKEN}
+    local systemid=${5-$PPDD_SYSTEM_ID}
+    systemid=${systemid//:/%3A}
+    ppdd_curl_args=(
+    -XPUT    
+    -H 'content-type: application/json' 
+    -H $token
+    -d '{
+        "current_password": "'$current_password'",
+        "new_password": "'$new_password'"
+        }'  
+    )
+    curl -ks "https://${PPDD_FQDN}:3009/rest/v1.0/dd-systems/${systemid}/users/${user_id}" $ppdd_curl_args
+}
+
 function set_ppdd_ddboost {
     local token=${1-$PPDD_TOKEN}
     local systemid=${2-$PPDD_SYSTEM_ID}

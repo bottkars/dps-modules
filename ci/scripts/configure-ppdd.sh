@@ -8,7 +8,13 @@ DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 
 
 source dps_modules/ci/functions/ddsh_functions.sh
-
+source dps_modules/ci/functions/ppdd_functions.sh
+echo "getting PPDD token"
+export PPDD_TOKEN=$(get_ppdd_token ${DDVE_SETUP_PASSWORD})
+echo "getting PPDD System ID"
+export PPDD_SYSTEM_ID=$(get_ppdd_system_id)
+echo "Setting sysadmin password using REST API"
+set_ppdd_user_password sysadmin ${DDVE_SETUP_PASSWORD} "${DDVE_PASSWORD}"
 
 
 export DDVE_DOMAIN=$(echo $DDVE_FQDN | cut -d'.' -f2-)
