@@ -54,27 +54,29 @@ function ppdd_curl {
 
 function get_ppdd_token {
     local password=$1
-    local ppdd_adminuser=${PPDD_ADMINUSER:-sysadmin}
-    ppdd_curl_args=(
-    -XPOST    
+    local ppdd_adminuser=${2:-sysadmin}
+    local ppdd_curl_args=(
+    -XPOST 
     -H 'content-type: application/json' 
-    -d '{"username":"'${ppdd_adminuser}'","password":"'${password}'"}')
-    local response=$(
-        curl -ks -i "https://${PPDD_FQDN}:3009/rest/v1.0/auth" $ppdd_curl_args
-        ) 
-    local token=$(echo $response | grep "X-DD-AUTH-TOKEN:")
+    -d '{"username":"'${ppdd_adminuser}'","password":"'${password}'"}'
+    )
+    echo "${ppdd_curl_args[@]}" >&2
+    local response=$(curl -ks --include "https://${PPDD_FQDN}:3009/rest/v1.0/auth" "${ppdd_curl_args[@]}" ) 
+    echo "${response[@]}" >&2
+    local token=$(echo "${response[@]}" | grep "X-DD-AUTH-TOKEN:")
     echo $token
 }
 
 
 function get_ppdd_system_id {
-    local token=${1-$PPDD_TOKEN}
-    ppdd_curl_args=(
+    local token="${1-$PPDD_TOKEN}"
+    local ppdd_curl_args=(
     -XGET    
-    -H 'content-type: application/json' 
-    -H $token
+    -H "content-type: application/json"
+    -H "${token}"
     )
-    curl -ks "https://${PPDD_FQDN}:3009/rest/v1.0/system" $ppdd_curl_args | jq -r .uuid
+    echo "${ppdd_curl_args[@]}" >&2
+    curl -ks "https://${PPDD_FQDN}:3009/rest/v1.0/system" "${ppdd_curl_args[@]}"  | jq -r .uuid
 }
 
 function get_ppdd_vdisks {
@@ -86,7 +88,7 @@ function get_ppdd_vdisks {
     -H 'content-type: application/json' 
     -H $token
     )
-    curl -ks "https://${PPDD_FQDN}:3009/rest/v2.0/dd-systems/${systemid}/protocols/vdisk/devices" $ppdd_curl_args
+    curl -ks "https://${PPDD_FQDN}:3009/rest/v2.0/dd-systems/${systemid}/protocols/vdisk/devices" "${ppdd_curl_args[@]}"
 }
 
 function get_ppdd_ddboost {
@@ -98,7 +100,7 @@ function get_ppdd_ddboost {
     -H 'content-type: application/json' 
     -H $token
     )
-    curl -ks "https://${PPDD_FQDN}:3009/rest/v2.0/dd-systems/${systemid}/protocols/ddboost" $ppdd_curl_args
+    curl -ks "https://${PPDD_FQDN}:3009/rest/v2.0/dd-systems/${systemid}/protocols/ddboost" "${ppdd_curl_args[@]}" 
 }
 
 function get_ppdd_users {
@@ -108,9 +110,9 @@ function get_ppdd_users {
     ppdd_curl_args=(
     -XGET    
     -H 'content-type: application/json' 
-    -H $token
+    -H "$token"
     )
-    curl -ks "https://${PPDD_FQDN}:3009/rest/v1.0/dd-systems/${systemid}/users" $ppdd_curl_args
+    curl -ks "https://${PPDD_FQDN}:3009/rest/v1.0/dd-systems/${systemid}/users" "${ppdd_curl_args[@]}"
 }
 
 
@@ -126,13 +128,13 @@ function set_ppdd_user_password {
     ppdd_curl_args=(
     -XPUT    
     -H 'content-type: application/json' 
-    -H $token
+    -H "$token"
     -d '{
         "current_password": "'$current_password'",
         "new_password": "'$new_password'"
         }'  
     )
-    curl -ks --fail "https://${PPDD_FQDN}:3009/rest/v1.0/dd-systems/${systemid}/users/${user_id}" $ppdd_curl_args
+    curl -ks --fail "https://${PPDD_FQDN}:3009/rest/v1.0/dd-systems/${systemid}/users/${user_id}" "${ppdd_curl_args[@]}"
 }
 
 function set_ppdd_ddboost {
@@ -146,7 +148,7 @@ function set_ppdd_ddboost {
     -d '{ "operation": "enable"
     }'  
     )
-    curl -ks "https://${PPDD_FQDN}:3009/rest/v1.0/dd-systems/${systemid}/protocols/ddboost" $ppdd_curl_args
+    curl -ks "https://${PPDD_FQDN}:3009/rest/v1.0/dd-systems/${systemid}/protocols/ddboost" "${ppdd_curl_args[@]}"
 }
 
 
@@ -169,7 +171,7 @@ function set_ppdd_cloudprovider {
         }
     }'  
     )
-    curl -ks "https://${PPDD_FQDN}:3009/rest/v2.0/dd-systems/${systemid}/cloud-profiles" $ppdd_curl_args
+    curl -ks "https://${PPDD_FQDN}:3009/rest/v2.0/dd-systems/${systemid}/cloud-profiles" "${ppdd_curl_args[@]}"
 }
 
 
