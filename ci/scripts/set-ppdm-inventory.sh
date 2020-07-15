@@ -22,7 +22,7 @@ CERT_ID=$(echo $CERTIFICATE | jq -r '.id')
 
 echo "Trusting INVENTORY ${INVENTORY_FQDN} certificate"
 # lazy retry timer until we got it .......
-until ( [[ ! -z $(get_ppdm_certificates | jq -r '.content[] | select(.host==env.INVENTORY_FQDN)') ]] )  
+until ( [[ ! -z $(get_ppdm_certificates | jq -r '.content[] | select(.host==env.INVENTORY_FQDN) | select(.state=="ACCEPTED")') ]] )  
 #     [[ ! -z $(trust_ppdm_host_certificate "${CERTIFICATE}" "${CERT_ID}" | jq -r '. | select(.state=="ACCEPTED")') ]]  )
     do
     trust_ppdm_host_certificate "${CERTIFICATE}" "${CERT_ID}"
