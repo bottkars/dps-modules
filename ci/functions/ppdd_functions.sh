@@ -77,7 +77,7 @@ function get_ppdd_system_id {
     ppdd_curl_args=(
     -XGET    
     -H "content-type: application/json"
-    -H "${token}"
+    -H "$token"
     )
     ppdd_curl "v1.0/system"   | jq -r .uuid
 }
