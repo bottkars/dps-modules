@@ -165,7 +165,7 @@ function set_ppdd_cloudprovider {
     "azure": {
         "account_name": "localstems",
         "primary_key": "'${primary_key}'",
-        "secondary_key": "'${secondary_key}"
+        "secondary_key": "'${secondary_key}'"
         }
     }'  
     )
