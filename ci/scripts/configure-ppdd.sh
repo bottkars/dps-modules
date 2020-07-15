@@ -4,9 +4,6 @@ set -eu
 
 echo "installing jq...."
 DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
-
-
-
 source dps_modules/ci/functions/ddsh_functions.sh
 
 ddsh net set dns ${PPDD_DNS}
