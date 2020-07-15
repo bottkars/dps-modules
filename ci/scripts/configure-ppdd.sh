@@ -7,6 +7,9 @@ DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 source dps_modules/ci/functions/ddsh_functions.sh
 export PPDD_DOMAIN=$(echo $PPDD_FQDN | cut -d'.' -f2-)
 
+ddsh net config ${PPDD_INTERFACE} dhcp no
+ddsh net config ${PPDD_INTERFACE} type fixed ${PPDD_ADDRESS} netmask ${PPDD_NETMASK}
+ddsh net route add gateway ${PPDD_GATEWAY}
 ddsh net set dns ${PPDD_DNS}
 ddsh net set hostname ${PPDD_FQDN}
 ddsh net set searchdomain  ${PPDD_DOMAIN}
