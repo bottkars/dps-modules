@@ -134,7 +134,7 @@ function set_ppdd_user_password {
         "new_password": "'$new_password'"
         }'  
     )
-    curl -ks --fail "https://${PPDD_FQDN}:3009/rest/v1.0/dd-systems/${systemid}/users/${user_id}" "${ppdd_curl_args[@]}"
+    curl -ks "https://${PPDD_FQDN}:3009/rest/v1.0/dd-systems/${systemid}/users/${user_id}" "${ppdd_curl_args[@]}"
 }
 
 function set_ppdd_ddboost {
