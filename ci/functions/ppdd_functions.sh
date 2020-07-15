@@ -1,52 +1,56 @@
 #!/bin/bash
 function ppdd_curl {
     local url
-    url="https://${PPDD_FQDN}:3009/rest/v1.0/${1#/}"
+    url="https://${PPDD_FQDN}:3009/rest/${1#/}"
     shift || return # fail if we weren't passed at least x args
     local sleep_seconds=10
     local retry=0
     local retries=5
     local result=""
-    #while [[ -z $result ]]
-    #    do
-    #    if [[ $retry -gt $retries ]]
-    #        then
-    #        echo "exceeded max retries of $retries" >&2
-    #        break
-   #     fi
-    #    [[ "${DEBUG}" == "TRUE" ]] && echo $url ${ppdd_curl_args[@]} >&2
+    while [[ -z $result ]]
+        do
+        if [[ $retry -gt $retries ]]
+            then
+            echo "exceeded max retries of $retries" >&2
+            break
+        fi
+        [[ "${DEBUG}" == "TRUE" ]] && echo $url ${ppdd_curl_args[@]} >&2
         result=$(curl -ks "$url" \
         "${ppdd_curl_args[@]}" "$@"
         )
-    #    [[ "${DEBUG}" == "TRUE" ]] && echo $result >&2
-    #    [[ "${DEBUG}" == "TRUE" ]] && echo $retry >&2
-     #   ((retry++))
-       # if [[ $(echo $result | jq -r 'select(.code != null)' 2> /dev/null) ]]
+    [[ "${DEBUG}" == "TRUE" ]] && echo $result >&2
+    [[ "${DEBUG}" == "TRUE" ]] && echo $retry >&2
+       ((retry++))
+       if [[ $(echo $result | jq -r 'select(.code != null)' 2> /dev/null) &&  $(echo $result | jq -r 'select(.code != 0)' 2> /dev/null) ]]
        #     ### eval section for return code will be added here
-       #     then
-       #         local errorlevel=$(echo $result | jq -r '.code') 
-       #         case $errorlevel in 
-       #             400|401)
-       #             echo "access denied" >&2
-       #             break
-       #             ;;
-       #             404)
-       #             echo "resource does not exist or is deleted" >&2
-       #             break
-        #            ;;
-       #             423)
-       #             echo "user locked, waiting for 5 Minutes " >&2
-       #             sleep 300
-       #             ;;
-       #             *)
-       #             echo "current State $errorlevel" >&2
-       #             ;;
-       #         esac    
-       #         result=""
-       #     [[ "${DEBUG}" == "TRUE" ]] && echo "sleeping for $sleep_seconds seconds" >&2
-       #     sleep $sleep_seconds    
-        #fi
-    #done    
+            then
+                echo $result >&2
+                local errorlevel=$(echo $result | jq -r '.code') 
+                case $errorlevel in 
+                    400|401)
+                    echo "access denied" >&2
+                    return 1
+                    ;;
+                    404)
+                    echo "resource does not exist or is deleted" >&2
+                    return 1
+                    ;;
+                    5040|5417|5028)
+                    return 1
+                    ;;
+                    423)
+                    echo "user locked, waiting for 5 Minutes " >&2
+                    sleep 300
+                    ;;
+                    *)
+                    echo "current State $errorlevel" >&2
+                    ;;
+                esac    
+                result=""
+            [[ "${DEBUG}" == "TRUE" ]] && echo "sleeping for $sleep_seconds seconds" >&2
+            sleep $sleep_seconds    
+        fi
+    done    
     echo $result
 }
 
@@ -70,13 +74,12 @@ function get_ppdd_token {
 
 function get_ppdd_system_id {
     local token="${1-$PPDD_TOKEN}"
-    local ppdd_curl_args=(
+    ppdd_curl_args=(
     -XGET    
     -H "content-type: application/json"
     -H "${token}"
     )
-    echo "${ppdd_curl_args[@]}" >&2
-    curl -ks "https://${PPDD_FQDN}:3009/rest/v1.0/system" "${ppdd_curl_args[@]}"  | jq -r .uuid
+    ppdd_curl "v1.0/system"   | jq -r .uuid
 }
 
 function get_ppdd_vdisks {
@@ -88,7 +91,7 @@ function get_ppdd_vdisks {
     -H 'content-type: application/json' 
     -H $token
     )
-    curl -ks "https://${PPDD_FQDN}:3009/rest/v2.0/dd-systems/${systemid}/protocols/vdisk/devices" "${ppdd_curl_args[@]}"
+    ppdd_curl "v2.0/dd-systems/${systemid}/protocols/vdisk/devices"
 }
 
 function get_ppdd_ddboost {
@@ -100,7 +103,7 @@ function get_ppdd_ddboost {
     -H 'content-type: application/json' 
     -H $token
     )
-    curl -ks "https://${PPDD_FQDN}:3009/rest/v2.0/dd-systems/${systemid}/protocols/ddboost" "${ppdd_curl_args[@]}" 
+    ppdd_curl  "v2.0/dd-systems/${systemid}/protocols/ddboost"
 }
 
 function get_ppdd_users {
@@ -112,7 +115,7 @@ function get_ppdd_users {
     -H 'content-type: application/json' 
     -H "$token"
     )
-    curl -ks "https://${PPDD_FQDN}:3009/rest/v1.0/dd-systems/${systemid}/users" "${ppdd_curl_args[@]}"
+    ppdd_curl "v1.0/dd-systems/${systemid}/users" | jq -r '.|= del(.paging_info)'
 }
 
 
@@ -134,7 +137,7 @@ function set_ppdd_user_password {
         "new_password": "'$new_password'"
         }'  
     )
-    curl -ks "https://${PPDD_FQDN}:3009/rest/v1.0/dd-systems/${systemid}/users/${user_id}" "${ppdd_curl_args[@]}"
+    ppdd_curl "/v1.0/dd-systems/${systemid}/users/${user_id}" 
 }
 
 function set_ppdd_ddboost {
