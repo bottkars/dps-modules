@@ -11,4 +11,6 @@ export PPDD_TOKEN=$(get_ppdd_token ${PPDD_SETUP_PASSWORD})
 echo "getting PPDD System ID"
 export PPDD_SYSTEM_ID=$(get_ppdd_system_id)
 echo "Setting sysadmin password using REST API"
-set_ppdd_user_password ${PPDD_USERNAME} ${PPDD_SETUP_PASSWORD} "${PPDD_PASSWORD}"
+pwchange=$(set_ppdd_user_password ${PPDD_USERNAME} ${PPDD_SETUP_PASSWORD} "${PPDD_PASSWORD}")
+echo "Done changing Password"
+
