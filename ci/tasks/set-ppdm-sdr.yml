@@ -8,8 +8,8 @@ inputs:
 params:
   PPDM_FQDN: 
   PPDM_PASSWORD: 
-  DDVE_PATH:
-  DDVE_FQDN:
+  PPDD_PATH:
+  PPDD_FQDN:
 
 run:
   path: dps_modules/ci/scripts/set-ppdm-sdr.sh

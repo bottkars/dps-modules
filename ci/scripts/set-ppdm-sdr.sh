@@ -10,6 +10,6 @@ echo "requesting API token"
 
 export PPDM_TOKEN=$(get_ppdm_token ${PPDM_PASSWORD})
 echo "Configuring Server DR"
-result=$(set_ppdm_sdr-settings "${DDVE_FQDN}" "${DDVE_PATH}" "DATA_DOMAIN_SYSTEM" "true")
+result=$(set_ppdm_sdr-settings "${PPDD_FQDN}" "${PPDD_PATH}" "DATA_DOMAIN_SYSTEM" "true")
 echo $result 
 
