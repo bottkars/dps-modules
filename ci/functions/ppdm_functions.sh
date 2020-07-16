@@ -433,3 +433,61 @@ function delete_ppdm_certificate {
     local response=$(ppdm_curl "certificates/${certificates_id}" )
     echo $response 
     }  
+
+
+function add_ppdm_protection_engine_proxy {
+    local protection_engine_id=${1}
+    local NetworkMoref=${2}
+    local ClusterMoref=${3}
+    local DatastoreMoref=${4}
+    local Fqdn=${5}
+
+    local token=${:-$PPDM_TOKEN}
+    local data='{
+	"Config": {
+		"ProxyType": "External",
+		"DeployProxy": true,
+		"Port": 9090,
+		"Disabled": false,
+		"MORef": "",
+		"Credential": {
+			"Type": "ObjectId"
+		},
+		"AdvancedOptions": {
+			"TransportSessions": {
+				"Mode": "HotaddPreferred",
+				"UserDefined": true
+			}
+		},
+		"ProxyDeploymentConfig": {
+			"Location": {
+				"NetworkMoref": "'$NetworkMoref'",
+				"ClusterMoref": "'$ClusterMoref'",
+				"DatastoreMoref": "'$DatastoreMoref'"
+			},
+			"Timezone": "",
+			"Fqdn": "'${Fqdn}',
+			"IpAddress": "'$IpAddress'",
+			"NetMask": "'$NetMask'",
+			"Gateway": "'$Gateway'",
+			"Dns": "'$Dns'",
+			"IPProtocol": "'$IPProtocol'"
+		},
+		"VimServerRef": {
+			"Type": "ObjectId",
+			"ObjectId": "69c8ac3a-3eca-55f1-a2e0-347e63a90540"
+		},
+		"HostName": "vproxy2.home.labbuildr.com"
+	}
+}'
+    ppdm_curl_args=(
+    -XPOST
+    -H "content-type: application/json" \
+    -H "Authorization: Bearer ${token}" \
+    -d "${data}" \
+    )  
+    local response=$(ppdm_curl protection-engines/${protection_engine_id}/proxies)
+    echo $response
+}
+
+
