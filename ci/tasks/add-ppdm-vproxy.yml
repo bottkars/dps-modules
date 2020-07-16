@@ -11,9 +11,7 @@ params:
   GOVC_PASSWORD: 
   GOVC_URL: 
   GOVC_USERNAME: 
-  PPDM_VMNAME:
-
-  
+  PROXY_FILE:
 
 run:
   path: dps_modules/ci/scripts/add-ppdm-vproxy.sh

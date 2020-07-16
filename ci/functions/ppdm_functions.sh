@@ -441,8 +441,14 @@ function add_ppdm_protection_engine_proxy {
     local ClusterMoref=${3}
     local DatastoreMoref=${4}
     local Fqdn=${5}
-
-    local token=${:-$PPDM_TOKEN}
+    local IpAddress=${6}
+    local NetMask=${7}
+	local Gateway=${8}
+	local Dns=${9}
+	local IPProtocol=${10}
+    local HostName=${11}
+    local VimServerRefID=${12}
+    local token=${13:-$PPDM_TOKEN}
     local data='{
 	"Config": {
 		"ProxyType": "External",
@@ -466,7 +472,7 @@ function add_ppdm_protection_engine_proxy {
 				"DatastoreMoref": "'$DatastoreMoref'"
 			},
 			"Timezone": "",
-			"Fqdn": "'${Fqdn}',
+			"Fqdn": "'$Fqdn'",
 			"IpAddress": "'$IpAddress'",
 			"NetMask": "'$NetMask'",
 			"Gateway": "'$Gateway'",
@@ -475,9 +481,9 @@ function add_ppdm_protection_engine_proxy {
 		},
 		"VimServerRef": {
 			"Type": "ObjectId",
-			"ObjectId": "69c8ac3a-3eca-55f1-a2e0-347e63a90540"
+			"ObjectId": "'$VimServerRefID'"
 		},
-		"HostName": "vproxy2.home.labbuildr.com"
+		"HostName": "'$HostName'"
 	}
 }'
     ppdm_curl_args=(
@@ -490,4 +496,58 @@ function add_ppdm_protection_engine_proxy {
     echo $response
 }
 
+function get_ppdm_protection-engines_proxies {
+    local id=${1}
+    local token=${99:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "Authorization: Bearer ${token}" 
+    )
+    local response=$(ppdm_curl protection-engines/${id}/proxies)
+    echo $response
+}
 
+
+function get_ppdm_protection-engines_proxy {
+    local id=${1}
+    local proxyId=${2}
+    local token=${99:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "Authorization: Bearer ${token}" 
+    )
+    local response=$(ppdm_curl protection-engines/${id}/proxies/${proxyId})
+    echo $response
+}
+
+function disable_ppdm_protection-engines_proxy {
+    local id=${1}
+    local proxyId=${2}
+    local token=${99:-$PPDM_TOKEN}
+    local data=$(get_ppdm_protection-engines_proxy $id $proxyId)
+    data=$(echo $data | jq 'del(._links)')
+    data=$(echo $data| jq '.Config.Disabled |= true')
+    ppdm_curl_args=(
+    -XPUT
+    -H "content-type: application/json" 
+    -H "Authorization: Bearer ${token}" 
+    -d "${data}" 
+    )
+    local response=$(ppdm_curl protection-engines/${id}/proxies/${proxyId})
+    echo $response
+}
+
+function delete_ppdm_protection-engines_proxy {
+    local token=${3:-$PPDM_TOKEN}
+    local id=${1}
+    local proxyId=${2}
+    ppdm_curl_args=(
+    -XDELETE
+    -H "content-type: application/json" 
+    -H "Authorization: Bearer ${token}"
+    )
+    local response=$(ppdm_curl "protection-engines/${id}/proxies/${proxyId}" )
+    echo $response 
+    }  
+
+# jq -r .Status.ProxyStatus.Status
