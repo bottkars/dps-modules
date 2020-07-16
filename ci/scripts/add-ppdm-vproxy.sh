@@ -12,3 +12,4 @@ source dps_modules/ci/functions/yaml.sh
 
 exit 1
 break
+pause
