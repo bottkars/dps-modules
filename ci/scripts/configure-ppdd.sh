@@ -22,5 +22,11 @@ ddsh filesys enable
 ddsh ddboost enable
 # ddsh cloud enable
 ddsh mtree create ${PPDD_NFS_PATH}
-ddsh nfs export create path ${PPDD_NFS_PATH} clients ${PPDD_NFS_CLIENT}
+ddsh nfs export create path ${PPDD_NFS_PATH} clients ${PPDD_NFS_CLIENT} options sec=sys,rw,no_root_squash,no_all_squash,secure,version=3
 
+
+## sec=sys,rw,no_root_squash,no_all_squash,secure,version=3
+# todo:
+# cloud
+# certificate
+# adminaccess certificate import host application all file host.p12

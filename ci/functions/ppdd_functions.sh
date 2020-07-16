@@ -85,7 +85,7 @@ function get_ppdd_system_id {
 function get_ppdd_vdisks {
     local token=${1-$PPDD_TOKEN}
     local systemid=${2-$PPDD_SYSTEM_ID}
-    systemid=${systemid//:/%3A}
+    systemid=${systemid//:/%3A} #
     ppdd_curl_args=(
     -XGET    
     -H 'content-type: application/json' 
