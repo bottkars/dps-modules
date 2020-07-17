@@ -9,8 +9,9 @@ source dps_modules/ci/functions/yaml.sh
 
 
 REF_VERSION=$(cat ./variable/version)
-PROXY_FILE=./variable/ppdm-instant-${REF_VERSION}.yml
-create_variables "${PROXY_FILE}" sourced_
+FILE=${PROXY_FILE}${REF_VERSION}.yml
+echo "Using $PROXY_FILE versioned ${REF_VERSION}"
+create_variables "${FILE}" sourced_
 
 echo "evaluated variables from Source Control :"
 declare -p | grep 'a sourced_'
