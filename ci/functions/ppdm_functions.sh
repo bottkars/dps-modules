@@ -447,7 +447,7 @@ function add_ppdm_protection_engine_proxy {
 	local Gateway=${9}
 	local Dns=${10}
 	local IPProtocol=${11}
-    local HostName=${12}
+    local VMName=${12}
     local VimServerRefID=${13}
     local token=${14:-$PPDM_TOKEN}
     local data='{
@@ -479,13 +479,14 @@ function add_ppdm_protection_engine_proxy {
 			"NetMask": "'$NetMask'",
 			"Gateway": "'$Gateway'",
 			"Dns": "'$Dns'",
-			"IPProtocol": "'$IPProtocol'"
+			"IPProtocol": "'$IPProtocol'",
+            "VMName": "'$VMName'"
 		},
 		"VimServerRef": {
 			"Type": "ObjectId",
 			"ObjectId": "'$VimServerRefID'"
 		},
-		"HostName": "'$HostName'"
+		"HostName": "'$Fqdn'"
 	}
 }'
     ppdm_curl_args=(
