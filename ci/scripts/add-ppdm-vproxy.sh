@@ -32,7 +32,7 @@ echo $FolderMoref
 
 protection_engine_id=$(get_ppdm_protection-engines | jq -r .id)
 VimServerRefID=$(get_ppdm_inventory-sources  | jq -r 'select(.address==env.GOVC_URL) | .id')
-request=add_ppdm_protection_engine_proxy  \
+request=$(add_ppdm_protection_engine_proxy \
     "${protection_engine_id}" \
     "${NetworkMoref}" \
     "${ClusterMoref}" \
@@ -45,5 +45,6 @@ request=add_ppdm_protection_engine_proxy  \
     "${sourced_Dns}" \
     "${sourced_IPProtocol}" \
     "${sourced_VMName}" \
-    "${VimServerRefID}" 
+    "${VimServerRefID}" \
+    )
 echo $request | jq -r .
