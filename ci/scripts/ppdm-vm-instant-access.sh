@@ -35,7 +35,10 @@ export vmName=$sourced_VMName
 
 
 assetId=$(get_ppdm_assets  | jq -r 'select(.name == env.vmName).id')
+echo "==>using Asset ID ${assetId}"
 copyId=$(get_ppdm_assets_copies ${assetId} | jq -r .[0].id)
+echo "==>using Copy ID ${copyId}"
+
 vcenterInventorySourceId=$(get_ppdm_inventory-sources | jq -r 'select(.type=="VCENTER") | select(.address==env.GOVC_URL).id')
 request=$(start_ppdm-instant_restored-copies \
     $copyId \
