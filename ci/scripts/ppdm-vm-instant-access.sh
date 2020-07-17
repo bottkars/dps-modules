@@ -15,29 +15,33 @@ declare -p | grep 'a sourced_'
 
 
 printf "evaluating Moref for ${sourced_vsphere_host} ... "
-HostMoref=$(govc host.info -json ${sourced_vsphere_host} | jq -r '.HostSystems[0].Parent.Value')
-echo $hosteMoref
+hostMoref=$(govc host.info -json ${sourced_vsphere_host} | jq -r '.HostSystems[0].Self.Value')
+echo $hostMoref
 
 
 printf "evaluating Moref for ${sourced_vsphere_datastore} ... "
-DatastoreMoref=$(govc Datacenters.info -json ${sourced_vsphere_datacenter}  | jq -r '.Datacenters[].Self.Value')
-echo $dataCenterMoreof
+dataCenterMoref=$(govc datacenter.info -json ${sourced_vsphere_datacenter}  | jq -r '.Datacenters[].Self.Value')
+echo $dataCenterMoref
 
 printf "evaluating Moref for ${sourced_vsphere_folder} ... "
-FolderMoref=$(govc folder.info -json ${sourced_vsphere_folder}  | jq -r '.Folders[].Self.Value')
-echo $FflderMoref
-govc datacenter.info -json home_dc | jq -r '.Datacenters[].Self.Value'
+folderMoref=$(govc folder.info -json "${sourced_vsphere_folder}"  | jq -r '.Folders[].Self.Value')
+echo $folderMoref
+
+export PPDM_TOKEN=$(get_ppdm_token $PPDM_PASSWORD)
+export vmName=$sourced_VMName
 
 
+assetId=$(get_ppdm_assets  | jq -r 'select(.name == env.vmName).id')
+copyId=$(get_ppdm_assets_copies ${assetId} | jq -r .[0].id)
+vcenterInventorySourceId=$(get_ppdm_inventory-sources | jq -r 'select(.type=="VCENTER") | select(.address==env.GOVC_URL).id')
+request=$(start_ppdm-instant_restored-copies \
+    $copyId \
+    $vcenterInventorySourceId \
+    $vmName \
+    $dataCenterMoref \
+    $hostMoref )
 
-
-asset_id=$(get_ppdm_assets  | jq -r 'select(.name == env.VMName).id')
-
-copy_id=$(get_ppdm_assets_copies ${asset_id} | jq -r .[0].id)
-
-
-break
-pause
+echo $request | jq -r .
 
 
 

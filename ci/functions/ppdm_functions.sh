@@ -586,20 +586,35 @@ function delete_ppdm_protection-engines_proxy {
 
 function start_ppdm-instant_restored-copies {
     local copyId=${1}
-    local DatacenterMoref=${2}
-    local DatastoreMoref=${4}
-    local FolderMoref=${5}
-    local Fqdn=${6}
-    local IpAddress=${7}
-    local NetMask=${8}
-	local Gateway=${9}
-	local Dns=${10}
-	local IPProtocol=${11}
-    local VMName=${12}
-    local VimServerRefID=${13}
+    local vcenterInventorySourceId=${2}
+    local vmName=${3}
+    local dataCenterMoref=${4}
+    local hostMoref=${5}
     local token=${14:-$PPDM_TOKEN}
-    local data=
-
-}
+    local data='{
+    "description": "Instant Access Restore",
+    "copyId": "'${copyId}'",
+    "restoreType": "INSTANT_ACCESS",
+    "restoredCopiesDetails": {
+      "targetVmInfo": {
+        "inventorySourceId": "'${vcenterInventorySourceId}'",
+        "vmName": "instant_access_'$vmName'",
+        "dataCenterMoref": "'$dataCenterMoref'",
+        "clusterMoref": "",
+        "hostMoref": "'$hostMoref'",
+        "vmPowerOn": true,
+        "vmReconnectNic": false
+      }
+    }
+  }'
+    ppdm_curl_args=(
+    -XPOST
+    -H "content-type: application/json" 
+    -H "Authorization: Bearer ${token}"
+    -d "${data}" 
+    )
+    local response=$(ppdm_curl restored-copies)
+    echo $response 
+    }  
 
 # jq -r .Status.ProxyStatus.Status
