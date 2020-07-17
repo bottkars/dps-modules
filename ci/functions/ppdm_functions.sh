@@ -74,6 +74,14 @@ function get_ppdm_configuration {
     echo $response
 }
 
+function get_ppdm_activities {
+    local token=${99:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "Authorization: Bearer ${token}" )
+    local response=$(ppdm_curl activities | jq -r ".content[]" )
+    echo $response
+}
 
 function get_ppdm_assets {
     local token=${99:-$PPDM_TOKEN}
@@ -81,6 +89,28 @@ function get_ppdm_assets {
     -XGET
     -H "Authorization: Bearer ${token}" )
     local response=$(ppdm_curl assets | jq '.content[]')
+    echo $response
+}
+
+
+function get_ppdm_assets_copies {
+    local id=${1}
+    local token=${99:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "Authorization: Bearer ${token}" )
+    local response=$(ppdm_curl assets/${id}/copies | jq '.content')
+    echo $response
+}
+
+
+function get_ppdm_copy {
+    local id=${1}
+    local token=${99:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "Authorization: Bearer ${token}" )
+    local response=$(ppdm_curl copies/${id} )
     echo $response
 }
 
@@ -552,5 +582,24 @@ function delete_ppdm_protection-engines_proxy {
     local response=$(ppdm_curl "protection-engines/${id}/proxies/${proxyId}" )
     echo $response 
     }  
+
+
+function start_ppdm-instant_restored-copies {
+    local copyId=${1}
+    local DatacenterMoref=${2}
+    local DatastoreMoref=${4}
+    local FolderMoref=${5}
+    local Fqdn=${6}
+    local IpAddress=${7}
+    local NetMask=${8}
+	local Gateway=${9}
+	local Dns=${10}
+	local IPProtocol=${11}
+    local VMName=${12}
+    local VimServerRefID=${13}
+    local token=${14:-$PPDM_TOKEN}
+    local data=
+
+}
 
 # jq -r .Status.ProxyStatus.Status

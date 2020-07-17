@@ -8,7 +8,6 @@ source dps_modules/ci/functions/ppdm_functions.sh
 source dps_modules/ci/functions/yaml.sh
 
 create_variables "${PROXY_FILE}" sourced_
-export PPDM_TOKEN=$(get_ppdm_token $PPDM_PASSWORD)
 
 echo "evaluated variables from Source Control :"
 declare -p | grep 'a sourced_'
@@ -29,6 +28,10 @@ echo $DatastoreMoref
 printf "evaluating Moref for ${sourced_vsphere_folder} ... "
 FolderMoref=$(govc folder.info -json ${sourced_vsphere_folder}  | jq -r '.Folders[].Self.Value')
 echo $FolderMoref
+
+
+
+export PPDM_TOKEN=$(get_ppdm_token $PPDM_PASSWORD)
 
 protection_engine_id=$(get_ppdm_protection-engines | jq -r .id)
 VimServerRefID=$(get_ppdm_inventory-sources  | jq -r 'select(.address==env.GOVC_URL) | .id')
