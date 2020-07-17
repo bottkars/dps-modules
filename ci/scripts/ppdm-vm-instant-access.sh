@@ -39,7 +39,8 @@ request=$(start_ppdm-instant_restored-copies \
     $vcenterInventorySourceId \
     $vmName \
     $dataCenterMoref \
-    $hostMoref )
+    $hostMoref \
+    $folderMoref)
 
 echo $request | jq -r .
 

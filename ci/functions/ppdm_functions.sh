@@ -590,6 +590,7 @@ function start_ppdm-instant_restored-copies {
     local vmName=${3}
     local dataCenterMoref=${4}
     local hostMoref=${5}
+    local folderMoref=${6}
     local token=${14:-$PPDM_TOKEN}
     local data='{
     "description": "Instant Access Restore",
@@ -601,6 +602,7 @@ function start_ppdm-instant_restored-copies {
         "vmName": "instant_access_'$vmName'",
         "dataCenterMoref": "'$dataCenterMoref'",
         "clusterMoref": "",
+        "folderMoref": "'$folderMoref'",
         "hostMoref": "'$hostMoref'",
         "vmPowerOn": true,
         "vmReconnectNic": false
