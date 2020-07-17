@@ -19,7 +19,7 @@ hostMoref=$(govc host.info -json ${sourced_vsphere_host} | jq -r '.HostSystems[0
 echo $hostMoref
 
 
-printf "evaluating Moref for ${sourced_vsphere_datastore} ... "
+printf "evaluating Moref for ${sourced_vsphere_datacenter} ... "
 dataCenterMoref=$(govc datacenter.info -json ${sourced_vsphere_datacenter}  | jq -r '.Datacenters[].Self.Value')
 echo $dataCenterMoref
 
