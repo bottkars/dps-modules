@@ -45,5 +45,5 @@ add_ppdm_protection_engine_proxy  \
     "${sourced_Gateway}" \
     "${sourced_Dns}" \
     "${sourced_IPProtocol}" \
-    "${sourced_HostName}" \
+    "${sourced_VMName}" \
     "${VimServerRefID}" | jq -r .
