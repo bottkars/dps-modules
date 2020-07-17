@@ -10,7 +10,10 @@ source dps_modules/ci/functions/yaml.sh
 create_variables "${PROXY_FILE}" sourced_
 export PPDM_TOKEN=$(get_ppdm_token $PPDM_PASSWORD)
 
-echo "evaluated variables from Source Control :\n$(printenv | grep sourced)"
+echo "evaluated variables from Source Control :
+$(printenv | grep sourced_)"
+
+
 printf "evaluating Moref for ${sourced_vsphere_host} ... "
 ClusterMoref=$(govc host.info -json ${sourced_vsphere_host} | jq -r '.HostSystems[0].Parent.Value')
 echo $ClusterMoref
@@ -24,7 +27,7 @@ DatastoreMoref=$(govc datastore.info -json ${sourced_vsphere_datastore}  | jq -r
 echo $DatastoreMoref
 
 printf "evaluating Moref for ${sourced_vsphere_folder} ... "
-DatastoreMoref=$(govc folder.info -json ${sourced_vsphere_folder}  | jq -r '.Folders[].Self.Value')
+FolderMoref=$(govc folder.info -json ${sourced_vsphere_folder}  | jq -r '.Folders[].Self.Value')
 echo $FolderMoref
 
 protection_engine_id=$(get_ppdm_protection-engines | jq -r .id)
