@@ -10,8 +10,8 @@ source dps_modules/ci/functions/yaml.sh
 create_variables "${PROXY_FILE}" sourced_
 export PPDM_TOKEN=$(get_ppdm_token $PPDM_PASSWORD)
 
-echo "evaluated variables from Source Control :
-$(declare -p | grep 'a sourced_')"
+echo "evaluated variables from Source Control :"
+declare -p | grep 'a sourced_'
 
 
 printf "evaluating Moref for ${sourced_vsphere_host} ... "
