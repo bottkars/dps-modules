@@ -8,6 +8,8 @@ source dps_modules/ci/functions/ppdm_functions.sh
 source dps_modules/ci/functions/yaml.sh
 
 
+REF_VERSION=$(cat ./variable/version)
+PROXY_FILE=./variable/ppdm-instant-${REF_VERSION}.yml
 create_variables "${PROXY_FILE}" sourced_
 
 echo "evaluated variables from Source Control :"
