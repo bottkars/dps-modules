@@ -440,15 +440,16 @@ function add_ppdm_protection_engine_proxy {
     local NetworkMoref=${2}
     local ClusterMoref=${3}
     local DatastoreMoref=${4}
-    local Fqdn=${5}
-    local IpAddress=${6}
-    local NetMask=${7}
-	local Gateway=${8}
-	local Dns=${9}
-	local IPProtocol=${10}
-    local HostName=${11}
-    local VimServerRefID=${12}
-    local token=${13:-$PPDM_TOKEN}
+    local FolderMoref=${5}
+    local Fqdn=${6}
+    local IpAddress=${7}
+    local NetMask=${8}
+	local Gateway=${9}
+	local Dns=${10}
+	local IPProtocol=${11}
+    local HostName=${12}
+    local VimServerRefID=${13}
+    local token=${14:-$PPDM_TOKEN}
     local data='{
 	"Config": {
 		"ProxyType": "External",
@@ -469,7 +470,8 @@ function add_ppdm_protection_engine_proxy {
 			"Location": {
 				"NetworkMoref": "'$NetworkMoref'",
 				"ClusterMoref": "'$ClusterMoref'",
-				"DatastoreMoref": "'$DatastoreMoref'"
+				"DatastoreMoref": "'$DatastoreMoref'",
+				"FolderMoref": "'$FolderMoref'"
 			},
 			"Timezone": "",
 			"Fqdn": "'$Fqdn'",

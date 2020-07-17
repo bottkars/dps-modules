@@ -40,3 +40,9 @@ get_ppdm_configuration
 ### example scripts
 
 here are some [example scripts](./ci/scripts) leveraging the modules
+
+
+#### some tasks and tricks
+
+protection_engine=$(get_ppdm_protection-engines | jq -r .id)
+proxy=$(get_ppdm_protection-engines_proxies $protection_engine  | jq -r ' .content[] | select(.Config.ProxyType == "External").Id')
