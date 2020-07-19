@@ -57,7 +57,7 @@ request=$(start_ppdm-instant_restored-copies \
 
 echo $request | jq -r .
 
-INSTANT_FILE="$(echo "$INSTANT_FILE" | envsubst '$vmName $REF_VERSION')" 
+INSTANT_FILE="$(echo "$INSTANT_FILE" | envsubst $vmName $REF_VERSION)" 
 echo $request >> instant_access/${INSTANT_FILE}
 
 
