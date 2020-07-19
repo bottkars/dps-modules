@@ -40,13 +40,20 @@ copyId=$(get_ppdm_assets_copies ${assetId} | jq -r .[0].id)
 echo "==>using Copy ID ${copyId}"
 
 vcenterInventorySourceId=$(get_ppdm_inventory-sources | jq -r 'select(.type=="VCENTER") | select(.address==env.GOVC_URL).id')
+
+echo "==> Trigger job for instant access of ${vmName} as ${vmName}-${REF_VERSION}"
+
 request=$(start_ppdm-instant_restored-copies \
     $copyId \
     $vcenterInventorySourceId \
     $vmName \
     $dataCenterMoref \
     $hostMoref \
-    $folderMoref)
+    $folderMoref \
+    $REF_VERSION
+    )
+
+
 
 echo $request | jq -r .
 

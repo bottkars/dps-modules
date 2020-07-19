@@ -591,6 +591,7 @@ function start_ppdm-instant_restored-copies {
     local dataCenterMoref=${4}
     local hostMoref=${5}
     local folderMoref=${6}
+    local ref_version=${7}
     local token=${14:-$PPDM_TOKEN}
     local data='{
     "description": "Instant Access Restore",
@@ -599,7 +600,7 @@ function start_ppdm-instant_restored-copies {
     "restoredCopiesDetails": {
       "targetVmInfo": {
         "inventorySourceId": "'${vcenterInventorySourceId}'",
-        "vmName": "instant_access_'$vmName'",
+        "vmName": "'$vmName'"-"'$ref_version'",
         "dataCenterMoref": "'$dataCenterMoref'",
         "clusterMoref": "",
         "folderMoref": "'$folderMoref'",
