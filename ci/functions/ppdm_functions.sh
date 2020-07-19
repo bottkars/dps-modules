@@ -587,7 +587,7 @@ function delete_ppdm_protection-engines_proxy {
 function start_ppdm-instant_restored-copies {
     local copyId=${1}
     local vcenterInventorySourceId=${2}
-    local vmName=${3}-${7}
+    local vmName=${3}
     local dataCenterMoref=${4}
     local hostMoref=${5}
     local folderMoref=${6}
