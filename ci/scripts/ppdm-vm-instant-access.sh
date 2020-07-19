@@ -50,7 +50,7 @@ request=$(start_ppdm-instant_restored-copies \
     $dataCenterMoref \
     $hostMoref \
     $folderMoref \
-    $REF_VERSION
+    $REF_VERSION \
     )
 
 
