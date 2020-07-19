@@ -8,7 +8,7 @@ source dps_modules/ci/functions/ppdm_functions.sh
 source dps_modules/ci/functions/yaml.sh
 
 
-REF_VERSION=$(cat ./variable/version)
+export REF_VERSION=$(cat ./variable/version)
 FILE=${PROXY_FILE}${REF_VERSION}.yml
 echo "Using $PROXY_FILE versioned ${REF_VERSION}"
 create_variables "${FILE}" sourced_
@@ -57,6 +57,8 @@ request=$(start_ppdm-instant_restored-copies \
 
 echo $request | jq -r .
 
+INSTANT_FILE="$(echo "$INSTANT_FILE" | envsubst '$vmName' '$REF_VERSION')" 
+echo $request >> instant_access/${INSTANT_FILE}
 
 
 

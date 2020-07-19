@@ -5,8 +5,10 @@ platform: linux
 inputs:
  - name: dps_modules
  - name: variable
-
+outputs:
+ - name: instant_access
 params:
+  INSTANT_FILE: instant_access-'$vmName'-'$REF_VERSION'.json
   GOVC_INSECURE: 
   GOVC_PASSWORD: 
   GOVC_URL: 
