@@ -7,7 +7,7 @@ echo "preparing networker ${NVE_VERSION} nve"
 
 govc about
 
-echo "installing jq...."
+echo "checking for jq...."
 DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 govc import.spec networker/NVE-${NVE_VERSION}.ova > networker.json
 echo "configuring appliance (vami) settings"

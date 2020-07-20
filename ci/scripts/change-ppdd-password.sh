@@ -2,7 +2,7 @@
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 
-echo "installing jq...."
+echo "checking for jq...."
 DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 
 source dps_modules/ci/functions/ppdd_functions.sh
