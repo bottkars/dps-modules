@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
-
+figlet DPS Automation
 echo "installing jq...."
 DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 AV_BASEURL=$(echo $avamar | jq -r ".BaseURL")
