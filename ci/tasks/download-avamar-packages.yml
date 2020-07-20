@@ -10,6 +10,7 @@ params:
   extension: ova
   AV_LOCATION:
   AV_RELEASE:
+  DEBUG: false
 outputs:
   - name: AvamarUpgrade
   - name: UpgradeAvinstaller
