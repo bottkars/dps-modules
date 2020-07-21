@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
-
+figlet DPS Automation
 NVE_VERSION=$(cat networker/version)
 echo "preparing networker ${NVE_VERSION} nve"
 

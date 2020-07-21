@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 [[ "${DEBUG}" == "TRUE" ]] && set -x
-
+figlet DPS Automation
 function retryop()
 {
   retry=0

@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
+figlet DPS Automation
 PPDM_VERSION=$(cat powerprotect/version)
 echo "preparing powerprotect ${PPDM_VERSION} base install"
 

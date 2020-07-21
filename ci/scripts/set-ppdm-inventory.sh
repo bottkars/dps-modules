@@ -1,8 +1,7 @@
 #!/bin/bash
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
-
-
+figlet DPS Automation
 echo "checking for jq...."
 DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 source dps_modules/ci/functions/ppdm_functions.sh

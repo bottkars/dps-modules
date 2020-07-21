@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
+figlet DPS Automation
 PPDD_VERSION=$(cat ddve/version)
 echo "preparing ddve ${PPDD_VERSION} base install"
 
