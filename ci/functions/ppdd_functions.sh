@@ -178,3 +178,16 @@ function set_ppdd_cloudprovider {
 }
 
 
+
+
+function get_ppdd_licenses {
+    local token=${1-$PPDD_TOKEN}
+    local systemid=${2-$PPDD_SYSTEM_ID}
+    systemid=${systemid//:/%3A}
+    ppdd_curl_args=(
+    -XGET   
+    -H 'content-type: application/json' 
+    -H $token
+    )
+    ppdd_curl "/v2.0/dd-systems/${systemid}/licenses" "${ppdd_curl_args[@]}"
+}
