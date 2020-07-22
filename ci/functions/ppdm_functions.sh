@@ -7,7 +7,8 @@ function ppdm_curl {
     local retry=0
     local retries=5
     local result=""
-    while [[ -z $result ]]
+    local return_code=1
+    while [[ -z $result && "$return_code" != 0 ]]
         do
         if [[ $retry -gt $retries ]]
             then
@@ -18,13 +19,16 @@ function ppdm_curl {
         result=$(curl -ks "$url" \
         "${ppdm_curl_args[@]}" "$@"
         )
+        return_code=$?
+        [[ "${DEBUG}" == "TRUE" ]] && echo $return_code >&2
         [[ "${DEBUG}" == "TRUE" ]] && echo $result >&2
         [[ "${DEBUG}" == "TRUE" ]] && echo $retry >&2
         ((retry++))
-        if [[ $(echo $result | jq -r 'select(.code != null)' 2> /dev/null) ]]
+
+        if [[ $(echo $result | jq -e 'select(.code != null)' 2> /dev/null) ]]
             ### eval section for return code will be added here
             then
-                local errorlevel=$(echo $result | jq -r '.code') 
+                local errorlevel=$(echo $result | jq -e '.code' 2> /dev/null) 
                 case $errorlevel in 
                     400|401)
                     echo "access denied" >&2
@@ -46,8 +50,8 @@ function ppdm_curl {
             [[ "${DEBUG}" == "TRUE" ]] && echo "sleeping for $sleep_seconds seconds" >&2
             sleep $sleep_seconds    
         fi
-    done    
-    echo $result
+    done 
+    echo $result | jq -e . 2>/dev/null
 }
 
 
@@ -220,7 +224,7 @@ function get_ppdm_protection-engines {
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
     )
-    local response=$(ppdm_curl protection-engines  | jq '.content[]')
+    local response=$(ppdm_curl protection-engines  | jq .)
     echo $response
     }
 
@@ -335,14 +339,93 @@ function set_ppdm_sdr-settings {
     echo $response
 }
 
-function get_ppdm_components {
+
+function send_ppdm_smtp-test {
+    local mailFrom=${1}
+    local mailServer=${2}
+    local password=${3}
+    local port=${4}
+    local recipient=${5}
+    local username=${6}
+    local token=${99:-$PPDM_TOKEN}
+    local data='{
+        "mailFrom": "'${mailFrom}'",
+        "mailServer": "'${mailServer}'",
+        "password": "'${password}'",
+        "port": '${port}',
+        "recipient": "'${recipient}'",
+        "username": "'${username}'"
+        }'
+    ppdm_curl_args=(
+    -XPOST
+    -H "content-type: application/json" \
+    -H "Authorization: Bearer ${token}" \
+    -d "${data}" \
+    )  
+    local response=$(ppdm_curl smtp/test)
+    echo $response
+}
+
+
+function set_ppdm_smtp_configuration {
+    local id=${1}
+    local mailFrom=${2}
+    local mailServer=${3}
+    local password=${4}
+    local port=${5}
+    local username=${6}
+    local token=${99:-$PPDM_TOKEN}
+    local data='{
+        "id": "'${id}'",
+        "mailFrom": "'${mailFrom}'",
+        "mailServer": "'${mailServer}'",
+        "password": "'${password}'",
+        "port": '${port}',
+        "username": "'${username}'"
+        }'
+    ppdm_curl_args=(
+    -XPUT
+    -H "content-type: application/json" \
+    -H "Authorization: Bearer ${token}" \
+    -d "${data}" \
+    )  
+    local response=$(ppdm_curl smtp/${id})
+    echo $response
+}
+function create_ppdm_smtp_configuration {
+    local mailFrom=${1}
+    local mailServer=${2}
+    local password=${3}
+    local port=${4}
+    local username=${5}
+    local token=${99:-$PPDM_TOKEN}
+    local data='{
+        "mailFrom": "'${mailFrom}'",
+        "mailServer": "'${mailServer}'",
+        "password": "'${password}'",
+        "port": '${port}',
+        "username": "'${username}'"
+        }'
+    ppdm_curl_args=(
+    -XPOST
+    -H "content-type: application/json" \
+    -H "Authorization: Bearer ${token}" \
+    -d "${data}" \
+    )  
+    local response=$(ppdm_curl smtp)
+    echo $response
+}
+
+
+function delete_ppdm_smtp_configuration {
+    local id=${1}
     local token=${99:-$PPDM_TOKEN}
     ppdm_curl_args=(
-    -XGET
+    -XDELETE
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    local response=$(ppdm_curl components  | jq -r .)
+    local response=$(ppdm_curl smtp/${id})
     echo $response
 }
 
@@ -357,6 +440,40 @@ function get_ppdm_components {
     echo $response
 }
 
+function get_ppdm_search-clusters {
+    local token=${99:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "content-type: application/json" \
+    -H "Authorization: Bearer ${token}" \
+    )  
+    local response=$(ppdm_curl search-clusters  | jq -r .)
+    echo $response
+}
+
+function get_ppdm_component {
+    local id=${1}
+    local token=${99:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "content-type: application/json" \
+    -H "Authorization: Bearer ${token}" \
+    )  
+    local response=$(ppdm_curl components/${id}  | jq -r .)
+    echo $response
+}
+
+function get_ppdm_search-cluster {
+    local id=${1}
+    local token=${99:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "content-type: application/json" \
+    -H "Authorization: Bearer ${token}" \
+    )  
+    local response=$(ppdm_curl search-clusters/${id}  | jq -r .)
+    echo $response
+}
 
 function get_ppdm_server-disaster-recovery-hosts {
     local token=${99:-$PPDM_TOKEN}
@@ -377,6 +494,28 @@ function get_ppdm_storage-systems {
     -H "Authorization: Bearer ${token}" \
     )  
     local response=$(ppdm_curl storage-systems  | jq '.content[]')
+    echo $response
+}
+
+function get_ppdm_telemetry-settings {
+    local token=${99:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "content-type: application/json" \
+    -H "Authorization: Bearer ${token}" \
+    )  
+    local response=$(ppdm_curl common-settings/TELEMETRY_SETTING  | jq -r .)
+    echo $response
+}
+# /api/v2/smtp
+function get_ppdm_smtp-settings {
+    local token=${99:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "content-type: application/json" \
+    -H "Authorization: Bearer ${token}" \
+    )  
+    local response=$(ppdm_curl smtp  | jq -r .)
     echo $response
 }
 
