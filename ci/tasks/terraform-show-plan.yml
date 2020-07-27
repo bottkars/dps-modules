@@ -10,4 +10,4 @@ params:
   TF_DIR_PATH: 
 
 run:
-  path: dps_modules/ci/scripts/terraform_show_plan.sh
+  path: dps_modules/ci/scripts/terraform-show-plan.sh
