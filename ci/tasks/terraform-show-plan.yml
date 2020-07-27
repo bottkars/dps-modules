@@ -1,0 +1,13 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: dps_modules
+ - name: plan-output-archive
+
+params:
+  TF_DIR_PATH: 
+
+run:
+  path: dps_modules/ci/scripts/terraform_show_plan.sh
