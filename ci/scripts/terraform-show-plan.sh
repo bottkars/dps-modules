@@ -6,4 +6,4 @@ mv plan-output-archive/terraform/.t* plan-output-archive/terraform/${STATE_OUTPU
 cd plan-output-archive/terraform/${STATE_OUTPUT_DIR}/
 echo "Verifyiing Plan Envrionment"
 
-terrafrom show .tfplan
+terraform show .tfplan
