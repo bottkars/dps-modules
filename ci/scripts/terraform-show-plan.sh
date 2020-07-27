@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 
