@@ -4,6 +4,6 @@ set -eu
 echo "Creating Plan Envrionment"
 mv plan-output-archive/terraform/.t* plan-output-archive/terraform/${STATE_OUTPUT_DIR}/
 cd plan-output-archive/terraform/${STATE_OUTPUT_DIR}/
-echo "Verifyiing Plan Envrionment"
+echo "Verifying Plan Envrionment"
 
 terraform show .tfplan
