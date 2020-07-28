@@ -29,7 +29,7 @@ params:
   
 
 run:
-  path: dps_modules/ci/scripts/deploy-nve.sh
+  path: dps_modules/ci/scripts/deploy-ave.sh
 
 
 # test with 
