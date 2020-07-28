@@ -9,6 +9,7 @@ outputs:
 
 
 params:
+  DEBUG: false
   GOVC_INSECURE: 
   GOVC_PASSWORD: 
   GOVC_URL: 
@@ -25,7 +26,8 @@ params:
   AVE_NETMASK: 
   AVE_FQDN: 
   AVE_VMNAME:
-  AVE_DNS: 
+  AVE_DNS:
+  AVE_SIZE: 0.5TB 
   
 
 run:
