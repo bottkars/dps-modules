@@ -9,6 +9,9 @@ source dps_modules/ci/functions/ave_functions.sh
 
 
 WORKFLOW=AveConfig
+export AVE_PASSWORD=${AVE_SETUP_PASSWORD}
+export AVE_USERNAME=root
+
 echo "waiting for AVAMAR $WORKFLOW  to be available"
 ### get the SW Version
 unset AVE_CONFIG

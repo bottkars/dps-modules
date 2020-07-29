@@ -4,7 +4,7 @@
 
 function avi-cli {
     local command=$@
-    local shell="/bin/bash -I -c"
+    local shell="/bin/bash -c"
     govc guest.run -vm.ipath "${GOVC_VM_IPATH}" \
     -l "${AVE_USERNAME}:${AVE_PASSWORD}" \
     ${shell} \
