@@ -3,25 +3,27 @@ set -e
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
 
-  
+source dps_modules/ci/functions/ave_functions.sh
+
 
 
 
 WORKFLOW=AveConfig
 echo "waiting for AVAMAR $WORKFLOW  to be available"
 ### get the SW Version
+unset AVE_CONFIG
 until [[ ! -z $AVE_CONFIG ]]
 do
-AVE_CONFIG=$( /opt/emc-tools/bin/avi-cli --user root --password "${AVE_SETUP_PASSWORD}" \
+AVE_CONFIG=$(avi-cli --user root --password "${AVE_SETUP_PASSWORD}" \
  --listrepository localhost 2> /dev/null  \
- | grep ${WORKFLOW} | awk  '{print $1}' )
+ | grep ${WORKFLOW} | awk '{print $1}' )
 sleep 5
 printf "."
 done
 
 
 echo "waiting for ave-config to become ready"
-until [[ $(/opt/emc-tools/bin/avi-cli --user root --password "${AVE_SETUP_PASSWORD}" \
+until [[ $(avi-cli --user root --password "${AVE_SETUP_PASSWORD}" \
  --listhistory localhost | grep ave-config | awk  '{print $5}') == "ready" ]]
 do
 printf "."
@@ -32,7 +34,7 @@ done
 
 AVE_TIMEZONE="Europe/Berlin"
 AVE_COMMON_PASSWORD="Change_Me12345_"
-/opt/emc-tools/bin/avi-cli --user root --password "${AVE_PASSWORD}" --install ave-config  \
+avi-cli --user root --password "${AVE_PASSWORD}" --install ave-config  \
     --input timezone_name="${AVE_TIMEZONE}" \
     --input common_password=${AVE_COMMON_PASSWORD} \
     --input use_common_password=true \
@@ -42,6 +44,9 @@ AVE_COMMON_PASSWORD="Change_Me12345_"
     --input viewuserpass=${AVE_COMMON_PASSWORD} \
     --input admin_password_os=${AVE_COMMON_PASSWORD} \
     --input root_password_os=${AVE_COMMON_PASSWORD} \
+    --input keystore_passphrase=${AVE_COMMON_PASSWORD} \
+    --input add_datadomain_config=false
+    --input accept_eula=true \
     localhost
 #until [[ 200 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${NVE_FQDN}:9000") ]] ; do
 #    printf '.'
