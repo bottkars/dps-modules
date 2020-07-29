@@ -1,0 +1,43 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: dps_modules
+
+
+params:
+    GOVC_INSECURE: 
+    GOVC_PASSWORD:
+    GOVC_URL: 
+    GOVC_USERNAME: 
+    GOVC_RESOURCE_POOL: 
+    GOVC_DATASTORE: 
+    GOVC_DATACENTER: 
+    GOVC_NETWORK: 
+    GOVC_VM_IPATH:
+    AVE_FQDN: 
+    AVE_SETUP_PASSWORD: 
+    AVE_TIMEZONE: 
+    AVE_ADMIN_PASSWORD_OS: 
+    AVE_ROOT_PASSWORD_OS: 
+    AVE_SNMP_STRING: 
+    AVE_DATADOMAIN_HOST: 
+    AVE_STORAGE_PATH: 
+    AVE_DDBOOST_USER: 
+    AVE_NEW_DDBOOST_USER:
+    AVE_DDBOOST_USER_PWD:
+    AVE_DDBOOST_USER_PWD_CF:
+    AVE_DATADOMAIN_SYSADMIN:
+    AVE_DATADOMAIN_SYSADMIN_PWD:
+    AVE_TOMCAT_KEYSTORE_PASSWORD:
+    AVE_AUTHC_ADMIN_PASSWORD:
+            
+
+run:
+  path: dps_modules/ci/scripts/configure-ave-vsphere.sh
+
+
+# test with 
+# echo "<preset variable yml>" > vars.yml
+# while IFS=": " read -r field1 field2; do     export $field1=$field2; done < vars.yml
