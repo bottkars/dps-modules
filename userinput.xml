@@ -1,4 +1,5 @@
-<?xml version='1.0' encoding='UTF-8'?><properties><property type='text_field'>
+<?xml version='1.0' encoding='UTF-8'?><properties>
+<property type='text_field'>
     <name>startdpn_advanced_flags</name>
     <category>Server Settings</category>
     <tooltip>Optional advanced flags used to start gsan, must be in terms of --flagname1[=value1][ --flagname2[=value2] ...]</tooltip>
