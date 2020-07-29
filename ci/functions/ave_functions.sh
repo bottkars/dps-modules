@@ -11,12 +11,3 @@ function avi-cli {
     "\"source /etc/profile.local; avi-cli ${command}\"" 
 }    
 
-
-NVE_PACKAGE=$(echo $(govc guest.run -l=admin:changeme \
--vm.ipath ${GOVC_VM_IPATH} \
- /opt/emc-tools/bin/avi-cli --user root --password "changeme" \
- --listbycategory 'SW\ Releases' localhost 2> /dev/null ) \
- | grep aveconfig | awk  '{print $8}')
-sleep 5
-printf "."
-done

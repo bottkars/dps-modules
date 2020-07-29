@@ -32,8 +32,6 @@ done
 
 
 
-AVE_TIMEZONE="Europe/Berlin"
-AVE_COMMON_PASSWORD="Change_Me12345_"
 avi-cli --user root --password "${AVE_PASSWORD}" --install ave-config  \
     --input timezone_name="${AVE_TIMEZONE}" \
     --input common_password=${AVE_COMMON_PASSWORD} \
