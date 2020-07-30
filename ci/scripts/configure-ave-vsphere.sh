@@ -56,7 +56,7 @@ avi-cli-start --user root --password "${AVE_PASSWORD}" --install ave-config  \
     --input datadomain_snmp_string=public \
         localhost
 
-until [[ 200 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${AVE_FQDN}:443/aui/#/login") ]] ; do
+until [[ 200 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${AVE_FQDN}:443/aui/") ]] ; do
     printf '.'
     sleep 5
 done
@@ -69,4 +69,5 @@ echo "Avamar Virtual Appliance https://${AVE_FQDN}/aui is ready !"
 #echo "Networker Appliance https://${NVE_FQDN}:9000 is ready !"
 
 ## validate new_ddboost_user over ddboost_user
+
 
