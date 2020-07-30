@@ -10,28 +10,8 @@ source dps_modules/ci/functions/ave_functions.sh
 
 WORKFLOW=AveConfig
 
-echo "waiting for AVAMAR $WORKFLOW  to be available"
-### get the SW Version
-unset AVE_CONFIG
-until [[ ! -z $AVE_CONFIG ]]
-do
-AVE_CONFIG=$(avi-cli-run --user root --password "${AVE_SETUP_PASSWORD}" \
- --listrepository localhost 2> /dev/null  \
- | grep ${WORKFLOW} | awk '{print $1}' )
-sleep 5
-printf "."
-done
-printf "\n"
 
-echo "waiting for ave-config to become ready"
-until [[ $(avi-cli-run --user root --password "${AVE_SETUP_PASSWORD}" \
- --listhistory localhost | grep ave-config | awk  '{print $5}') == "ready" ]]
-do
-printf "."
-sleep 5
-done
-printf "\n"
-
+curl -k "${AVE_UPGRADE_CLIENT_DOWNLOADS_URL}" --output /space/avamar/repo/packages/${AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE}
 
 
 avi-cli-start --user root --password "${AVE_PASSWORD}" --install ave-config  \
@@ -57,7 +37,7 @@ avi-cli-start --user root --password "${AVE_PASSWORD}" --install ave-config  \
     --input datadomain_snmp_string=public \
         localhost
 
-until [[ 301 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${AVE_FQDN}:443/dtlt") ]] ; do
+until [[ 200 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${AVE_FQDN}:443/dtlt") ]] ; do
     printf '.'
     sleep 5
 done

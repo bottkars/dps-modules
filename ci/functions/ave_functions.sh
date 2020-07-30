@@ -19,3 +19,22 @@ function avi-cli-start {
     ${shell} \
     "\"source /etc/profile.local; avi-cli ${command}\"" 
 } 
+
+
+function avi-run-bashscript {
+    local command=$@
+    local shell="/bin/bash -c"
+    govc guest.run -vm.ipath "${GOVC_VM_IPATH}" \
+    -l "${AVE_USERNAME}:${AVE_PASSWORD}" \
+    ${shell} \
+    "\"source /etc/profile.local; ${command}\"" 
+} 
+
+function avi-start-bashscript {
+    local command=$@
+    local shell="/bin/bash -c"
+    govc guest.start -vm.ipath "${GOVC_VM_IPATH}" \
+    -l "${AVE_USERNAME}:${AVE_PASSWORD}" \
+    ${shell} \
+    "\"source /etc/profile.local; ${command}\"" 
+} 
