@@ -9,9 +9,9 @@ source dps_modules/ci/functions/ave_functions.sh
 
 echo "Downloading ${AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE} to avamar Server Repo"
 
-avi-run-bashscript curl -k "${AVE_UPGRADE_CLIENT_DOWNLOADS_URL}" --output /space/avamar/repo/packages/${AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE}
+avi-run-bashscript curl -k "'${AVE_UPGRADE_CLIENT_DOWNLOADS_URL}'" --output /space/avamar/repo/packages/${AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE}
 
-echo "Waiting for Package ${AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE} to become available"
+echo "Waiting for Package ${AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE} to become available for Installation"
 until [[ $(avi-cli-run --user root --password "${AVE_PASSWORD}" --listrepository localhost \
 | grep ${AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE} \
 | awk '{print $5}') == "Accepted" ]]
@@ -22,7 +22,7 @@ done
 printf "\n"
 echo "${AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE} Accepted"
 echo "Starting Installation, this could take 40 Minutes"
-avi-cli-run --user root --password "${AVE_COMMON_PASSWORD}" \
+avi-cli-run --user root --password "${AVE_PASSWORD}" \
 --install upgrade-client-downloads localhost
 echo "Done installing UpgradeClientDownloads"
 
