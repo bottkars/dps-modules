@@ -9,7 +9,7 @@ source dps_modules/ci/functions/ave_functions.sh
 
 echo "Downloading ${AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE} to avamar Server Repo"
 
-avi-run-bash curl -k "${AVE_UPGRADE_CLIENT_DOWNLOADS_URL}" --output /space/avamar/repo/packages/${AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE}
+avi-run-bashscript curl -k "${AVE_UPGRADE_CLIENT_DOWNLOADS_URL}" --output /space/avamar/repo/packages/${AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE}
 
 echo "Waiting for Package ${AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE} to become available"
 until [[ $(avi-cli-run --user root --password "${AVE_PASSWORD}" --listrepository localhost \
