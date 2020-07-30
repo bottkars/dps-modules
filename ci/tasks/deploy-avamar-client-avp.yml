@@ -27,7 +27,7 @@ params:
   
 
 run:
-  path: dps_modules/ci/scripts/deploy-ave.sh
+  path: dps_modules/ci/scripts/deploy-avamar-client-avp.sh
 
 
 # test with 
