@@ -15,7 +15,7 @@ echo "waiting for AVAMAR $WORKFLOW  to be available"
 unset AVE_CONFIG
 until [[ ! -z $AVE_CONFIG ]]
 do
-AVE_CONFIG=$(avi-cli-run --user root --password "${AVE_SETUP_PASSWORD}" \
+AVE_CONFIG=$(avi-cli-run --user root --password "${AVE_PASSWORD}" \
  --listrepository localhost 2> /dev/null  \
  | grep ${WORKFLOW} | awk '{print $1}' )
 sleep 5
@@ -24,7 +24,7 @@ done
 printf "\n"
 
 echo "waiting for ave-config to become ready"
-until [[ $(avi-cli-run --user root --password "${AVE_SETUP_PASSWORD}" \
+until [[ $(avi-cli-run --user root --password "${AVE_PASSWORD}" \
  --listhistory localhost | grep ave-config | awk  '{print $5}') == "ready" ]]
 do
 printf "."
