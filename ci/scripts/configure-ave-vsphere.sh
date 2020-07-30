@@ -30,7 +30,7 @@ do
 printf "."
 sleep 5
 done
-printf "Installation System ready,now configuring AVE \n"
+printf "Installation System ready, now configuring AVE \n"
 printf "This might take up to 40 Minutes\n"
 
 

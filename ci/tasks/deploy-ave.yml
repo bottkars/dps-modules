@@ -5,7 +5,6 @@ platform: linux
 inputs:
  - name: dps_modules
  - name: avamar
-outputs:
 
 
 params:

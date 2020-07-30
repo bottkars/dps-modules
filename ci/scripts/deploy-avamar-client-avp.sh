@@ -9,11 +9,12 @@ AVP_VERSION=$(echo $AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE  | cut -d "-" -f2-)
 AVP_VERSION=${AVP_VERSION//.avp}
 AVP_VERSION=${AVP_VERSION/-/.}
 
-
+set +e
 if [[ $AVP_VERSION == "$(avi-cli-run --user root --password "${AVE_PASSWORD}" --listhistory localhost  | grep upgrade-client-downloads |  awk '{print $3}')" ]]
     then
         echo "${AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE} already installed, nothing to do here"
     else
+        set -e
         avi-cli-run --user root --password "${AVE_PASSWORD}" --listhistory localhost  | grep upgrade-client-downloads
 
         echo "Downloading ${AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE} to avamar Server Repo"
