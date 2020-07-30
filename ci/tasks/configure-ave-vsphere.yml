@@ -17,7 +17,6 @@ params:
     GOVC_NETWORK: 
     GOVC_VM_IPATH:
     AVE_FQDN: 
-    AVE_SETUP_PASSWORD: 
     AVE_TIMEZONE: "Europe/Berlin"
     AVE_PASSWORD: "changeme"
     AVE_USERNAME: root
