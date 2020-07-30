@@ -8,6 +8,7 @@ outputs:
 
 
 params:
+  DEBUG: false
   GOVC_INSECURE: 
   GOVC_PASSWORD: 
   GOVC_URL: 
