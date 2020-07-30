@@ -30,7 +30,9 @@ do
 printf "."
 sleep 5
 done
-printf "\n"
+printf "Installation System ready,now configuring AVE \n"
+printf "This might take up to 40 Minutes\n"
+
 
 
 
@@ -57,19 +59,14 @@ avi-cli-start --user root --password "${AVE_PASSWORD}" --install ave-config  \
     --input datadomain_snmp_string=public \
         localhost
 
-until [[ 301 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${AVE_FQDN}:443/dtlt") ]] ; do
+until [[ 200 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${AVE_FQDN}:/dtlt/home.html") ]] ; do
     printf '.'
     sleep 5
 done
 
 printf "\n"
 
-printf "Avamar Virtual Appliance https://${AVE_FQDN}/aui is ready !\n"
+printf "Avamar Virtual Appliance https://${AVE_FQDN} is ready for use now !\n"
 
-### from here we will stzart to upload client configs :-)
-#echo
-#echo "Networker Appliance https://${NVE_FQDN}:9000 is ready !"
-
-## validate new_ddboost_user over ddboost_user
 
 
