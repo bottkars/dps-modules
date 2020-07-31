@@ -108,15 +108,7 @@ function get_avi_token {
     echo $response
 }
 
-function get_avi_packages {
-    local token=${99:-$AVI_TOKEN}
-    avi_curl_args=(
-    -XGET  
-    -H 'content-type: application/json' 
-    -b "JSESSIONID=${token}" )
-    local response=$(avi_curl packages  | jq -r '.packages[]')
-    echo $response
-}
+get
 
 function get_avi_repository {
     local token=${99:-$AVI_TOKEN}
@@ -138,7 +130,15 @@ function get_avi_packages_history {
     echo $response
 }
 
-
+function get_avi_packages {
+    local token=${99:-$AVI_TOKEN}
+    avi_curl_args=(
+    -XGET
+    -H 'content-type: application/json'
+    -b "JSESSIONID=${token}" )
+    local response=$(avi_curl packages  | jq -r '.packages[]')
+    echo $response
+}
 
 function get_avi_userinput {
     local package=$1
@@ -154,7 +154,7 @@ function get_avi_userinput {
 }
 
 function set_avi_config {
-    local data=$1
+    local data=${1:-"{}"}
     local package=$2
     local token=${99:-$AVI_TOKEN}
     local avi_adminuser=${AVE_ROOT:-root}
@@ -202,7 +202,7 @@ function put_avi_package {
     -XPUT
     -H 'content-type: multipart/form-data' 
     -b "JSESSIONID=${token}"
-    -T ${file}
+    -F name=@${file}
     )
     local response=$(avi_curl packages  | jq -r '.')
     echo $response
