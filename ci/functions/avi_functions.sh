@@ -131,10 +131,6 @@ function get_avi_packages_history {
 
 
 
-packages/install/
-
-
-
 function get_avi_userinput {
     local package=$1
     local token=${99:-$AVI_TOKEN}
