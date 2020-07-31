@@ -3,7 +3,7 @@ set -e
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
 
-source dps_modules/ci/functions/ave_functions.sh
+source dps_modules/ci/functions/avi_functions.sh
 
 AVP_VERSION=$(echo $AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE  | cut -d "-" -f2-)
 AVP_VERSION=${AVP_VERSION//.avp}

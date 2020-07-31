@@ -44,7 +44,7 @@ function avi-start-bashscript {
 function avi_curl {
     local url
     local avi_fqdn=${AVE_FQDN:-AVI_FQDN}
-    url="https://${avi_fqdn}:443/avi/service/api/${1#/}"
+    url="https://${avi_fqdn}:7543/avi/service/api/${1#/}"
     shift || return # fail if we weren't passed at least x args
     local sleep_seconds=10
     local retry=0
@@ -114,7 +114,7 @@ function get_avi_packages {
     -XGET  
     -H 'content-type: application/json' 
     -b "JSESSIONID=${token}" )
-    local response=$(avi_curl packages  | jq -r '.')
+    local response=$(avi_curl packages  | jq -r '.packages[]')
     echo $response
 }
 
@@ -128,3 +128,53 @@ function get_avi_packages_history {
     local response=$(avi_curl packages/history  | jq -r .histories )
     echo $response
 }
+
+
+
+packages/install/
+
+
+
+function get_avi_userinput {
+    local package=$1
+    local token=${99:-$AVI_TOKEN}
+    local avi_adminuser=${AVE_ROOT:-root}
+    avi_curl_args=(
+    -XGET
+    -H 'content-type: text/plain' 
+    -b "JSESSIONID=${token}" 
+    )
+    local response=$(avi_curl userinput/$package  )
+    echo $response
+}
+
+function set_avi_config {
+    local data=$1
+    local package=$2
+    local token=${99:-$AVI_TOKEN}
+    local avi_adminuser=${AVE_ROOT:-root}
+    avi_curl_args=(
+    -XPOST
+    -v    
+    -H 'content-type: multipart/form-data' 
+    -b "JSESSIONID=${token}"
+    -F userinput="" 
+    -F input=${data}
+    )
+    local response=$(avi_curl packages/install/$package  | jq -r '.token')
+    echo $response
+}
+
+
+function get_avi_messages {
+    local token=${99:-$AVI_TOKEN}
+    local avi_adminuser=${AVE_ROOT:-root}
+    avi_curl_args=(
+    -XGET
+    -H 'content-type: application/json' 
+    -b "JSESSIONID=${token}" 
+    )
+    local response=$(avi_curl messages  | jq -r '.messages')
+    echo $response
+}
+/avi/service/api/messages

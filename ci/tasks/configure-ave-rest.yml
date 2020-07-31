@@ -7,15 +7,6 @@ inputs:
 
 
 params:
-    GOVC_INSECURE: 
-    GOVC_PASSWORD:
-    GOVC_URL: 
-    GOVC_USERNAME: 
-    GOVC_RESOURCE_POOL: 
-    GOVC_DATASTORE: 
-    GOVC_DATACENTER: 
-    GOVC_NETWORK: 
-    GOVC_VM_IPATH:
     AVE_FQDN: 
     AVE_TIMEZONE: "Europe/Berlin"
     AVE_PASSWORD: "changeme"
