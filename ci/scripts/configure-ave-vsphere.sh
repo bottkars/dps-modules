@@ -72,7 +72,7 @@ export AVE_PASSWORD=${AVE_COMMON_PASSWORD}
 printf "Avamar Virtual Appliance https://${AVE_FQDN} is ready for use now !\n but waiting for installer to finalize"
 
 echo "Waiting for ave-install completed"
-until [[ $(avi-cli-run --user root --password "${AVE_PASSWORD}" --listrepository localhost \
+until [[ $(avi-cli-run --user root --password "${AVE_PASSWORD}" --listhistory localhost \
  | grep ave-install \
  | awk '{print $5}') == "completed" ]]
 do
