@@ -36,7 +36,7 @@ printf "This might take up to 40 Minutes\n"
 
 
 
-avi-cli-start --user root --password "${AVE_PASSWORD}" --install ave-config  \
+INSTALL_PID=$(avi-cli-start --user root --password "${AVE_PASSWORD}" --install ave-config  \
     --input timezone_name="${AVE_TIMEZONE}" \
     --input common_password=${AVE_COMMON_PASSWORD} \
     --input use_common_password=true \
@@ -57,16 +57,28 @@ avi-cli-start --user root --password "${AVE_PASSWORD}" --install ave-config  \
     --input datadomain_sysadmin=${AVE_DATADOMAIN_SYSADMIN} \
     --input datadomain_sysadmin_pwd=${AVE_DATADOMAIN_SYSADMIN_PWD} \
     --input datadomain_snmp_string=public \
-        localhost
+        localhost)
 
+echo "Running Installer ave-install with PID $INSTALL_PID"
+# we loop the web interface, as we would switch password during install
 until [[ 200 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${AVE_FQDN}:/dtlt/home.html") ]] ; do
     printf '.'
     sleep 5
 done
 
 printf "\n"
+# switch password to new installer
+export AVE_PASSWORD=${AVE_COMMON_PASSWORD}
+printf "Avamar Virtual Appliance https://${AVE_FQDN} is ready for use now !\n but waiting for installer to finalize"
 
-printf "Avamar Virtual Appliance https://${AVE_FQDN} is ready for use now !\n"
+echo "Waiting for ave-install completed"
+until [[ $(avi-cli-run --user root --password "${AVE_PASSWORD}" --listrepository localhost \
+ | grep ave-install \
+ | awk '{print $5}') == "completed" ]]
+do
+    printf "."
+    sleep 5
+done
 
-
-
+echo
+echo "Done"
