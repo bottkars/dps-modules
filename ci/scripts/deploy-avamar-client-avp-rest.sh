@@ -8,7 +8,11 @@ source dps_modules/ci/functions/avi_functions.sh
 
 AVI_TOKEN=$(get_avi_token $AVE_PASSWORD)
 
-AVE_VERSION=$(cat avamar_client_package/version)
+AVP_VERSION=$(cat avamar_client_package/version)
+
+
+
+put_avi_package avamar_client_package/UpgradeClientDownloads-${AVP_VERSION}.avp
 
 
 
@@ -26,11 +30,7 @@ AVE_VERSION=$(cat avamar_client_package/version)
 
 
 
-
-
-
-break 1
-AVP_VERSION=$(echo $AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE  | cut -d "-" -f2-)
+sleep 3000AVP_VERSION=$(echo $AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE  | cut -d "-" -f2-)
 AVP_VERSION=${AVP_VERSION//.avp}
 AVP_VERSION=${AVP_VERSION/-/.}
 echo "Checking if ${AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE} is already installed"
