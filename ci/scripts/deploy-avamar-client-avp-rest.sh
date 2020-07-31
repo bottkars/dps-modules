@@ -6,7 +6,7 @@ figlet DPS Automation
 source dps_modules/ci/functions/avi_functions.sh
 
 
-
+AVI_TOKEN=$(get_avi_token $AVE_PASSWORD)
 
 
 

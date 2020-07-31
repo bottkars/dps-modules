@@ -4,6 +4,7 @@ platform: linux
 
 inputs:
  - name: dps_modules
+ - name: avamar_client_package
 
 
 params:

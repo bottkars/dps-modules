@@ -193,7 +193,7 @@ function get_avi_info {
 }
 
 
-function set_avi_package {
+function put_avi_package {
     local file=$1
     local token=${99:-$AVI_TOKEN}
     local avi_adminuser=${AVE_ROOT:-root}
