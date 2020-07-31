@@ -32,9 +32,10 @@ set_avi_config $data upgrade-client-downloads | jq -r .
 
 until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]]
     do
-    get_avi_messages  | jq -r .[-1]
+    get_avi_messages  | jq -r '.[-1]'
     sleep 10
 done
 
 
+#     get_avi_messages  | jq -r '.[-1].status | .key'
 

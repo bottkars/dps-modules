@@ -6,7 +6,7 @@ figlet DPS Automation
 source dps_modules/ci/functions/avi_functions.sh
 export WORKFLOW=ave-config
 
-printf "Waiting for AVI System zu become ready \n"
+printf "Waiting for AVI System to become ready \n"
 until [[ 200 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${AVE_FQDN}:443/avi/avigui.html") ]] ; do
     printf '.'
     sleep 5

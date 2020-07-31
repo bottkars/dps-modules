@@ -202,7 +202,7 @@ function put_avi_package {
     -b "JSESSIONID=${token}"
     -F name=@${file}
     )
-    local response=$(avi_curl packages  | jq -r '.')
+    local response=$(avi_curl packages  | jq -r '.message')
     echo $response
 }
 
