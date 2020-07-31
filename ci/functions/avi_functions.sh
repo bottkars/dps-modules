@@ -118,6 +118,15 @@ function get_avi_packages {
     echo $response
 }
 
+function get_avi_repository {
+    local token=${99:-$AVI_TOKEN}
+    avi_curl_args=(
+    -XGET  
+    -H 'content-type: application/json' 
+    -b "JSESSIONID=${token}" )
+    local response=$(avi_curl packages/repository  | jq -r '.packages[]')
+    echo $response
+}
 
 function get_avi_packages_history {
     local token=${99:-$AVI_TOKEN}
@@ -153,7 +162,7 @@ function set_avi_config {
     -XPOST
     -H 'content-type: multipart/form-data' 
     -b "JSESSIONID=${token}"
-    -F userinput="" 
+    -F userinput=""
     -F input=${data}
     )
     local response=$(avi_curl packages/install/$package  | jq -r '.token')
@@ -170,5 +179,15 @@ function get_avi_messages {
     -b "JSESSIONID=${token}" 
     )
     local response=$(avi_curl messages  | jq -r '.messages')
+    echo $response
+}
+
+function get_avi_info {
+    local avi_adminuser=${AVE_ROOT:-root}
+    avi_curl_args=(
+    -XGET
+    -H 'content-type: application/json' 
+    )
+    local response=$(avi_curl infog  | jq -r '.')
     echo $response
 }

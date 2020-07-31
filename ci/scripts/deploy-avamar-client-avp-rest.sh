@@ -5,6 +5,29 @@ figlet DPS Automation
 
 source dps_modules/ci/functions/avi_functions.sh
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+break 1
 AVP_VERSION=$(echo $AVE_UPGRADE_CLIENT_DOWNLOADS_PACKAGE  | cut -d "-" -f2-)
 AVP_VERSION=${AVP_VERSION//.avp}
 AVP_VERSION=${AVP_VERSION/-/.}

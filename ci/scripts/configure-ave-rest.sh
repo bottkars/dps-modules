@@ -5,7 +5,18 @@ figlet DPS Automation
 
 source dps_modules/ci/functions/avi_functions.sh
 export WORKFLOW=ave-config
+
+printf "Waiting for AVI System zu become ready \n"
+until [[ 200 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${AVE_FQDN}:443/avi/avigui.html") ]] ; do
+    printf '.'
+    sleep 5
+done
+printf "\n"
+
+
 AVI_TOKEN=$(get_avi_token $AVE_PASSWORD)
+
+
 echo "waiting for ${WORKFLOW} to become ready"
 
 until [[ $(get_avi_packages | jq -r 'select(.title==env.WORKFLOW).status == "ready"')  ]]
@@ -48,7 +59,7 @@ set_avi_config $data ave-config | jq -r .
 until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]]
     do
     get_avi_messages  | jq -r .[-1]
-    sleep 5
+    sleep 10
 done
 
 
