@@ -198,7 +198,8 @@ function set_avi_package {
     local token=${99:-$AVI_TOKEN}
     local avi_adminuser=${AVE_ROOT:-root}
     avi_curl_args=(
-    -XPOST
+    -v 
+    -XPUT
     -H 'content-type: multipart/form-data' 
     -b "JSESSIONID=${token}"
     -T ${file}
