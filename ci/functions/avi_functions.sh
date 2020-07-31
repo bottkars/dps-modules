@@ -151,7 +151,6 @@ function set_avi_config {
     local avi_adminuser=${AVE_ROOT:-root}
     avi_curl_args=(
     -XPOST
-    -v    
     -H 'content-type: multipart/form-data' 
     -b "JSESSIONID=${token}"
     -F userinput="" 
