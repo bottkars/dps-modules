@@ -26,7 +26,7 @@ params:
             
 
 run:
-  path: dps_modules/ci/scripts/configure-ave-vsphere-rest.sh
+  path: dps_modules/ci/scripts/configure-ave-rest.sh
 
 
 # test with 
