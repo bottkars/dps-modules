@@ -108,7 +108,6 @@ function get_avi_token {
     echo $response
 }
 
-get
 
 function get_avi_repository {
     local token=${99:-$AVI_TOKEN}
