@@ -8,6 +8,8 @@ source dps_modules/ci/functions/avi_functions.sh
 
 AVI_TOKEN=$(get_avi_token $AVE_PASSWORD)
 
+AVE_VERSION=$(cat avamar_client_package/version)
+
 
 
 
