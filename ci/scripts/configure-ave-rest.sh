@@ -6,7 +6,7 @@ figlet DPS Automation
 source dps_modules/ci/functions/avi_functions.sh
 export WORKFLOW=ave-config
 AVI_TOKEN=$(get_avi_token $AVE_PASSWORD)
-echo "waiting for ${} to become ready"
+echo "waiting for ${WORKFLOW} to become ready"
 
 until [[ $(get_avi_packages | jq -r 'select(.title==env.WORKFLOW).status == "ready"')  ]]
 do
