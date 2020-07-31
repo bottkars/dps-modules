@@ -177,4 +177,3 @@ function get_avi_messages {
     local response=$(avi_curl messages  | jq -r '.messages')
     echo $response
 }
-/avi/service/api/messages
