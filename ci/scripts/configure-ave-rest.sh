@@ -58,7 +58,7 @@ set_avi_config $data ave-config | jq -r .
 
 until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]]
     do
-    get_avi_messages  | jq -r .[-1]
+    get_avi_messages  | jq -r  '.[-1] | [.timestamp, .status, .taskId, .taskName, .content] | @tsv'
     sleep 10
 done
 
