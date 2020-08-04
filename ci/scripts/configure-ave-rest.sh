@@ -52,10 +52,10 @@ data='{"timezone_name":"'${AVE_TIMEZONE}'",
 }'
 
 
-if [[ ${AVE_BASEVER} -ge "19.3" ]]
+if [[ "${AVE_BASEVER}" -ge "19.3" ]]
     then
     echo $data  | jq '. + {"accept_eula": "true"}'
-    fi
+fi
 
 
 data=$(echo "${data}" | jq -c .)
