@@ -61,18 +61,17 @@ function avamar_curl {
 
 
 function get_avamar_token {
+    local av_user=${1}
+    local av_password=${2:-$AVE_PASSWORD}
     avi_curl_args=(
     -XPOST
-    -i 
-    --trace-ascii -
-    -H 'Authorization: Basic YWRtaW46Q2hhbmdlX01lMTIzNDVfCg=='
     -H 'content-type: application/x-www-form-urlencoded' 
     --data-urlencode "grant_type=password"
     --data-urlencode "scope=write"
-    --data-urlencode "username=MCUser"
-    --data-urlencode "password=Change_Me12345_"
+    --data-urlencode "username=$av_user"
+    --data-urlencode "password=$av_password"
 )
-    local response=$(avamar_curl oauth/token)
+    local response=$(avamar_curl v1/oauth/swagger)
     echo $response
 }
 
@@ -90,7 +89,7 @@ function get_avamar_token {
 function create_avamar_oauth_client {
     avi_curl_args=(
     -XPOST
-    -H 'Authorization: Basic cm9vdDpDaGFuZ2VfTWUxMjM0NV8K'
+    -H 'Authorization: Basic cm9vdDpjaGFuZ2VtZQo='
     -H 'content-type: application/json' 
     -d '{
             "accessTokenValiditySeconds": 1800,
@@ -101,7 +100,7 @@ function create_avamar_oauth_client {
             "all"
             ],
             "clientId": "2345678",
-            "clientName": "adminclient",
+            "clientName": "root",
             "clientSecret": "Change_Me12345_",
             "redirectUris": [
             "https://my-app-server/callback"

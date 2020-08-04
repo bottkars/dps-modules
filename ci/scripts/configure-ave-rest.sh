@@ -42,6 +42,7 @@ data='{"timezone_name":"'${AVE_TIMEZONE}'",
 "keystore_passphrase":"'${AVE_COMMON_PASSWORD}'" ,
 "add_datadomain_config":"'${AVE_ADD_DATADOMAIN_CONFIG}'" ,
 "attach_dd_with_cert":"false" ,
+"accept_eula":"true" ,
 "datadomain_host":"'${AVE_DATADOMAIN_HOST}'" ,
 "ddboost_user":"'${AVE_DDBOOST_USER}'", 
 "ddboost_user_pwd":"'${AVE_DDBOOST_USER_PWD}'" ,
@@ -52,10 +53,6 @@ data='{"timezone_name":"'${AVE_TIMEZONE}'",
 }'
 
 
-if [[ "${AVE_BASEVER}" -ge "19.3" ]]
-    then
-    echo $data  | jq '. + {"accept_eula": "true"}'
-fi
 
 
 data=$(echo "${data}" | jq -c .)
