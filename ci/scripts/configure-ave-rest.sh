@@ -53,6 +53,12 @@ data='{"timezone_name":"'${AVE_TIMEZONE}'",
 }'
 
 
+if [[ ${AVE_BASEVER} -ge "19.3" ]]
+    then
+    echo $data  | jq '. + {"accept_eula": "true"}'
+    fi
+
+
 data=$(echo "${data}" | jq -c .)
 set_avi_config $data ave-config | jq -r .
 
