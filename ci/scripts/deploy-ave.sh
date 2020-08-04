@@ -3,16 +3,15 @@ set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
 AVE_VERSION=$(cat avamar/version)
-echo "preparing avamar ${AVE_VERSION} Virtual Edition"
-
 govc about
+echo "preparing avamar ${AVE_VERSION} Virtual Edition for ${AVE_VMNAME}"
 
-echo "checking for jq...."
-DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
+
 govc import.spec avamar/AVE-${AVE_VERSION}.ova > avamar.json
 echo "configuring appliance (vami) settings"
 source dps_modules/ci/functions/govc_functions.sh
 
+echo "Configuring OVS Settings"
 
 jq  '(.DiskProvisioning |= "thin")' avamar.json  > "tmp" && mv "tmp" avamar.json
 
@@ -30,7 +29,7 @@ jq  '(.NetworkMapping[].Name |= env.AVE_NETWORK)' avamar.json  > "tmp" && mv "tm
 # jq  '(.PowerOn |= false)' avamar.json  > "tmp" && mv "tmp" avamar.json
 jq  '(.InjectOvfEnv |= true)' avamar.json  > "tmp" && mv "tmp" avamar.json
 
-echo "importing avamar ${AVE_VERSION} AVE template"
+echo "importing avamar ${AVE_VERSION} AVE template as VM ${AVE_VMNAME}"
 govc import.ova -name ${AVE_VMNAME} -folder=${AVE_FOLDER}  -options=avamar.json avamar/AVE-${AVE_VERSION}.ova
 govc vm.network.change -vm.ipath ${GOVC_VM_IPATH} -net=VLAN250 ethernet-0
 
@@ -76,7 +75,7 @@ case "${AVE_SIZE}" in
     break
 esac 
 
-echo "Setting AVE to  
+echo "Setting AVE  ${AVE_VMNAME} to  
     ${AVE_CPU} CPU
     ${AVE_MEM}MB Memory
     ${AVE_DISK_SIZE}B Disk Size
@@ -94,13 +93,5 @@ done
 
 
 govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
-echo "finished DELLEMC Avamar  ${AVE_VERSION} Virtual Edition install"
-
-#echo "Waiting for AVE avi-installer to bevome ready, this can take up to 5 Minutes"
-#until [[ 200 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${AVE_FQDN}:443/avi/avigui.html") ]] ; do
-#    printf '.'
-#    sleep 5
-#done
-#echo
-#echo "Appliance https://${AVE_FQDN}:443/avi/avigui.html is ready for Configuration with root:changeme"
+echo "finished DELLEMC Avamar  ${AVE_VERSION} Virtual Edition install for  ${AVE_VMNAME}"
 
