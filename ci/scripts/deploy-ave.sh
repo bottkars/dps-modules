@@ -75,7 +75,7 @@ case "${AVE_SIZE}" in
     break
 esac 
 
-echo "Setting AVE  ${AVE_VMNAME} to  
+echo "Setting AVE ${AVE_VMNAME} to  
     ${AVE_CPU} CPU
     ${AVE_MEM}MB Memory
     ${AVE_DISK_SIZE}B Disk Size
@@ -93,5 +93,5 @@ done
 
 
 govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
-echo "finished DELLEMC Avamar  ${AVE_VERSION} Virtual Edition install for  ${AVE_VMNAME}"
+echo "finished DELLEMC Avamar ${AVE_VERSION} Virtual Edition install for ${AVE_VMNAME}"
 
