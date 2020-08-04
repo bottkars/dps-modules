@@ -22,6 +22,7 @@ params:
     AVE_DDBOOST_USER_PWD: Change_Me12345_
     AVE_DATADOMAIN_SYSADMIN: sysadmin
     AVE_DATADOMAIN_SYSADMIN_PWD: Change_Me12345_
+    AVE_BASEVER:
 
             
 
