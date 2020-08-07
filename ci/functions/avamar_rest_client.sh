@@ -4,7 +4,7 @@
 function avamar_curl {
     local url
     local avamar_fqdn=${AVAMAR_FQDN:-AVI_FQDN}
-    url="https://${avamar_fqdn}/api/${1#/}"
+    url="https://${avamar_fqdn}/${1#/}"
     shift || return # fail if we weren't passed at least x args
     local sleep_seconds=10
     local retry=0
@@ -71,8 +71,8 @@ function get_avamar_token {
     --data-urlencode "username=$av_user"
     --data-urlencode "password=$av_password"
 )
-    local response=$(avamar_curl v1/oauth/swagger)
-    echo $response
+    local response=$(avamar_curl api/v1/oauth/swagger)
+    echo $response | jq -r '.access_token'
 }
 
 #    -F "username=root"
@@ -89,7 +89,7 @@ function get_avamar_token {
 function create_avamar_oauth_client {
     avi_curl_args=(
     -XPOST
-    -H 'Authorization: Basic cm9vdDpjaGFuZ2VtZQo='
+    -H 'Authorization: Basic cm9vdDpDaGFuZ2VfTWUxMjM0NV8K'
     -H 'content-type: application/json' 
     -d '{
             "accessTokenValiditySeconds": 1800,
@@ -99,7 +99,6 @@ function create_avamar_oauth_client {
             "autoApproveScopes": [
             "all"
             ],
-            "clientId": "2345678",
             "clientName": "root",
             "clientSecret": "Change_Me12345_",
             "redirectUris": [
@@ -112,95 +111,77 @@ function create_avamar_oauth_client {
             }'
 
     )
-    local response=$(avamar_curl v1/oauth2/clients  | jq -r '.')
+    local response=$(avamar_curl api/v1/oauth2/clients  | jq -r '.')
     echo $response
 }
 
 
-function get_avi_packages_history {
-    local token=${99:-$AVI_TOKEN}
-    avi_curl_args=(
-    -XGET  
-    -H 'content-type: application/json' 
-    -b "JSESSIONID=${token}" )
-    local response=$(avi_curl packages/history  | jq -r .histories )
-    echo $response
-}
 
-function get_avi_packages {
-    local token=${99:-$AVI_TOKEN}
+
+
+function get_avamar_clients {
+    local avamar_token=${1:-AVAMAR_TOKEN}
+    local domain=${2:-/}
     avi_curl_args=(
     -XGET
-    -H 'content-type: application/json'
-    -b "JSESSIONID=${token}" )
-    local response=$(avi_curl packages  | jq -r '.packages[]')
-    echo $response
-}
-
-function get_avi_userinput {
-    local package=$1
-    local token=${99:-$AVI_TOKEN}
-    local avi_adminuser=${AVE_ROOT:-root}
-    avi_curl_args=(
-    -XGET
-    -H 'content-type: text/plain' 
-    -b "JSESSIONID=${token}" 
+    -H "accept: application/json" 
+    -H "authorization: Bearer $avamar_token"
+    --data-urlencode domain=$domain
+    --data-urlencode recursive=false
     )
-    local response=$(avi_curl userinput/$package  )
+    local response=$(avamar_curl api/v1/clients)
     echo $response
 }
 
-function set_avi_config {
-    local data=${1:-"{}"}
-    local package=$2
-    local token=${99:-$AVI_TOKEN}
-    local avi_adminuser=${AVE_ROOT:-root}
+
+
+function get_avamar_certificates {
+    local avamar_token=${1:-AVAMAR_TOKEN}
+    avi_curl_args=(
+    -XGET
+    -H "accept: application/json" 
+    -H "authorization: Bearer $avamar_token"
+    --data-urlencode domain=$domain
+    --data-urlencode recursive=false
+    )
+    local response=$(avamar_curl acm/api/keystore/certificates)
+    echo $response
+}
+
+
+
+function add_avamar_vcenter {
+    local avamar_token=${99:-$AVAMAR_TOKEN}
+    local vcenter_name=$1
+    local vcenter_username=$2
+    local vcenter_password=$3
+    local domain=$4
+    local port=${5:-443}
+    local data='{
+    "contact": {
+        "email": "",
+        "phone": "",
+        "name": "",
+        "location": "",
+        "notes": ""
+    },
+    "name": "'$vcenter_name'",
+    "password": "'$vcenter_password'",
+    "username": "'$vcenter_username'",
+    "port": '$port',
+    "domain": "'$domain'",
+    "ruleDomainMapping": {},
+    "cbtEnabled": false,
+    "ruleEnabled": false
+}'
     avi_curl_args=(
     -XPOST
-    -H 'content-type: multipart/form-data' 
-    -b "JSESSIONID=${token}"
-    -F userinput=""
-    -F input=${data}
+    -H "content-type: application/json" 
+    -H "authorization: Bearer $avamar_token"
+    -d $data    
     )
-    local response=$(avi_curl packages/install/$package  | jq -r '.')
+    local response=$(avamar_curl api/v1/virtualcenters)
     echo $response
-}
 
-
-function get_avi_messages {
-    local token=${99:-$AVI_TOKEN}
-    local avi_adminuser=${AVE_ROOT:-root}
-    avi_curl_args=(
-    -XGET
-    -H 'content-type: application/json' 
-    -b "JSESSIONID=${token}" 
-    )
-    local response=$(avi_curl messages  | jq -r '.messages')
-    echo $response
-}
-
-function get_avi_info {
-    local avi_adminuser=${AVE_ROOT:-root}
-    avi_curl_args=(
-    -XGET
-    -H 'content-type: application/json' 
-    )
-    local response=$(avi_curl infog  | jq -r '.')
-    echo $response
-}
-
-
-function put_avi_package {
-    local file=$1
-    local token=${99:-$AVI_TOKEN}
-    local avi_adminuser=${AVE_ROOT:-root}
-    avi_curl_args=(
-    -XPUT
-    -H 'content-type: multipart/form-data' 
-    -b "JSESSIONID=${token}"
-    -F name=@${file}
-    )
-    local response=$(avi_curl packages  | jq -r '.message')
-    echo $response
 }
 
