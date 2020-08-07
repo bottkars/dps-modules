@@ -33,6 +33,7 @@ echo $FolderMoref
 echo "Getting Access Token"
 export PPDM_TOKEN=$(get_ppdm_token "${PPDM_PASSWORD}")
 
+echo "Getting Protection Engine"
 
 
 protection_engine_id=$(get_ppdm_protection-engines | jq -r .id)
