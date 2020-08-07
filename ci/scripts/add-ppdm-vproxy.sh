@@ -30,8 +30,10 @@ FolderMoref=$(govc folder.info -json ${sourced_vsphere_folder}  | jq -r '.Folder
 echo $FolderMoref
 
 
-ech "Getting Access Token"
+echo "Getting Access Token"
 export PPDM_TOKEN=$(get_ppdm_token "${PPDM_PASSWORD}")
+
+
 
 protection_engine_id=$(get_ppdm_protection-engines | jq -r .id)
 VimServerRefID=$(get_ppdm_inventory-sources  | jq -r 'select(.address==env.GOVC_URL) | .id')
