@@ -224,7 +224,7 @@ function get_ppdm_protection-engines {
     -H "content-type: application/json"
     -H "Authorization: Bearer ${token}"
     )
-    local response=$(ppdm_curl protection-engines  | jq .)
+    local response=$(ppdm_curl protection-engines  | jq '.content[]' )
     echo $response
     }
 
