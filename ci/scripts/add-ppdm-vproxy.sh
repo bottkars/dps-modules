@@ -2,8 +2,6 @@
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
-echo "checking for jq...."
-DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 source dps_modules/ci/functions/ppdm_functions.sh
 source dps_modules/ci/functions/yaml.sh
 
@@ -36,7 +34,7 @@ export PPDM_TOKEN=$(get_ppdm_token "${PPDM_PASSWORD}")
 echo "Getting Protection Engine"
 
 
-protection_engine_id=$(get_ppdm_protection-engines | jq -r .id)
+protection_engine_id=$(get_ppdm_protection-engines | jq -r '.id' )
 VimServerRefID=$(get_ppdm_inventory-sources  | jq -r 'select(.address==env.GOVC_URL) | .id')
 request=$(add_ppdm_protection_engine_proxy \
     "${protection_engine_id}" \
