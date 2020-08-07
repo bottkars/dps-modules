@@ -35,7 +35,9 @@ echo "Getting Protection Engine"
 
 
 protection_engine_id=$(get_ppdm_protection-engines | jq -r '.id' )
+echo "Getting VimServerRefID"
 VimServerRefID=$(get_ppdm_inventory-sources  | jq -r 'select(.address==env.GOVC_URL) | .id')
+echo "Requesting new Engine"
 request=$(add_ppdm_protection_engine_proxy \
     "${protection_engine_id}" \
     "${NetworkMoref}" \
