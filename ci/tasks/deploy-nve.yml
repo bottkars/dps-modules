@@ -9,6 +9,7 @@ outputs:
 
 
 params:
+  DEBUG: "FALSE"
   GOVC_INSECURE: 
   GOVC_PASSWORD: 
   GOVC_URL: 
