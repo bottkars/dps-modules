@@ -1,15 +1,14 @@
 #!/bin/bash
 # set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
-
-DEBIAN_FRONTEND=noninteractive apt-get install -qq sshpass < /dev/null > /dev/null
+figlet DPS Automation
 
 echo "waiting for DELLEMC Networker Workflow NveConfig to be ready"
 ### get the SW Version
-until [[ ! -z $NVE_PACKAGE ]]
+until [[ ! -z "$NVE_PACKAGE" ]]
 do
 NVE_PACKAGE=$(echo $(govc guest.run -l=admin:changeme \
--vm.ipath ${GOVC_VM_IPATH} \
+-vm.ipath "${GOVC_VM_IPATH}" \
  /usr/bin/avi-cli --user root --password "changeme" \
  --listbycategory 'SW\ Releases' localhost 2> /dev/null ) \
  | grep NveConfig | awk  '{print $8}')
