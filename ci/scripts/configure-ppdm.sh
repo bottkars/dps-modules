@@ -8,7 +8,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 echo "requesting API token for initial setup"
 
 source dps-modules/ci/functions/ppdm_functions.sh
-if [[ (PPDM_TOKEN=$(get_ppdm_token "${PPDM_SETUP_PASSWORD}")) ]]
+if PPDM_TOKEN=$(get_ppdm_token "${PPDM_SETUP_PASSWORD}")
 then
 echo "Retrieving initial appliance configuration Template"
     CONFIGURATION=$(get_ppdm_configuration)
