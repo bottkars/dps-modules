@@ -65,7 +65,7 @@ function get_ppdd_token {
     -d '{"username":"'${ppdd_adminuser}'","password":"'${password}'"}'
     )
     echo "${ppdd_curl_args[@]}" >&2
-    if [[ (local response=$(curl -ks --include "https://${PPDD_FQDN}:3009/rest/v1.0/auth" "${ppdd_curl_args[@]}" )) ]]
+    if local response=$(curl -ks --include "https://${PPDD_FQDN}:3009/rest/v1.0/auth" "${ppdd_curl_args[@]}" )
     then
         echo "${response[@]}" >&2
         local token=$(echo "${response[@]}" | grep "X-DD-AUTH-TOKEN:")
