@@ -16,11 +16,11 @@ echo "Retrieving initial appliance configuration Template"
     CONFIGURATION_ID=$(echo $CONFIGURATION | jq -r .id)
 
     echo "Customizing Appliance Configuration Template"
-    CONFIGURATION=$(echo $CONFIGURATION | jq --arg oldpassword changeme --arg password ${PPDM_PASSWORD} '(.osUsers[] | select(.userName == "root").newPassword) |= $password | (.osUsers[] | select(.userName == "root").password) |= $oldpassword')
-    CONFIGURATION=$(echo $CONFIGURATION | jq --arg oldpassword '@ppAdm1n' --arg password ${PPDM_PASSWORD} '(.osUsers[] | select(.userName == "admin").newPassword) |= $password | (.osUsers[] | select(.userName == "admin").password) |= $oldpassword')
-    CONFIGURATION=$(echo $CONFIGURATION | jq --arg oldpassword '$upp0rt!' --arg password ${PPDM_PASSWORD} '(.osUsers[] | select(.userName == "support").newPassword) |= $password | (.osUsers[] | select(.userName == "support").password) |= $oldpassword')
-    CONFIGURATION=$(echo $CONFIGURATION | jq --arg oldpassword 'Ch@ngeme1' --arg password ${PPDM_PASSWORD} '.lockbox.passphrase  |= $oldpassword | .lockbox.newPassphrase  |= $password')
-    CONFIGURATION=$(echo $CONFIGURATION | jq --arg password ${PPDM_PASSWORD} '.applicationUserPassword |= $password')
+    CONFIGURATION=$(echo $CONFIGURATION | jq --arg oldpassword changeme --arg password "${PPDM_PASSWORD}" '(.osUsers[] | select(.userName == "root").newPassword) |= $password | (.osUsers[] | select(.userName == "root").password) |= $oldpassword')
+    CONFIGURATION=$(echo $CONFIGURATION | jq --arg oldpassword '@ppAdm1n' --arg password "${PPDM_PASSWORD}" '(.osUsers[] | select(.userName == "admin").newPassword) |= $password | (.osUsers[] | select(.userName == "admin").password) |= $oldpassword')
+    CONFIGURATION=$(echo $CONFIGURATION | jq --arg oldpassword '$upp0rt!' --arg password "${PPDM_PASSWORD}" '(.osUsers[] | select(.userName == "support").newPassword) |= $password | (.osUsers[] | select(.userName == "support").password) |= $oldpassword')
+    CONFIGURATION=$(echo $CONFIGURATION | jq --arg oldpassword 'Ch@ngeme1' --arg password "${PPDM_PASSWORD}" '.lockbox.passphrase  |= $oldpassword | .lockbox.newPassphrase  |= $password')
+    CONFIGURATION=$(echo $CONFIGURATION | jq --arg password "${PPDM_PASSWORD}" '.applicationUserPassword |= $password')
     CONFIGURATION=$(echo $CONFIGURATION | jq --arg timezone "Europe/Berlin - Central European Time" '.timeZone |= $timezone')
     CONFIGURATION=$(echo $CONFIGURATION | jq --arg ntpservers "192.168.1.1" '.ntpServers |= [$ntpservers]')
     CONFIGURATION=$(echo $CONFIGURATION | jq 'del(._links)')
