@@ -5,7 +5,7 @@ figlet DPS Automation
 
 echo "checking for jq...."
 DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
-source dps_modules/ci/functions/ppdm_functions.sh
+source dps-modules/ci/functions/ppdm_functions.sh
 echo "requesting API token"
 
 export PPDM_TOKEN=$(get_ppdm_token ${PPDM_PASSWORD})

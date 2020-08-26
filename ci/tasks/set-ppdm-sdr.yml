@@ -3,7 +3,7 @@
 platform: linux
 
 inputs:
- - name: dps_modules
+ - name: dps-modules
 
 params:
   PPDM_FQDN: 
@@ -12,7 +12,7 @@ params:
   PPDD_FQDN:
 
 run:
-  path: dps_modules/ci/scripts/set-ppdm-sdr.sh
+  path: dps-modules/ci/scripts/set-ppdm-sdr.sh
 
 
 # test with 

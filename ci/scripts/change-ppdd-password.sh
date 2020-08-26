@@ -7,7 +7,7 @@ figlet DPS Automation
 echo "checking for jq...."
 DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 
-source dps_modules/ci/functions/ppdd_functions.sh
+source dps-modules/ci/functions/ppdd_functions.sh
 echo "getting PPDD token"
 export PPDD_TOKEN=$(get_ppdd_token ${PPDD_SETUP_PASSWORD})
 echo "getting PPDD System ID"

@@ -7,7 +7,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 
 echo "requesting API token"
 
-source dps_modules/ci/functions/ppdm_functions.sh
+source dps-modules/ci/functions/ppdm_functions.sh
 export PPDM_TOKEN=$(get_ppdm_token ${PPDM_SETUP_PASSWORD})
 
 echo "Retrieving initial appliance configuration Template"

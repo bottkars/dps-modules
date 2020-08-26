@@ -2,8 +2,8 @@
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
-source dps_modules/ci/functions/ppdm_functions.sh
-source dps_modules/ci/functions/yaml.sh
+source dps-modules/ci/functions/ppdm_functions.sh
+source dps-modules/ci/functions/yaml.sh
 
 create_variables "${PROXY_FILE}" sourced_
 

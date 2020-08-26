@@ -4,7 +4,7 @@ set -eu
 figlet DPS Automation
 echo "checking for jq...."
 DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
-source dps_modules/ci/functions/ddsh_functions.sh
+source dps-modules/ci/functions/ddsh_functions.sh
 export PPDD_DOMAIN=$(echo $PPDD_FQDN | cut -d'.' -f2-)
 
 ddsh net config ${PPDD_INTERFACE} dhcp no

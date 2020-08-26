@@ -9,7 +9,7 @@ echo "preparing avamar ${AVE_VERSION} Virtual Edition for ${AVE_VMNAME}"
 
 govc import.spec avamar/AVE-${AVE_VERSION}.ova > avamar.json
 echo "configuring appliance (vami) settings"
-source dps_modules/ci/functions/govc_functions.sh
+source dps-modules/ci/functions/govc_functions.sh
 
 echo "Configuring OVS Settings"
 

@@ -4,8 +4,8 @@ set -eu
 figlet DPS Automation
 echo "checking for jq...."
 DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
-source dps_modules/ci/functions/ppdm_functions.sh
-source dps_modules/ci/functions/yaml.sh
+source dps-modules/ci/functions/ppdm_functions.sh
+source dps-modules/ci/functions/yaml.sh
 
 
 export REF_VERSION=$(cat ./variable/version)

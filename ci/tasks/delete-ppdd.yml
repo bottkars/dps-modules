@@ -3,7 +3,7 @@
 platform: linux
 
 inputs:
- - name: dps_modules
+ - name: dps-modules
 
 params:
   GOVC_INSECURE: 
@@ -18,7 +18,7 @@ params:
   
 
 run:
-  path: dps_modules/ci/scripts/delete-ppdd.sh
+  path: dps-modules/ci/scripts/delete-ppdd.sh
 
 
 # test with 

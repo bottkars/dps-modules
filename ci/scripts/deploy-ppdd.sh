@@ -10,7 +10,7 @@ govc about
 echo "checking for jq...."
 DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 govc import.spec ddve/ddve-${PPDD_VERSION}.ova > ddve.json
-source dps_modules/ci/functions/govc_functions.sh
+source dps-modules/ci/functions/govc_functions.sh
 
 echo "configuring appliance (vami) settings for a ${PPDD_TYPE} PowerProtect DD"
 jq  '(.DiskProvisioning |= "thin")' ddve.json  > "tmp" && mv "tmp" ddve.json
