@@ -63,12 +63,13 @@ function get_ppdm_token {
     -XPOST    
     -H 'content-type: application/json' 
     -d '{"username":"'${ppdm_adminuser}'","password":"'${password}'"}')
-    if local response=$(ppdm_curl login  | jq -r '.access_token')
+    local response=$(ppdm_curl login  | jq -r '.access_token')
+    if [[ "$response" == "null" ]]
     then 
-        echo $response
-    else    
-        echo "error retrieving token" >&2
+        echo "error retrieving token"
         return 1
+    else    
+        echo $response
     fi        
 }
 
