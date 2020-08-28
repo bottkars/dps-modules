@@ -13,7 +13,7 @@ AVP_VERSION=$(cat avi_package/version)
 
 printf "Uploading ${AVI_PACKAGE}-${AVP_VERSION}.avp to $AVI_FQDN"
 put_avi_package "avi_package/${AVI_PACKAGE}-${AVP_VERSION}.avp"
-export WORKFLOW=upgrade-client-downloads
+export WORKFLOW=${AVI_PACKAGE}-${AVP_VERSION//-/.}
 
 
 sleep 3600
@@ -28,7 +28,7 @@ done
 
 
 data="{}"
-set_avi_config $data upgrade-client-downloads | jq -r .
+set_avi_config $data "${WORKFLOW}" | jq -r .
 
 
 until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]]
