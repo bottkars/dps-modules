@@ -43,7 +43,7 @@ function avi-start-bashscript {
 ### rest functions
 function avi_curl {
     local url
-    local avi_fqdn=${AVE_FQDN:-AVI_FQDN}
+    local avi_fqdn=${AVE_FQDN:-$AVI_FQDN}
     url="https://${avi_fqdn}:7543/avi/service/api/${1#/}"
     shift || return # fail if we weren't passed at least x args
     local sleep_seconds=10
