@@ -16,8 +16,6 @@ put_avi_package "avi_package/${AVI_PACKAGE}-${AVP_VERSION}.avp"
 export WORKFLOW=${AVI_PACKAGE}-${AVP_VERSION//-/.}
 
 
-sleep 3600
-
 
 until [[ $(get_avi_packages | jq -e -r 'select(.title==env.WORKFLOW).status == "ready"' 2>/dev/null)  ]]
 do
@@ -36,7 +34,4 @@ until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /
     get_avi_messages  | jq -r  '.[-1] | [.timestamp, .status, .taskId, .taskName, .content] | @tsv'
     sleep 10
 done
-
-
-#     get_avi_messages  | jq -r '.[-1].status | .key'
 
