@@ -21,7 +21,7 @@ done
 printf "\n"
 
 
-AVI_TOKEN=$(get_avi_token $NVE_PASSWORD)
+AVI_TOKEN=$(get_avi_token "${NVE_PASSWORD}")
 
 
 echo "waiting for ${WORKFLOW} to become ready"
