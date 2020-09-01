@@ -5,7 +5,9 @@ figlet DPS Automation
 
 source dps-modules/ci/functions/avi_functions.sh
 NVE_VERSION=$(cat networker/version)
+DEPLOYMENT_VERSION=$(cat deployment/version)
 export WORKFLOW=NveConfig-${NVE_VERSION}
+export NVE_PASSWORD=$(jq -r .properties.outputs.nvePasswd.value "deployment/deployment-${DEPLOYMENT_VERSION}.json")
 printf "Configuring Networker Virtual Edition\n"
 printf "testing we can resolve the AVI at %s" "${AVI_FQDN}"
 until dig +short -t srv "${AVI_FQDN}"; do
