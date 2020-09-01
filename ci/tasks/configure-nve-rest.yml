@@ -4,6 +4,7 @@ platform: linux
 
 inputs:
  - name: dps-modules
+ - name: networker
 
 
 params:

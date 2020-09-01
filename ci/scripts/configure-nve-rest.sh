@@ -4,7 +4,8 @@ set -e
 figlet DPS Automation
 
 source dps-modules/ci/functions/avi_functions.sh
-export WORKFLOW=ave-config
+NVE_VERSION=$(cat networker/version)
+export WORKFLOW=NveConfig-${NVE_VERSION}
 printf "Configuring Networker Virtual Edition\n"
 printf "testing we can resolve the AVI at %s" "${AVI_FQDN}"
 until dig +short -t srv "${AVI_FQDN}"; do
@@ -53,7 +54,7 @@ data='{"timezone_name":"'${NVE_TIMEZONE}'",
 "add_datadomain_config":"'${NVE_ADD_DATDOMAIN_CONFIG}'"
 }'
 data=$(echo "${data}" | jq -c .)
-set_avi_config $data $WORKFLOW| jq -r .
+set_avi_config "${data}" "${WORKFLOW}" | jq -r .
 
 until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]]
     do
