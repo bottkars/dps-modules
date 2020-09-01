@@ -1,0 +1,35 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: dps-modules
+
+
+params:
+  DEBUG: "FALSE"
+  AVI_FQDN:
+  NVE_ADD_DATDOMAIN_CONFIG:
+  NVE_SETUP_PASSWORD: 
+  NVE_TIMEZONE: 
+  NVE_ADMIN_PASSWORD_OS: 
+  NVE_ROOT_PASSWORD_OS: 
+  NVE_SNMP_STRING: 
+  NVE_DATADOMAIN_HOST: 
+  NVE_STORAGE_PATH: 
+  NVE_DDBOOST_USER: 
+  NVE_NEW_DDBOOST_USER: 
+  NVE_DDBOOST_USER_PWD:
+  NVE_DDBOOST_USER_PWD_CF: 
+  NVE_DATADOMAIN_SYSADMIN: 
+  NVE_DATADOMAIN_SYSADMIN_PWD: 
+  NVE_TOMCAT_KEYSTORE_PASSWORD: 
+  NVE_AUTHC_ADMIN_PASSWORD:  
+
+run:
+  path: dps-modules/ci/scripts/configure-nve-rest.sh
+
+
+# test with 
+# echo "<preset variable yml>" > vars.yml
+# while IFS=": " read -r field1 field2; do     export $field1=$field2; done < vars.yml

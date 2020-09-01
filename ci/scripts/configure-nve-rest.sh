@@ -50,22 +50,8 @@ data='{"timezone_name":"'${NVE_TIMEZONE}'",
 "tomcat_keystore_password":"'${NVE_TOMCAT_KEYSTORE_PASSWORD}'" ,
 "authc_admin_password":"'${NVE_AUTHC_ADMIN_PASSWORD}'" ,
 "install_avpasswd":"false" ,
-"add_datadomain_config":"false"
+"add_datadomain_config":"'${NVE_ADD_DATDOMAIN_CONFIG}'"
 }'
-
-
-data='{"timezone_name":"'${NVE_TIMEZONE}'", 
-"admin_password_os":"'${NVE_ADMIN_PASSWORD_OS}'" ,
-"root_password_os":"'${NVE_ROOT_PASSWORD_OS}'" ,
-"snmp_string":"'${NVE_SNMP_STRING}'" ,
-"tomcat_keystore_password":"'${NVE_TOMCAT_KEYSTORE_PASSWORD}'" ,
-"authc_admin_password":"'${NVE_AUTHC_ADMIN_PASSWORD}'" ,
-"install_avpasswd":"false" ,
-"add_datadomain_config":"false"
-}'
-
-
-
 data=$(echo "${data}" | jq -c .)
 set_avi_config $data $WORKFLOW| jq -r .
 
@@ -74,8 +60,5 @@ until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /
     get_avi_messages  | jq -r  '.[-1] | [.timestamp, .status, .taskId, .taskName, .content] | @tsv'
     sleep 10
 done
-
-
-
 echo
 echo "Done"
