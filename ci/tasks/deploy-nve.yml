@@ -3,12 +3,13 @@
 platform: linux
 
 inputs:
- - name: dps_modules
+ - name: dps-modules
  - name: networker
 outputs:
 
 
 params:
+  DEBUG: "FALSE"
   GOVC_INSECURE: 
   GOVC_PASSWORD: 
   GOVC_URL: 
@@ -29,7 +30,7 @@ params:
   
 
 run:
-  path: dps_modules/ci/scripts/deploy-nve.sh
+  path: dps-modules/ci/scripts/deploy-nve.sh
 
 
 # test with 

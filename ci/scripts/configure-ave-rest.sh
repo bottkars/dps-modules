@@ -3,7 +3,7 @@ set -e
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
 
-source dps_modules/ci/functions/avi_functions.sh
+source dps-modules/ci/functions/avi_functions.sh
 export WORKFLOW=ave-config
 
 printf "Waiting for AVI System to become ready \n"

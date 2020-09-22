@@ -4,22 +4,21 @@ platform: linux
 
 inputs:
  - name: dps-modules
+ - name: avi_package
 
 
 params:
-  PPDM_NETWORK: 
-  PPDM_ADDRESS: 
-  PPDM_GATEWAY: 
-  PPDM_NETMASK: 
-  PPDM_FQDN: 
-  PPDM_VMNAME:
-  PPDM_DNS:
-  PPDM_PASSWORD: "Password123!"
-  PPDM_SETUP_PASSWORD: "admin"
+  DEBUG: false
+  AVI_FQDN:
+  AVI_USERNAME:
+  AVI_PASSWORD:
+  AVI_PACKAGE:
+  AVI_URL:
+
   
 
 run:
-  path: dps-modules/ci/scripts/configure-ppdm.sh
+  path: dps-modules/ci/scripts/deploy-avi-package.sh
 
 
 # test with 

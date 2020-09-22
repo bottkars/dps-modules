@@ -1,4 +1,4 @@
-# dps_modules
+# dps-modules
 
 This Repo contains Task and Functions that can be used in Concourse CI/CD, or any other Automation Solution, from bash
 
