@@ -765,4 +765,17 @@ function start_ppdm-instant_restored-copies {
     echo $response 
     }  
 
-# jq -r .Status.ProxyStatus.Status
+
+function stop_ppdm-instant_restored-copies {
+    local copyId=${1}
+    ppdm_curl_args=(
+    -XPOST
+    -H "content-type: application/json" 
+    -H "Authorization: Bearer ${token}"
+    -d "${data}" 
+    )
+    local response=$(ppdm_curl restored-copies/${copyId}/remove)
+    echo $response 
+}  
+
+
