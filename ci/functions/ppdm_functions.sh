@@ -768,6 +768,7 @@ function start_ppdm-instant_restored-copies {
 
 function stop_ppdm-instant_restored-copies {
     local copyId=${1}
+    local token=${2:-$PPDM_TOKEN}    
     ppdm_curl_args=(
     -XPOST
     -H "content-type: application/json" 
