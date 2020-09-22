@@ -8,7 +8,7 @@ inputs:
 outputs:
  - name: instant_access
 params:
-  INSTANT_FILE: $vmName-$REF_VERSION.json
+  INSTANT_FILE: $vmName-$timestamp.json
   GOVC_INSECURE: 
   GOVC_PASSWORD: 
   GOVC_URL: 
