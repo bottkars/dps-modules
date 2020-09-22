@@ -278,7 +278,7 @@ function get_ppdm_inventory-sources {
     -H "content-type: application/json" \
     -H "Authorization: Bearer ${token}" \
     )  
-    local response=$(ppdm_curl inventory-sources)
+    local response=$(ppdm_curl inventory-sources | jq -r ".content[]")
     echo $response
 }
 
