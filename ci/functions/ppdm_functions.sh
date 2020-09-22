@@ -773,7 +773,6 @@ function stop_ppdm-instant_restored-copies {
     -XPOST
     -H "content-type: application/json" 
     -H "Authorization: Bearer ${token}"
-    -d "${data}" 
     )
     local response=$(ppdm_curl restored-copies/${copyId}/remove)
     echo $response 
