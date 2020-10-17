@@ -20,7 +20,7 @@ echo "Retrieving initial appliance configuration Template"
     CONFIGURATION=$(echo $CONFIGURATION | jq --arg oldpassword 'Ch@ngeme1' --arg password "${PPDM_PASSWORD}" '.lockbox.passphrase  |= $oldpassword | .lockbox.newPassphrase  |= $password')
     CONFIGURATION=$(echo $CONFIGURATION | jq --arg password "${PPDM_PASSWORD}" '.applicationUserPassword |= $password')
     CONFIGURATION=$(echo $CONFIGURATION | jq --arg timezone "Europe/Berlin - Central European Time" '.timeZone |= $timezone')
-    CONFIGURATION=$(echo $CONFIGURATION | jq --arg ntpservers "192.168.1.1" '.ntpServers |= [$ntpservers]')
+    CONFIGURATION=$(echo $CONFIGURATION | jq --arg ntpservers "${PPDM_NTP_SERVER}" '.ntpServers |= [$ntpservers]')
     CONFIGURATION=$(echo $CONFIGURATION | jq 'del(._links)')
     printf "Appliance Config State complete: "
 

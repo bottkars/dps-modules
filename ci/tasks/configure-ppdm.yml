@@ -7,6 +7,7 @@ inputs:
 
 
 params:
+  PPDM_NTP_SERVER: "192.168.1.1"
   PPDM_NETWORK: 
   PPDM_ADDRESS: 
   PPDM_GATEWAY: 

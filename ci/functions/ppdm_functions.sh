@@ -166,6 +166,18 @@ function set_ppdm_configurations {
     echo $response
 }
 
+function accept_ppdm_eula {
+    local token=${1:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XPATCH
+    -H "content-type: application/json"
+    -H "Authorization: Bearer ${token}"
+    -d '{"accepted":"true"}'
+    )
+    local response=$(ppdm_curl "eulas/PPDM" )
+    echo $response
+}
+
 function get_ppdm_config-status {
     local token=${2:-$PPDM_TOKEN}
     local configuration_id=${1}
