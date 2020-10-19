@@ -1,0 +1,15 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: dps-modules
+# - name: variable
+#outputs:
+# - name: cdrs-state
+params:
+  CDRS_SERVER_ID: 
+  CDRS_MYSQL_ID:
+run:
+  path: dps-modules/ci/scripts/stop-cdrs-services.sh
+
