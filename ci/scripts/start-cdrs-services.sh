@@ -11,7 +11,7 @@ az login --service-principal \
     --tenant ${AZURE_TENANT_ID} \
     --output tsv
 az account set --subscription ${AZURE_SUBSCRIPTION_ID}  
-
+echo "Starting CDRS Server ane Database"
 az mysql server start \
 --ids ${CDRS_MYSQL_ID} 
 az vm start \
