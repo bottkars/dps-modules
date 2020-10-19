@@ -18,7 +18,8 @@ CDRS_STATE_FILE="$(echo "$CDRS_STATE_FILE" | envsubst)"
 echo $state | jq -r . >> cdrs-state/${CDRS_STATE_FILE}
 
 
-if  [[ (echo $state | jq -r '.cdrsConnectivityState == "NO_CONNECTION"') ]] then
+if  [[ $(echo $state | jq -r '.cdrsConnectivityState == "NO_CONNECTION"') ]]
+then
     echo $state | jq -r . >> cdra-state/${CDRA_STATE_FILE}
 else
    echo $state | jq -r . >> cdra-state/running_${CDRA_STATE_FILE} 
