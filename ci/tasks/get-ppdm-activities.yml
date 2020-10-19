@@ -1,0 +1,20 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: dps-modules
+ - name: variable
+outputs:
+ - name: instant_access
+params:
+  INSTANT_FILE: cdr-state-$timestamp.json
+  PPDM_FQDN:
+  PPDM_PASSWORD:
+  PPDM_USERNAME: admin
+  PPDM_QUERY: CLOUD_PROTECT
+  PPDM_FILTER: RUNNING
+
+run:
+  path: dps-modules/ci/scripts/get-ppdm-activities.sh
+
