@@ -20,9 +20,9 @@ echo $state | jq -r . >> cdrs-state/${CDRS_STATE_FILE}
 
 if  [[ $(echo $state | jq -r '.cdrsConnectivityState == "NO_CONNECTION"') ]]
 then
-    echo $state  | jq -r . >> cdra-state/${CDRS_STATE_FILE}
+    echo $state  | jq -r . >> cdrs-state/${CDRS_STATE_FILE}
 else
-   echo $state | jq -r . >> cdra-state/running_${CDRS_STATE_FILE} 
+   echo $state | jq -r . >> cdrs-state/running_${CDRS_STATE_FILE} 
 fi   
 
 
