@@ -18,8 +18,10 @@ CDRA_STATE_FILE="$(echo "$CDRA_STATE_FILE" | envsubst)"
 
 if  [[ $(echo $activities| jq -r '.[].state == "RUNNING"') ]] 
 then
+    echo "Cloud Desaster Recovery Backup Running !"
     echo $activities | jq -r . >> cdra-state/${CDRA_STATE_FILE}
 else
+echo "No Cloud Desaster Recovery Backup Running !"
    echo $activities | jq -r . >> cdra-state/no_${CDRA_STATE_FILE} 
 fi   
 
