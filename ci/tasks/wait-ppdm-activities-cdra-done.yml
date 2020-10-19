@@ -16,5 +16,5 @@ params:
   PPDM_FILTER: RUNNING
 
 run:
-  path: dps-modules/ci/scripts/qwait-ppdm-activities-cdra-done.sh
+  path: dps-modules/ci/scripts/wait-ppdm-activities-cdra-done.sh
 
