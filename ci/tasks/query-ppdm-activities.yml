@@ -6,9 +6,9 @@ inputs:
  - name: dps-modules
 # - name: variable
 outputs:
- - name: instant_access
+ - name: cdra-state
 params:
-  STATE_FILE:
+  CDRA_STATE_FILE: cdra-state-$timestamp.json
   PPDM_FQDN:
   PPDM_PASSWORD:
   PPDM_USERNAME: admin

@@ -14,8 +14,8 @@ echo $activities | jq -r .
 timestamp="$(date '+%Y%m%d.%-H%M.%S+%Z')"
 export timestamp
 
-CDR_STATE_FILE="$(echo "$CDR_STATE_FILE" | envsubst)" 
-echo $activities | jq -r . >> cdr-state/${CDR_STATE_FILE}
+CDRA_STATE_FILE="$(echo "$CDRA_STATE_FILE" | envsubst)" 
+echo $activities | jq -r . >> cdra-state/${CDRA_STATE_FILE}
 
 
 
