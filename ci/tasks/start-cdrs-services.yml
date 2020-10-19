@@ -8,7 +8,7 @@ inputs:
 #outputs:
 # - name: cdrs-state
 params:
-  CDRS_SERVER_ID: /subscriptions/8c21cadc-9e41-459e-bf4b-919aa2fad975/resourceGroups/CDRS-RESOURCEGROUP/providers/Microsoft.Compute/virtualMachines/CDRS-Instance
+  CDRS_SERVER_ID: 
   CDRS_MYSQL_ID:
 run:
   path: dps-modules/ci/scripts/start-cdrs-services.sh
