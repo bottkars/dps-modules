@@ -4,7 +4,7 @@ platform: linux
 
 inputs:
  - name: dps-modules
- - name: variable
+# - name: variable
 outputs:
  - name: instant_access
 params:
