@@ -16,7 +16,8 @@ export timestamp
 
 CDRA_STATE_FILE="$(echo "$CDRA_STATE_FILE" | envsubst)" 
 
-if  [[ (echo $activities| jq -r '.[].state == "RUNNING"') ]] then
+if  [[ $(echo $activities| jq -r '.[].state == "RUNNING"') ]] 
+then
     echo $activities | jq -r . >> cdra-state/${CDRA_STATE_FILE}
 else
    echo $activities | jq -r . >> cdra-state/no_${CDRA_STATE_FILE} 
