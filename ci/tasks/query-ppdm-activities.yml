@@ -16,5 +16,5 @@ params:
   PPDM_FILTER: RUNNING
 
 run:
-  path: dps-modules/ci/scripts/get-ppdm-activities.sh
+  path: dps-modules/ci/scripts/query-ppdm-activities.sh
 
