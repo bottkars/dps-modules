@@ -12,5 +12,7 @@ az login --service-principal \
     --output tsv
 az account set --subscription ${AZURE_SUBSCRIPTION_ID}  
 
-
-break
+az mysql server start \
+--ids ${CDRS_MYSQL_ID} 
+az vm start \
+--ids ${CDRS_SERVER_ID}
