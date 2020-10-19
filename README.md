@@ -50,8 +50,8 @@ proxy=$(get_ppdm_protection-engines_proxies $protection_engine  | jq -r ' .conte
 
 
 
-#### fresh install
-
+#### fresh install example
+```bash
 export PPDM_FQDN=52.177.18.170
 
 export PPDM_PASSWORD="Change_Me12345_"
@@ -95,3 +95,4 @@ CONFIGURATION=$(echo $CONFIGURATION | jq 'del(._links)')
 
 
 echo $CONFIGURATION | jq -r
+```
