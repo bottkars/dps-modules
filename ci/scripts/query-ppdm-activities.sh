@@ -7,11 +7,10 @@ source dps-modules/ci/functions/ppdm_functions.sh
 source dps-modules/ci/functions/yaml.sh
 
 export PPDM_TOKEN=$(get_ppdm_token $PPDM_PASSWORD)
-activities=$(get_ppdm_activities ${PPDM_QUERY})
+activities=$(query_ppdm_activities "${PPDM_QUERY}")
 echo $activities | jq -r .
 
 
-sleep 700000
 timestamp="$(date '+%Y%m%d.%-H%M.%S+%Z')"
 export timestamp
 
