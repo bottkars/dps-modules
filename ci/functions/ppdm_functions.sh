@@ -258,7 +258,16 @@ function get_ppdm_cloud-dr-accounts {
     local response=$(ppdm_curl cloud-dr-accounts  | jq '.content[]')
     echo $response
     }
-
+function get_ppdm_cloud-dr-server-configuration {
+    local token=${99:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "content-type: application/json"
+    -H "Authorization: Bearer ${token}"
+    )
+    local response=$(ppdm_curl cloud-dr-server-configuration)
+    echo $response
+    }
 function create_ppdm_inventory-source {
     local token=${6:-$PPDM_TOKEN}
     local type=${1}

@@ -8,14 +8,19 @@ source dps-modules/ci/functions/yaml.sh
 
 export PPDM_TOKEN=$(get_ppdm_token $PPDM_PASSWORD)
 activities=$(query_ppdm_activities "${PPDM_QUERY}")
-echo $activities | jq -r .
+echo $activities | jq -r '.[]'
 
 
 timestamp="$(date '+%Y%m%d.%-H%M.%S+%Z')"
 export timestamp
 
 CDRA_STATE_FILE="$(echo "$CDRA_STATE_FILE" | envsubst)" 
-echo $activities | jq -r . >> cdra-state/${CDRA_STATE_FILE}
+
+if  [[ (echo $activities| jq -r '.[].state == "RUNNING"') ]] then
+    echo $activities | jq -r . >> cdra-state/${CDRA_STATE_FILE}
+else
+   echo $activities | jq -r . >> cdra-state/no_${CDRA_STATE_FILE} 
+fi   
 
 
 
