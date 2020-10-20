@@ -25,6 +25,11 @@ case  $CDRS_MYSQL_STATE  in
                 echo "Something bad just happend"
                 exit 1
                 ;;
+                Stopped)
+                echo "MySQL Server not running, starting now"
+                az mysql server start \
+                --ids ${CDRS_MYSQL_ID}
+                ;;
                 Inaccessible|Disabled)
                 echo "MySQL Server not running, starting now"
                 az mysql server restart \
