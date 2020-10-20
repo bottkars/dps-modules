@@ -12,7 +12,7 @@ az account set --subscription ${AZURE_SUBSCRIPTION_ID}
 
 echo "Getting MySQL Server Status"
 
-MYSQLSTATE=$(az mysql server show  \
+CDRS_MYSQL_STATE=$(az mysql server show  \
     --ids ${CDRS_MYSQL_ID} \
     --output tsv --query "userVisibleState"
 )
