@@ -31,19 +31,19 @@ case  $CDRS_MYSQL_STATE  in
                 --ids ${CDRS_MYSQL_ID}
                 ;;
 esac
-
+echo "Getting CDRS VM State"
 CDRS_SERVER_STATE=$(az vm show  \
     --ids ${CDRS_SERVER_ID} \
     --show-details \
     --output tsv --query "powerState"
 )
-echo "Server state is ${CDRS_SERVER_STATE}"
+echo "VM state is ${CDRS_SERVER_STATE}"
 case  $CDRS_SERVER_STATE  in
                 'VM running')     
                 echo "CDRS Server already running, nothing to do here"
                 ;;
                 'VM deallocated')
-                echo "CDRS Server not running, starting now"
+                echo "CDRS VM not running, starting now"
                 az vm  start \
                     --ids ${CDRS_SERVER_ID} \
                     --no-wait
@@ -52,7 +52,7 @@ case  $CDRS_SERVER_STATE  in
                     --show-details \
                     --output json --query "powerState=='VM running'" )
                 do 
-                    echo "waiting for server to start"
+                    echo "waiting for VM to start"
                     sleep 30
                 done
                 ;;
@@ -65,7 +65,7 @@ case  $CDRS_SERVER_STATE  in
                     --show-details \
                     --output tsv --query "powerState=='VM running'" )
                 do 
-                    echo "waiting for server to start"
+                    echo "waiting for VM to start"
                     sleep 30
                 done
                 ;;

@@ -11,7 +11,7 @@ az login --service-principal \
     --tenant ${AZURE_TENANT_ID} \
     --output tsv
 az account set --subscription ${AZURE_SUBSCRIPTION_ID}  
-echo "Stopping CDRS Server and Database"
+echo "Stopping CDRS VM and Database"
 echo "Getting MySQL Server Status"
 
 CDRS_MYSQL_STATE=$(az mysql server show  \
@@ -36,16 +36,16 @@ case  $CDRS_MYSQL_STATE  in
 esac
 
 
-
+echo "Getting CDRS VM State"
 CDRS_SERVER_STATE=$(az vm show  \
     --ids ${CDRS_SERVER_ID} \
     --show-details \
     --output tsv --query "powerState"
 )
-echo "Server state is ${CDRS_SERVER_STATE}"
+echo "VM state is ${CDRS_SERVER_STATE}"
 case  $CDRS_SERVER_STATE  in
                 'VM running')     
-                echo "CDRS Server running, stopping now"
+                echo "CDRS VM running, stopping now"
                 az vm deallocate \
                     --ids ${CDRS_SERVER_ID} \
                     --no-wait
@@ -54,7 +54,7 @@ case  $CDRS_SERVER_STATE  in
                     --show-details \
                     --output json --query "powerState=='VM deallocated'" )
                 do 
-                    echo "waiting for server to start"
+                    echo "waiting for VM to deallocate"
                     sleep 30
                 done    
                 ;;
@@ -65,12 +65,12 @@ case  $CDRS_SERVER_STATE  in
                     --show-details \
                     --output json --query "powerState=='VM deallocated'" )
                 do 
-                    echo "waiting for server to be deallocated"
+                    echo "waiting for VM to be deallocated"
                     sleep 30
                 done
                 ;;
                 'VM deallocated')
-                echo "CDRS Server not running, nothing to do here"
+                echo "CDRS VM not running, nothing to do here"
                 ;;
 esac
 
