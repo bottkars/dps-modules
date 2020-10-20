@@ -12,9 +12,66 @@ az login --service-principal \
     --output tsv
 az account set --subscription ${AZURE_SUBSCRIPTION_ID}  
 echo "Stopping CDRS Server and Database"
-az vm deallocate \
---ids ${CDRS_SERVER_ID}
+echo "Getting MySQL Server Status"
 
-az mysql server stop \
---ids ${CDRS_MYSQL_ID} 
+CDRS_MYSQL_STATE=$(az mysql server show  \
+    --ids ${CDRS_MYSQL_ID} \
+    --output tsv --query "userVisibleState"
+)
+echo "MySQL Server state is ${CDRS_MYSQL_STATE}"
 
+case  $CDRS_MYSQL_STATE  in
+                Ready|Inaccesible)     
+                echo "MySQL Instance running, Stopping now"
+                az mysql server stop \
+                --ids ${CDRS_MYSQL_ID} --verbose
+                ;;
+                Disabled)
+                echo "MySQL Server not running, nothing to do Here"
+                ;;
+                Dropping)
+                echo "Something bad just happend"
+                exit 1
+                ;;
+esac
+
+
+
+CDRS_SERVER_STATE=$(az vm show  \
+    --ids ${CDRS_SERVER_ID} \
+    --show-details \
+    --output tsv --query "powerState"
+)
+echo "Server state is ${CDRS_SERVER_STATE}"
+case  $CDRS_SERVER_STATE  in
+                'VM running')     
+                echo "CDRS Server running, stopping now"
+                az vm deallocate \
+                    --ids ${CDRS_SERVER_ID} \
+                    --no-wait
+                until $(az vm show \
+                    --ids ${CDRS_SERVER_ID} \
+                    --show-details \
+                    --output json --query "powerState=='VM deallocated'" )
+                do 
+                    echo "waiting for server to start"
+                    sleep 30
+                done    
+                ;;
+                'VM deallocating')
+                echo 'VM already Deallocating, wating to be done'
+                until $(az vm show \
+                    --ids ${CDRS_SERVER_ID} \
+                    --show-details \
+                    --output json --query "powerState=='VM deallocated'" )
+                do 
+                    echo "waiting for server to be deallocated"
+                    sleep 30
+                done
+                ;;
+                'VM deallocated')
+                echo "CDRS Server not running, nothing to do here"
+                ;;
+esac
+
+echo "Done Deallocating"

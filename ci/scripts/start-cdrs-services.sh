@@ -16,12 +16,16 @@ CDRS_MYSQL_STATE=$(az mysql server show  \
     --ids ${CDRS_MYSQL_ID} \
     --output tsv --query "userVisibleState"
 )
-
+echo "MySQL Server state is ${CDRS_MYSQL_STATE}"
 case  $CDRS_MYSQL_STATE  in
                 Ready)     
                 echo "MySQL Instance already running, nothing to do here"
                 ;;
-                *)
+                Dropping)
+                echo "Something bad just happend"
+                exit 1
+                ;;
+                Inaccessible|Disabled)
                 echo "MySQL Server not running, starting now"
                 az mysql server restart \
                 --ids ${CDRS_MYSQL_ID}
@@ -30,21 +34,36 @@ esac
 
 CDRS_SERVER_STATE=$(az vm show  \
     --ids ${CDRS_SERVER_ID} \
-    --output tsv --query "provisioningState"
+    --show-details \
+    --output tsv --query "powerState"
 )
 echo "Server state is ${CDRS_SERVER_STATE}"
 case  $CDRS_SERVER_STATE  in
-                Succeeded)     
+                'VM running')     
                 echo "CDRS Server already running, nothing to do here"
                 ;;
-                *)
+                'VM deallocated')
                 echo "CDRS Server not running, starting now"
+                az vm  start \
+                    --ids ${CDRS_SERVER_ID} \
+                    --no-wait
+                until $(az vm show \
+                    --ids ${CDRS_SERVER_ID} \
+                    --show-details \
+                    --output json --query "powerState=='VM running'" )
+                do 
+                    echo "waiting for server to start"
+                    sleep 30
+                done
+                ;;
+                'VM deallocating')
                 az vm  restart \
                     --ids ${CDRS_SERVER_ID} \
                     --no-wait
-                until az vm show \
+                until $(az vm show \
                     --ids ${CDRS_SERVER_ID} \
-                    --output json --query "provisioningState=='Succeeded'" 
+                    --show-details \
+                    --output tsv --query "powerState=='VM running'" )
                 do 
                     echo "waiting for server to start"
                     sleep 30
