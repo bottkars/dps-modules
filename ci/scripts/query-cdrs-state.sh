@@ -2,7 +2,6 @@
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
-echo "checking for jq...."
 source dps-modules/ci/functions/ppdm_functions.sh
 source dps-modules/ci/functions/yaml.sh
 
