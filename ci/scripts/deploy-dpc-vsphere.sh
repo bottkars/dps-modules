@@ -8,7 +8,7 @@ echo "preparing dpc ${DPC_VERSION} "
 govc about
 govc import.spec dpc/DPC-${DPC_VERSION}.ova > dpc.json
 echo "configuring appliance (vami) settings"
-
+exit 1
 jq  '(.PropertyMapping[] | select(.Key == "vami.ipv4.NetWorker_Virtual_Edition") | .Value) |= env.DPC_ADDRESS' dpc.json > "tmp" && mv "tmp" dpc.json
 jq  '(.PropertyMapping[] | select(.Key == "vami.gatewayv4.NetWorker_Virtual_Edition") | .Value) |= env.DPC_GATEWAY' dpc.json > "tmp" && mv "tmp" dpc.json
 jq  '(.PropertyMapping[] | select(.Key == "vami.DNS.NetWorker_Virtual_Edition") | .Value) |= env.DPC_DNS' dpc.json  > "tmp" && mv "tmp" dpc.json

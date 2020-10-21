@@ -30,7 +30,7 @@ params:
   
 
 run:
-  path: dps-modules/ci/scripts/deploy-nve.sh
+  path: dps-modules/ci/scripts/deploy-dpc-vsphere.sh
 
 
 # test with 
