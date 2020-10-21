@@ -11,29 +11,6 @@ az login --service-principal \
     --tenant ${AZURE_TENANT_ID} \
     --output tsv
 az account set --subscription ${AZURE_SUBSCRIPTION_ID}  
-echo "Stopping CDRS VM and Database"
-echo "Getting MySQL Server Status"
-
-CDRS_MYSQL_STATE=$(az mysql server show  \
-    --ids ${CDRS_MYSQL_ID} \
-    --output tsv --query "userVisibleState"
-)
-echo "MySQL Server state is ${CDRS_MYSQL_STATE}"
-
-case  $CDRS_MYSQL_STATE  in
-                Ready|Inaccesible)     
-                echo "MySQL Instance running, Stopping now"
-                az mysql server stop \
-                --ids ${CDRS_MYSQL_ID} --verbose
-                ;;
-                Disabled)
-                echo "MySQL Server not running, nothing to do Here"
-                ;;
-                Dropping)
-                echo "Something bad just happend"
-                exit 1
-                ;;
-esac
 
 
 echo "Getting CDRS VM State"
@@ -75,3 +52,30 @@ case  $CDRS_SERVER_STATE  in
 esac
 
 echo "Done Deallocating"
+
+
+echo "Stopping CDRS VM and Database"
+echo "Getting MySQL Server Status"
+
+CDRS_MYSQL_STATE=$(az mysql server show  \
+    --ids ${CDRS_MYSQL_ID} \
+    --output tsv --query "userVisibleState"
+)
+echo "MySQL Server state is ${CDRS_MYSQL_STATE}"
+
+case  $CDRS_MYSQL_STATE  in
+                Ready|Inaccesible)     
+                echo "MySQL Instance running, Stopping now"
+                az mysql server stop \
+                --ids ${CDRS_MYSQL_ID} --verbose
+                ;;
+                Disabled)
+                echo "MySQL Server not running, nothing to do Here"
+                ;;
+                Dropping)
+                echo "Something bad just happend"
+                exit 1
+                ;;
+esac
+
+

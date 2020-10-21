@@ -33,7 +33,7 @@ case  $CDRS_MYSQL_STATE  in
                 Inaccessible|Disabled)
                 echo "MySQL Server not running, starting now"
                 az mysql server restart \
-                --ids ${CDRS_MYSQL_ID}
+                --ids ${CDRS_MYSQL_ID} --verbose
                 ;;
 esac
 echo "Waiting 2 Minutes before starting CDRS VM"
