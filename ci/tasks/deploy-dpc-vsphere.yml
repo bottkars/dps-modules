@@ -27,7 +27,11 @@ params:
   DPC_FQDN: 
   DPC_VMNAME:
   DPC_DNS: 
-  
+  DPC_TIMEZONE:
+  DPC_ADMIN_PASSWORD:
+  DPC_ROOT_PASSWORD:
+  DPC_UI_PASSWORD:
+  DPC_LOCKBOX_PASSWORD:    
 
 run:
   path: dps-modules/ci/scripts/deploy-dpc-vsphere.sh

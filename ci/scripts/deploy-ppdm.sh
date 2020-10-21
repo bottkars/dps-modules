@@ -11,8 +11,6 @@ then
  echo "vm ${GOVC_VM_IPATH} already exists, nothing to do here"
 else
     echo "preparing powerprotect ${PPDM_VERSION} base install"
-    echo "checking for jq...."
-    DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
     govc import.spec powerprotect/dellemc-ppdm-sw-${PPDM_VERSION}.ova > powerprotect.json
     echo "configuring appliance (vami) settings"
     jq  '(.PropertyMapping[] | select(.Key == "vami.ip0.brs") | .Value) |= env.PPDM_ADDRESS' powerprotect.json > "tmp" && mv "tmp" powerprotect.json
