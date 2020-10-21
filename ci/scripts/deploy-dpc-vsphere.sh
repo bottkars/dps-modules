@@ -8,7 +8,7 @@ echo "preparing dpc ${DPC_VERSION}"
 govc about
 govc import.spec dpc/emc-dpc-ova-${DPC_VERSION}.ova > dpc.json
 echo "configuring appliance (vami) settings"
-exit 1
+
     echo "configuring appliance (vami) settings"
     jq  '(.PropertyMapping[] | select(.Key == "vami.ip0.brs") | .Value) |= env.DPC_ADDRESS' brs.json > "tmp" && mv "tmp" brs.json
     jq  '(.PropertyMapping[] | select(.Key == "vami.gateway.brs") | .Value) |= env.DPC_GATEWAY' brs.json > "tmp" && mv "tmp" brs.json
