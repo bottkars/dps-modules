@@ -7,7 +7,7 @@ source dps-modules/ci/functions/yaml.sh
 
 export PPDM_TOKEN=$(get_ppdm_token $PPDM_PASSWORD)
 state=$(get_ppdm_cloud-dr-server-configuration)
-echo $activities | jq -r .
+echo $state | jq -r .
 
 
 timestamp="$(date '+%Y%m%d.%H%M.%S+%Z')"
