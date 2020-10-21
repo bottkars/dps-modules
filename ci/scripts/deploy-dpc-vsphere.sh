@@ -6,7 +6,7 @@ DPC_VERSION=$(cat dpc/version)
 echo "preparing dpc ${DPC_VERSION}"
 
 govc about
-govc import.spec dpc/emc-dpc-ova-${DPC_VERSION}.ova > dpc.json
+govc import.spec dpc/emc-dpc-ova-${DPC_VERSION}.ova > brs.json
 echo "configuring appliance (vami) settings"
 
     echo "configuring appliance (vami) settings"
