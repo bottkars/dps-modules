@@ -9,7 +9,7 @@ govc about
 govc import.spec dpc/emc-dpc-ova-${DPC_VERSION}.ova > brs.json
 echo "configuring appliance (vami) settings"
 
-    echo "configuring appliance (vami) settings"
+
     jq  '(.PropertyMapping[] | select(.Key == "vami.ip0.brs") | .Value) |= env.DPC_ADDRESS' brs.json > "tmp" && mv "tmp" brs.json
     jq  '(.PropertyMapping[] | select(.Key == "vami.gateway.brs") | .Value) |= env.DPC_GATEWAY' brs.json > "tmp" && mv "tmp" brs.json
     jq  '(.PropertyMapping[] | select(.Key == "vami.netmask0.brs") | .Value) |= env.DPC_NETMASK' brs.json  > "tmp" && mv "tmp" brs.json
@@ -21,13 +21,10 @@ echo "configuring appliance (vami) settings"
     jq  '(.PropertyMapping[] | select(.Key == "vami.ui-password.brs") | .Value) |= env.DPC_UI_PASSWORD' brs.json  > "tmp" && mv "tmp" brs.json
     jq  '(.PropertyMapping[] | select(.Key == "vami.lockbox-password.brs") | .Value) |= env.DPC_LOCKBOX_PASSWORD' brs.json  > "tmp" && mv "tmp" brs.json
     jq  '(.PropertyMapping[] | select(.Key == "vami.timezone.brs") | .Value) |= env.DPC_TIMEZONE' brs.json  > "tmp" && mv "tmp" brs.json
-
-
-
     jq  '(.DiskProvisioning |= "thin")' brs.json  > "tmp" && mv "tmp" brs.json
     jq  '(.NetworkMapping[].Name |= env.DPC_NETWORK)' brs.json  > "tmp" && mv "tmp" brs.json
     echo "importing dpc ${DPC_VERSION} template"
-    govc import.ova -name ${DPC_VMNAME} -folder=${DPC_FOLDER} -options=brs.json dpc/emc-dpc-ova--${DPC_VERSION}.ova
+    govc import.ova -name ${DPC_VMNAME} -folder=${DPC_FOLDER} -options=brs.json dpc/emc-dpc-ova-${DPC_VERSION}.ova
     govc vm.network.change -vm.ipath ${GOVC_VM_IPATH} -net=VLAN250 ethernet-0
 
     govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
