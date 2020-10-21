@@ -36,7 +36,7 @@ case  $CDRS_MYSQL_STATE  in
                 --ids ${CDRS_MYSQL_ID}
                 ;;
 esac
-echo "aitong 2 Minutes before starting CDRS VM"
+echo "Waiting 2 Minutes before starting CDRS VM"
 sleep 120
 echo "Getting CDRS VM State"
 CDRS_SERVER_STATE=$(az vm show  \

@@ -1,0 +1,38 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: dps-modules
+ - name: dpc
+outputs:
+
+
+params:
+  DEBUG: "FALSE"
+  GOVC_INSECURE: 
+  GOVC_PASSWORD: 
+  GOVC_URL: 
+  GOVC_USERNAME: Administrator@vsphere.local
+  GOVC_RESOURCE_POOL: 
+  GOVC_DATASTORE: 
+  GOVC_DATACENTER:   
+  GOVC_NETWORK: 
+  GOVC_VM_IPATH:
+  DPC_FOLDER:
+  DPC_NETWORK: 
+  DPC_ADDRESS: 
+  DPC_GATEWAY: 
+  DPC_NETMASK: 
+  DPC_FQDN: 
+  DPC_VMNAME:
+  DPC_DNS: 
+  
+
+run:
+  path: dps-modules/ci/scripts/deploy-nve.sh
+
+
+# test with 
+# echo "<preset variable yml>" > vars.yml
+# while IFS=": " read -r field1 field2; do     export $field1=$field2; done < vars.yml
