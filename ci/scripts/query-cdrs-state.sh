@@ -20,10 +20,10 @@ echo $state | jq -r . >> cdrs-state/${CDRS_STATE_FILE}
 if  [[ $(echo $state | jq -r '.cdrsConnectivityState == "NO_CONNECTION"') == true ]]
 then
     echo "Cloud Desaster Recovery Services Suspended on Azure"
-   #echo $state  | jq -r . >> cdrs-state/${CDRS_STATE_FILE}
+    echo $state  | jq -r . >> cdrs-state/${CDRS_STATE_FILE}
 else
     echo "Cloud Desaster Recovery Services running on Azure"
-    #echo $state | jq -r . >> cdrs-state/running_${CDRS_STATE_FILE} 
+    echo $state | jq -r . >> cdrs-state/${CDRS_STATE_FILE} 
 fi   
 
 
