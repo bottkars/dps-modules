@@ -10,7 +10,7 @@ state=$(get_ppdm_cloud-dr-server-configuration)
 echo $state | jq -r .
 
 
-timestamp="$(date '+%Y%m%d.%H%M.%S+%Z')"
+timestamp="$(date '+%Y%m%d.%-H%M.%S')"
 export timestamp
 
 CDRS_STATE_FILE="$(echo "$CDRS_STATE_FILE" | envsubst)" 

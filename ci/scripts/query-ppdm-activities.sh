@@ -10,7 +10,7 @@ activities=$(query_ppdm_activities "${PPDM_QUERY}")
 echo $activities | jq -r '.[]'
 
 
-timestamp="$(date '+%Y%m%d.%H%M.%S+%Z')"
+timestamp="$(date '+%Y%m%d.%-H%M.%S')"
 export timestamp
 
 CDRA_STATE_FILE="$(echo "$CDRA_STATE_FILE" | envsubst)" 
