@@ -1,4 +1,28 @@
 #!/bin/bash
+urlencode() {
+    # urlencode <string>
+
+    old_lc_collate=$LC_COLLATE
+    LC_COLLATE=C
+
+    local length="${#1}"
+    for (( i = 0; i < length; i++ )); do
+        local c="${1:$i:1}"
+        case $c in
+            [a-zA-Z0-9.~_-]) printf '%s' "$c" ;;
+            *) printf '%%%02X' "'$c" ;;
+        esac
+    done
+
+    LC_COLLATE=$old_lc_collate
+}
+
+urldecode() {
+    # urldecode <string>
+
+    local url_encoded="${1//+/ }"
+    printf '%b' "${url_encoded//%/\\x}"
+}
 function ppdm_curl {
     local url
     url="https://${PPDM_FQDN}:8443/api/v2/${1#/}"
@@ -51,7 +75,7 @@ function ppdm_curl {
             sleep $sleep_seconds    
         fi
     done 
-    echo $result | jq -e . 2>/dev/null
+    echo -E $result  | jq -e . 2>/dev/null
 }
 
 
@@ -85,11 +109,12 @@ function get_ppdm_configuration {
 }
 
 function get_ppdm_activities {
+    local id=${1}
     local token=${99:-$PPDM_TOKEN}
     ppdm_curl_args=(
     -XGET
     -H "Authorization: Bearer ${token}" )
-    local response=$(ppdm_curl activities | jq -r ".content[]" )
+    local response=$(ppdm_curl activities/$id | jq -r  )
     echo $response
 }
 
@@ -800,33 +825,16 @@ function stop_ppdm-instant_restored-copies {
 }  
 
 
-function query_ppdm_activities2 {
+function query_ppdm_activities {
     local filter=${2:-'parentId eq null and classType in ("JOB", "JOB_GROUP") and state in ("RUNNING", "QUEUED", "PENDING_CANCELLATION")'}
     local query=${1:-'*'}
     local token=${99:-$PPDM_TOKEN}
-    
+    local encoded_filter=$(urlencode "${filter}")
     ppdm_curl_args=(
     -XGET
-    -H "Authorization: Bearer ${token}" \
-    --data-urlencode "filter=${filter}" \
-    --data-urlencode "q=${query}"
+    -H "Authorization: Bearer ${token}" 
     )
-    local response=$(ppdm_curl activities)
-    #echo $response | jq .content
-}
-
-function query_ppdm_activities {
-   # local filter=${2:-'parentId eq null and classType in ("JOB", "JOB_GROUP") and state in ("RUNNING", "QUEUED", "PENDING_CANCELLATION")'}
-    local filter=${2:-"parentId%20eq%20null%20and%20classType%20in%20(%22JOB%22%2C%20%22JOB_GROUP%22)%20and%20state%20in%20(%22RUNNING%22%2C%20%22QUEUED%22%2C%20%22PENDING_CANCELLATION%22)"}
-    local query=${1:-"*"}
-    local token=${99:-$PPDM_TOKEN}
-    
-    ppdm_curl_args=(
-    -XGET
-    -H "Authorization: Bearer ${token}" \
-    --data-urlencode "filter='${filter}'" \
-    --data-urlencode "q='${query}'"
-    )
-    local response=$(ppdm_curl "activities?filter=${filter}&query='${query}'")
+    local response=$(ppdm_curl "activities?filter=${encoded_filter}&query='${query}'")
     echo $response | jq '.content'
 }
+
