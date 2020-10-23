@@ -4,9 +4,9 @@ platform: linux
 
 inputs:
  - name: dps-modules
- - name: cdra-state
+ - name: cdra-active
 outputs:
- - name: cdra-state
+ - name: cdra-active
 params:
   CDRA_STATE_FILE: cdra-state-$timestamp.json
   PPDM_FQDN:
