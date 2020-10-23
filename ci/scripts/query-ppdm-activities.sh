@@ -21,7 +21,6 @@ then
     echo $activities | jq -r . >> cdra-state/${CDRA_STATE_FILE}
 else
 echo "No Cloud Desaster Recovery Backup Running ! ${timestamp}"
-   echo $activities | jq -r . >> cdra-state/no_${CDRA_STATE_FILE} 
 fi   
 
 
