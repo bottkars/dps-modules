@@ -6,7 +6,7 @@ inputs:
  - name: dps-modules
  - name: cdra-active
 outputs:
- - name: cdra-active
+ - name: cdra-state
 params:
   CDRA_STATE_FILE: cdra-state-$timestamp.json
   PPDM_FQDN:
