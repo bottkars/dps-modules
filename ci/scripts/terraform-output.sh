@@ -1,15 +1,26 @@
 #!/bin/sh
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
-echo "Creating Outputt"
-mv plan-output-archive/terraform/.t* plan-output-archive/terraform/${STATE_OUTPUT_DIR}/
-cd plan-output-archive/terraform/${STATE_OUTPUT_DIR}/
-echo "Verifying Plan Envrionment"
-
-terraform output
 
 
-sleep 10000 
 
 
-break exit 1
+echo "Creating Output"
+cat << "EOF" > backend.tf
+terraform {
+     backend "s3" {}
+     }
+EOF
+
+echo "Initializing Backend" 
+terraform init 
+terraform output 
+
+
+
+timestamp="$(date '+%Y%m%d.%-H%M.%S')"
+export timestamp
+
+OUTPUT_FILE="$(echo "$TFSTATE" | envsubst)" 
+echo terraform output  >> terraform-output/${OUTPUT_FILE}
+

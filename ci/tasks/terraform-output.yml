@@ -8,6 +8,7 @@ outputs:
 caches:
 - path: .tfcache
 params:
+  TFSTATE: tf-output-$timestamp.json
   TF_OUTPUT_DIR: terraform-output
   TF_PLUGIN_CACHE: .tfcache
   STATE_FILE_PATH:
