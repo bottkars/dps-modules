@@ -3,7 +3,7 @@ set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 
 apk add  gettext \
-      figlet
+      figlet > /dev/null 2>&1
 
 figlet DPS Automation
 echo "Creating Output"
