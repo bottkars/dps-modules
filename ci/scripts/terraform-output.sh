@@ -2,7 +2,10 @@
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 
+apt add  gettext \
+      figlet
 
+figlet DPS Automation
 echo "Creating Output"
 cat << "EOF" > backend.tf
 terraform {
