@@ -3,8 +3,6 @@ set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 
 
-apk add gettext
-
 echo "Creating Output"
 cat << "EOF" > backend.tf
 terraform {
