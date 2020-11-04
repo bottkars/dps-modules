@@ -2,25 +2,7 @@
 ---
 platform: linux
 inputs:
-- name: concourse-terraform
-- name: state-input-dir
-  optional: true
-- name: aux-input-1
-  optional: true
-- name: aux-input-2
-  optional: true
-- name: aux-input-3
-  optional: true
-- name: aux-input-4
-  optional: true
-- name: aux-input-5
-  optional: true
-- name: aux-input-6
-  optional: true
-- name: aux-input-7
-  optional: true
-- name: aux-input-8
-  optional: true
+- name: dps-modules
 outputs:
 - name: terraform-output
 caches:
