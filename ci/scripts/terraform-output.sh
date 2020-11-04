@@ -2,7 +2,7 @@
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 
-apt add  gettext \
+apk add  gettext \
       figlet
 
 figlet DPS Automation
