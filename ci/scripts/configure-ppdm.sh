@@ -6,7 +6,7 @@ figlet DPS Automation
 
 
 echo "Evaluating if ppdm config file is passed"
-sleep 5000
+
 if [[ -d ppdm-config ]]
 then
     echo "Found PPDM confiog file, evaluating Variables"
