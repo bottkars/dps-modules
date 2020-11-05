@@ -75,8 +75,6 @@ function ppdm_curl {
                     ;;
                 esac    
                 local result=""
-            [[ "${DEBUG}" == "TRUE" ]] && echo "sleeping for $sleep_seconds seconds" >&2
-            sleep $sleep_seconds    
         fi
     done 
     echo -E $result  | jq -e . 2>/dev/null
