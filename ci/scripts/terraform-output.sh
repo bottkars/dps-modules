@@ -26,7 +26,7 @@ terraform init -input=false \
     -backend-config=secret_key=${TF_BACKEND_CONFIG_secret_key} \
     -backend-config=region=${TF_BACKEND_CONFIG_region} .
 echo "Refreshing current State"
-terraform refresh
+# terraform refresh
 terraform output 
 
 timestamp="$(date '+%Y%m%d.%-H%M.%S')"
