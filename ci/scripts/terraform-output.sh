@@ -34,4 +34,4 @@ export timestamp
 
 
 OUTPUT_FILE="$(echo "$TFSTATE" | envsubst)" 
-terraform output  >> terraform-output/${OUTPUT_FILE}
+terraform output -json > terraform-output/${OUTPUT_FILE}
