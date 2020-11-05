@@ -19,6 +19,7 @@ az login --service-principal \
     --output tsv
 az account set --subscription ${AZURE_SUBSCRIPTION_ID}  
 
+az extension add --name aks-preview
 
 az aks create -g ${RESOURCE_GROUP} \
  -n ${AKS_CLUSTER_NAME} \
@@ -26,6 +27,7 @@ az aks create -g ${RESOURCE_GROUP} \
  -k 1.17.11 \
  --aks-custom-headers EnableAzureDiskFileCSIDriver=true \
  --subscription ${AZURE_SUBSCRIPTION_ID} \
+ --generate-ssh-keys \
  --vnet-subnet-id "/subscriptions/${AZURE_SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Network/virtualNetworks/${RESOURCE_GROUP}-virtual-network/subnets/${RESOURCE_GROUP}-aks-subnet"
 
 az aks get-credentials --resource-group ${RESOURCE_GROUP} --name ${AKS_CLUSTER_NAME}
