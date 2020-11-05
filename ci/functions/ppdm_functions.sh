@@ -67,8 +67,8 @@ function ppdm_curl {
                     sleep 300
                     ;;
                     500|501|503)
-                    echo "received $errorlevel, Server might be busy, waiting for 20 Seconds " >&2
-                    sleep 20
+                    echo "received $errorlevel, Server might be busy, waiting for 30 Seconds " >&2
+                    sleep 30
                     ;;
                     *)
                     echo "current State $errorlevel" >&2

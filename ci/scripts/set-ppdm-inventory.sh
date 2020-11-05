@@ -23,8 +23,7 @@ echo "Creating INVENTORY Credentials for ${INVENTORY_USERNAME}"
 
 
 CREDENTIALS=$(create_ppdm_credentials  ${INVENTORY_CREDENTIAL_TYPE} ${INVENTORY_USERNAME} ${INVENTORY_PASSWORD})
-CREDENTIALS_ID=$(echo $CREDENTIALS | jq -r '.id')    sleep 5
-
+CREDENTIALS_ID=$(echo $CREDENTIALS | jq -r '.id')
 
 
 echo "Trusting INVENTORY ${INVENTORY_FQDN} certificate"
@@ -44,4 +43,4 @@ echo
 
 echo "Adding INVENTORY ${INVENTORY_FQDN} to inventory"
 INVENTORY_NAME=$(echo ${INVENTORY_FQDN} | cut -d '.' -f-1  )
-create_ppdm_inventory-source $INVENTORY_TYPE ${INVENTORY_NAME} "${INVENTORY_FQDN}" $CREDENTIALS_ID ${INVENTORY_PORT}
+create_ppdm_inventory-source $INVENTORY_TYPE ${INVENTORY_NAME} "${INVENTORY_FQDN}" ${CREDENTIALS_ID} ${INVENTORY_PORT}
