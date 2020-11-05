@@ -66,6 +66,10 @@ function ppdm_curl {
                     echo "user locked, waiting for 5 Minutes " >&2
                     sleep 300
                     ;;
+                    500|501|503)
+                    echo "received $errorlevel, Server might be busy, waiting for 20 Seconds " >&2
+                    sleep 20
+                    ;;
                     *)
                     echo "current State $errorlevel" >&2
                     ;;

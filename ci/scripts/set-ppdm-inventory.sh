@@ -20,15 +20,10 @@ echo "requesting API token"
 export PPDM_TOKEN=$(get_ppdm_token ${PPDM_PASSWORD})
 
 echo "Creating INVENTORY Credentials for ${INVENTORY_USERNAME}"
-until [[ -z $CREDENTIALS_ID ]] ; do
-    CREDENTIALS_ID=$(create_ppdm_credentials  ${INVENTORY_CREDENTIAL_TYPE} ${INVENTORY_USERNAME} ${INVENTORY_PASSWORD} | jq -r '.id')
-    sleep 5
-done
 
 
-
- #   CREDENTIALS=$(create_ppdm_credentials  ${INVENTORY_CREDENTIAL_TYPE} ${INVENTORY_USERNAME} ${INVENTORY_PASSWORD})
- #   CREDENTIALS_ID=$(echo $CREDENTIALS | jq -r '.id')    sleep 5
+CREDENTIALS=$(create_ppdm_credentials  ${INVENTORY_CREDENTIAL_TYPE} ${INVENTORY_USERNAME} ${INVENTORY_PASSWORD})
+CREDENTIALS_ID=$(echo $CREDENTIALS | jq -r '.id')    sleep 5
 
 
 
