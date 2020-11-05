@@ -74,7 +74,7 @@ function ppdm_curl {
                     echo "current State $errorlevel" >&2
                     ;;
                 esac    
-                result=""
+                local result=""
             [[ "${DEBUG}" == "TRUE" ]] && echo "sleeping for $sleep_seconds seconds" >&2
             sleep $sleep_seconds    
         fi
