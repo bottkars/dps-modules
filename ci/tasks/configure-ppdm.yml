@@ -4,8 +4,7 @@ platform: linux
 
 inputs:
  - name: dps-modules
-
-
+ - name: ppdm-config
 params:
   PPDM_NTP_SERVER: "192.168.1.1"
   PPDM_NETWORK: 

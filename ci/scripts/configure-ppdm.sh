@@ -3,11 +3,22 @@ set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
 
+echo "Waiting for Appliance Fresh Install to become ready, this can take up to 10 Minutes"
+until [[ 200 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${PPDM_FQDN}:443/#/fresh") ]] ; do
+    printf '.'
+    sleep 5
+done
+echo
+echo "Appliance https://${PPDM_FQDN}:8443/api/v2 ready for Configuration"
+
 echo "requesting API token for initial setup"
 
 source dps-modules/ci/functions/ppdm_functions.sh
 if PPDM_TOKEN=$(get_ppdm_token "${PPDM_SETUP_PASSWORD}")
 then
+
+accept_ppdm_eula
+
 echo "Retrieving initial appliance configuration Template"
     CONFIGURATION=$(get_ppdm_configuration)
     NODE_ID=$(echo $CONFIGURATION | jq -r .nodeId)  
