@@ -2,6 +2,7 @@
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
+source dps-modules/ci/functions/ppdm_functions.sh
 
 
 if [[ -d ppdm-config ]]
