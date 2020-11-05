@@ -9,8 +9,9 @@ echo "Evaluating if ppdm config file is passed"
 
 if [[ -d ppdm-config ]]
 then
-    echo "Found PPDM confiog file, evaluating Variables"
-    eval "$(jq -r 'keys[] as $key | "export \($key)=\"\(.[$key].value)\""' ./ppdm-config/tf_state*.json)"
+    PPDM_CONFIG_VERSION=$(cat ./ppdm-config/version) 
+    echo "Found PPDM confiog file, evaluating Variables from vonfiguration Version ${PPDM_CONFIG_VERSION}"
+    eval "$(jq -r 'keys[] as $key | "export \($key)=\"\(.[$key].value)\""' ./ppdm-config/tf-output-${PPDM_CONFIG_VERSION}.json)"
 fi
 echo
 
