@@ -4,13 +4,13 @@ platform: linux
 
 inputs:
  - name: dps-modules
-
+ - name: ppdm-config
+   optional: true
 params:
   PPDM_FQDN: 
   PPDM_PASSWORD: 
   PPDD_PATH:
   PPDD_FQDN:
-
 run:
   path: dps-modules/ci/scripts/set-ppdm-sdr.sh
 
