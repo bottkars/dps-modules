@@ -3,12 +3,24 @@ set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
 
+
+
+echo "Evaluating if ppdm config file is passed"
+sleep 5000
+if [[ -d ppdm-config ]]
+then
+    echo "Found PPDM confiog file, evaluating Variables"
+    eval "$(jq -r 'keys[] as $key | "export \($key)=\"\(.[$key].value)\""' ./ppdm-config/tf_state*.json)"
+fi
+echo
+
 echo "Waiting for Appliance Fresh Install to become ready, this can take up to 10 Minutes"
 until [[ 200 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${PPDM_FQDN}:443/#/fresh") ]] ; do
     printf '.'
     sleep 5
 done
-echo
+
+
 echo "Appliance https://${PPDM_FQDN}:8443/api/v2 ready for Configuration"
 
 echo "requesting API token for initial setup"
