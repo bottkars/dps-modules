@@ -11,7 +11,7 @@ then
     echo "Found PPDM confiog file, evaluating Variables from vonfiguration Version ${PPDM_CONFIG_VERSION}"
     eval "$(jq -r 'keys[] as $key | "export \($key)=\"\(.[$key].value)\""' ./ppdm-config/tf-output-${PPDM_CONFIG_VERSION}.json)"
     # we scope to private fqdn, and need to remove the last dot
-    export INVENTORY_FQDN="https://${DDVE_PRIVATE_FQDN::-1}"
+    export INVENTORY_FQDN="${DDVE_PRIVATE_FQDN::-1}"
 fi
 
 echo "requesting API token"
