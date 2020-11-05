@@ -4,7 +4,8 @@ platform: linux
 
 inputs:
  - name: dps-modules
-
+ - name: ppdm-config
+   optional: true
 params:
   PPDM_FQDN: 
   PPDM_PASSWORD: 
