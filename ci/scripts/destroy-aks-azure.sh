@@ -27,7 +27,7 @@ az account set --subscription ${AZURE_SUBSCRIPTION_ID}
 az extension add --name aks-preview
 
 az aks delete -g ${RESOURCE_GROUP} \
- -n ${AKS_CLUSTER_NAME} 
+ -n ${AKS_CLUSTER_NAME} --yes
 
 
 
