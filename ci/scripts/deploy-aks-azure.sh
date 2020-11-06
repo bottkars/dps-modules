@@ -11,12 +11,17 @@ then
     echo "Found PPDM confiog file, evaluating Variables from vonfiguration Version ${PPDM_CONFIG_VERSION}"
     eval "$(jq -r 'keys[] as $key | "export \($key)=\"\(.[$key].value)\""' ./ppdm-config/tf-output-${PPDM_CONFIG_VERSION}.json)"
 fi
-echo "Connectring to Azure . . ."
-az login --service-principal \
-    -u ${AZURE_CLIENT_ID} \
-    -p ${AZURE_CLIENT_SECRET} \
-    --tenant ${AZURE_TENANT_ID} \
-    --output tsv
+echo "Connectring to Azure . . . "
+if [[ "$DEVICELOGIN" == "TRUE" ]]
+then
+    az login --use-device-code --output tsv
+else 
+    az login --service-principal \
+        -u ${AZURE_CLIENT_ID} \
+        -p ${AZURE_CLIENT_SECRET} \
+        --tenant ${AZURE_TENANT_ID} \
+        --output tsv
+fi        
 az account set --subscription ${AZURE_SUBSCRIPTION_ID}  
 
 az extension add --name aks-preview

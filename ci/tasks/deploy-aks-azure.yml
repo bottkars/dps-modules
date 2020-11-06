@@ -23,6 +23,7 @@ params:
   AKS_AGENT_OS_TYPE_0: Linux
   AKS_AGENT_0_POOL_NAME: linuxpool
   AKS_AGENT_0_SUBNET_NAME:
+  DEVICELOGIN: "FALSE"
 
 run:
   path: dps-modules/ci/scripts/deploy-aks-azure.sh
