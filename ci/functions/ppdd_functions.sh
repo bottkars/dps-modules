@@ -16,10 +16,9 @@ function ppdd_curl {
         fi
         [[ "${DEBUG}" == "TRUE" ]] && echo $url ${ppdd_curl_args[@]} >&2
         result=$(curl -ks "$url" \
-        "${ppdd_curl_args[@]}" "$@"
-        )
-    [[ "${DEBUG}" == "TRUE" ]] && echo $result >&2
-    [[ "${DEBUG}" == "TRUE" ]] && echo $retry >&2
+        "${ppdd_curl_args[@]}" "$@" )
+        [[ "${DEBUG}" == "TRUE" ]] && echo $result >&2
+        [[ "${DEBUG}" == "TRUE" ]] && echo $retry >&2
        ((retry++))
        if [[ $(echo $result | jq -r 'select(.code != null)' 2> /dev/null) &&  $(echo $result | jq -r 'select(.code != 0)' 2> /dev/null) ]]
        #     ### eval section for return code will be added here
@@ -46,7 +45,7 @@ function ppdd_curl {
                     echo "current State $errorlevel" >&2
                     ;;
                 esac    
-                result=""
+                local result=""
             [[ "${DEBUG}" == "TRUE" ]] && echo "sleeping for $sleep_seconds seconds" >&2
             sleep $sleep_seconds    
         fi
