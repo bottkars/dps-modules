@@ -40,3 +40,4 @@ az aks get-credentials --resource-group ${RESOURCE_GROUP} --name ${AKS_CLUSTER_N
 kubectl create -f "https://tanzuemea.tmc.cloud.vmware.com/installer?id=5ee191fe85a52e9dd2a9c135d406cd838879f00775960950a73596cb8631260e&source=attach"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/azuredisk-csi-driver/master/deploy/example/snapshot/storageclass-azuredisk-snapshot.yaml
 
+
