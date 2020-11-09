@@ -12,6 +12,7 @@ then
     PPDM_CONFIG_VERSION=$(cat ./ppdm-config/version) 
     echo "Found PPDM config file, evaluating Variables from vonfiguration Version ${PPDM_CONFIG_VERSION}"
     eval "$(jq -r 'keys[] as $key | "export \($key)=\"\(.[$key].value)\""' ./ppdm-config/tf-output-${PPDM_CONFIG_VERSION}.json)"
+    export DDVE_FQDN=${DDVE_PRIVATE_FQDN%?}
 fi
 echo
 
