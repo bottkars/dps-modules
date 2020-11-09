@@ -15,7 +15,7 @@ then
 fi
 echo
 
-echo "Calling Playbook ${PLABOOK}"
+echo "Calling Playbook ${PLAYBOOK}"
 
 ansible-playbook ${PLAYBOOK}
 
