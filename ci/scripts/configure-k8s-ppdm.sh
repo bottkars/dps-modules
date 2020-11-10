@@ -5,8 +5,8 @@ figlet DPS Automation
 source dps-modules/ci/functions/ppdm_functions.sh
 
 
-KUBECONFIG_VERSION==$(cat ./kubeconfig/version) 
-AKSCONFIG_VERSION==$(cat ./aksconfig/version) 
+KUBECONFIG_VERSION=$(cat ./kubeconfig/version) 
+AKSCONFIG_VERSION=$(cat ./aksconfig/version) 
 
 
 
