@@ -27,16 +27,22 @@ az account set --subscription ${AZURE_SUBSCRIPTION_ID}
 az extension add --name aks-preview
 
 az aks create -g ${RESOURCE_GROUP} \
- -n ${AKS_CLUSTER_NAME} \
- --network-plugin azure \
- -k 1.17.11 \
- --aks-custom-headers EnableAzureDiskFileCSIDriver=true \
- --subscription ${AZURE_SUBSCRIPTION_ID} \
- --generate-ssh-keys \
- --vnet-subnet-id "/subscriptions/${AZURE_SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Network/virtualNetworks/${RESOURCE_GROUP}-virtual-network/subnets/${RESOURCE_GROUP}-aks-subnet"
+  -n ${AKS_CLUSTER_NAME} \
+  --network-plugin azure \
+  -k 1.17.11 \
+  --aks-custom-headers EnableAzureDiskFileCSIDriver=true \
+  --subscription ${AZURE_SUBSCRIPTION_ID} \
+  --generate-ssh-keys \
+  --service-principal ${AKS_APP_ID} \
+  --client-secret ${AKS_SECRET} \
+  --vnet-subnet-id "/subscriptions/${AZURE_SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Network/virtualNetworks/${RESOURCE_GROUP}-virtual-network/subnets/${RESOURCE_GROUP}-aks-subnet"
 
 az aks get-credentials --resource-group ${RESOURCE_GROUP} --name ${AKS_CLUSTER_NAME}
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/azuredisk-csi-driver/master/deploy/example/snapshot/storageclass-azuredisk-snapshot.yaml
 
+timestamp="$(date '+%Y%m%d.%-H%M.%S+%Z')"
+export timestamp
 
+KUBECONFIG_OUTPUT_FILE="$(echo "$KUBECONFIG_FILE" | envsubst '$timestamp')"
+cp $./kube/config.json kubeconfig/"${KUBECONFIG_OUTPUT_FILE}"

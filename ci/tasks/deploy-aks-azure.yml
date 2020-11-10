@@ -5,6 +5,8 @@ platform: linux
 inputs:
  - name: dps-modules
  - name: ppdm-config
+outputs: 
+ - name: kubeconfig
 
 params:
   AZURE_TENANT_ID:
@@ -24,6 +26,9 @@ params:
   AKS_AGENT_0_POOL_NAME: linuxpool
   AKS_AGENT_0_SUBNET_NAME:
   DEVICELOGIN: "FALSE"
+  AKS_APP_ID:
+  AKS_SECRET:
+  KUBECONFIG_FILE: kubeconfig-$timestamp.json
 
 run:
   path: dps-modules/ci/scripts/deploy-aks-azure.sh
