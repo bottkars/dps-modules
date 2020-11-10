@@ -26,7 +26,7 @@ export K8S_FQDN=$(jq -r .fqdn  ${PWD}/aksconfig/aksconfig-${AKSCONFIG_VERSION}.j
 kubectl apply -f  ${PPDM_ADMIN_TEMPLATE}
 kubectl apply -f  ${PPDM_RBAC_TEMPLATE}
 
-PPDM_K8S_TOKEN=$(kubectl get secret "$(kubectl -n kube-system get secret | grep ppdm-admin | awk '{print $1}')" \
+export PPDM_K8S_TOKEN=$(kubectl get secret "$(kubectl -n kube-system get secret | grep ppdm-admin | awk '{print $1}')" \
 -n kube-system --template={{.data.token}} | base64 -d)
 
 
