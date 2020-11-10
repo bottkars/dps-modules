@@ -17,6 +17,7 @@ params:
   PPDM_RBAC_TEMPLATE: https://raw.githubusercontent.com/bottkars/dps-modules/master/ci/templates/ppdm/ppdm-rbac.yml
   PPDM_ADMIN_TEMPLATE: https://raw.githubusercontent.com/bottkars/dps-modules/master/ci/templates/ppdm/ppdm-admin.yml
   PLAYBOOK:
+  AKS_CLUSTER_NAME:
  
 
 run:
