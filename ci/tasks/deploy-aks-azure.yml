@@ -29,6 +29,7 @@ params:
   AKS_APP_ID:
   AKS_SECRET:
   KUBECONFIG_FILE: kubeconfig-$timestamp.json
+  AKSCONFIG_FILE: aksconfig-$timestamp.json
 
 run:
   path: dps-modules/ci/scripts/deploy-aks-azure.sh

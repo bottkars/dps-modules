@@ -26,7 +26,7 @@ az account set --subscription ${AZURE_SUBSCRIPTION_ID}
 
 az extension add --name aks-preview
 
-az aks create -g ${RESOURCE_GROUP} \
+AKS_CONFIG=$(az aks create -g ${RESOURCE_GROUP} \
   -n ${AKS_CLUSTER_NAME} \
   --network-plugin azure \
   -k 1.17.11 \
@@ -36,7 +36,7 @@ az aks create -g ${RESOURCE_GROUP} \
   --service-principal ${AKS_APP_ID} \
   --client-secret ${AKS_SECRET} \
   --vnet-subnet-id "/subscriptions/${AZURE_SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Network/virtualNetworks/${RESOURCE_GROUP}-virtual-network/subnets/${RESOURCE_GROUP}-aks-subnet"
-
+)
 az aks get-credentials --resource-group ${RESOURCE_GROUP} --name ${AKS_CLUSTER_NAME}
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/azuredisk-csi-driver/master/deploy/example/snapshot/storageclass-azuredisk-snapshot.yaml
@@ -46,3 +46,6 @@ export timestamp
 
 KUBECONFIG_OUTPUT_FILE="$(echo "$KUBECONFIG_FILE" | envsubst '$timestamp')"
 cp $HOME/.kube/config kubeconfig/"${KUBECONFIG_OUTPUT_FILE}"
+
+AKSCONFIG_OUTPUT_FILE="$(echo "$AKSCONFIG_FILE" | envsubst '$timestamp')"
+echo $AKS_CONFIG > aksconfig/"${AKSCONFIG_OUTPUT_FILE}"
