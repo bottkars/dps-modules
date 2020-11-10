@@ -29,10 +29,11 @@ az extension add --name aks-preview
 AKS_CONFIG=$(az aks create -g ${RESOURCE_GROUP} \
   -n ${AKS_CLUSTER_NAME} \
   --network-plugin azure \
-  -k 1.17.11 \
+  --kubernetes-version 1.17.11 \
   --aks-custom-headers EnableAzureDiskFileCSIDriver=true \
   --subscription ${AZURE_SUBSCRIPTION_ID} \
   --generate-ssh-keys \
+  --node-vm-size ${AKS_AGENT_0_VMSIZE}\
   --service-principal ${AKS_APP_ID} \
   --client-secret ${AKS_SECRET} \
   --vnet-subnet-id "/subscriptions/${AZURE_SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Network/virtualNetworks/${RESOURCE_GROUP}-virtual-network/subnets/${RESOURCE_GROUP}-aks-subnet"

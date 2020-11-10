@@ -1,0 +1,21 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: dps-modules
+ - name: kubeconfig
+ - name: aksconfig
+outputs: 
+ - name: k8stoken
+params:
+  DEBUG: "FALSE"
+  PPDM_K8S_FILE: ppdmk8stoken-$timestamp.json
+  PPDM_RBAC_TEMPLATE: https://raw.githubusercontent.com/bottkars/dps-modules/master/ci/templates/ppdm/ppdm-rbac.yml
+  PPDM_ADMIN_TEMPLATE: https://raw.githubusercontent.com/bottkars/dps-modules/master/ci/templates/ppdm/ppdm-admin.yml
+
+ 
+
+run:
+  path: dps-modules/ci/scripts/configure-k8s-ppdm.sh
+
