@@ -20,7 +20,7 @@ PPDM_K8S_TOKEN=$(kubectl get secret "$(kubectl -n kube-system get secret | grep 
 
 timestamp="$(date '+%Y%m%d.%-H%M.%S+%Z')"
 
-PPDM_K8S_FILE: ppdmk8stoken-$timestamp.json
+PPDM_K8S_FILE=ppdmk8stoken-$timestamp.json
 
 PPDM_K8S_OUTPUT_FILE="$(echo "$PPDM_K8S_FILE" | envsubst '$timestamp')"
 echo $PPDM_K8S_TOKEN > k8stoken/${PPDM_K8S_OUTPUT_FILE}
