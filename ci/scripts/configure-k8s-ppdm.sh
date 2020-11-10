@@ -18,6 +18,7 @@ kubectl apply -f  ${PPDM_RBAC_TEMPLATE}
 PPDM_K8S_TOKEN=$(kubectl get secret "$(kubectl -n kube-system get secret | grep ppdm-admin | awk '{print $1}')" \
 -n kube-system --template={{.data.token}} | base64 -d)
 
+timestaMPtimestamp="$(date '+%Y%m%d.%-H%M.%S+%Z')"
 
 PPDM_K8S_FILE: ppdmk8stoken-$timestamp.json
 
