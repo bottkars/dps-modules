@@ -10,7 +10,7 @@ AKSCONFIG_VERSION=$(cat ./aksconfig/version)
 
 
 
-export KUBECONFIG=${PWD}/kubeconfig-${KUBECONFIG_VERSION}.json
+export KUBECONFIG=${PWD}/kubeconfig/kubeconfig-${KUBECONFIG_VERSION}.json
 
 kubectl apply -f  ${PPDM_ADMIN_TEMPLATE}
 kubectl apply -f  ${PPDM_RBAC_TEMPALTE}
