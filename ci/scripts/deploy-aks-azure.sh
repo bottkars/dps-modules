@@ -45,4 +45,4 @@ timestamp="$(date '+%Y%m%d.%-H%M.%S+%Z')"
 export timestamp
 
 KUBECONFIG_OUTPUT_FILE="$(echo "$KUBECONFIG_FILE" | envsubst '$timestamp')"
-cp $HOME/kube/config.json kubeconfig/"${KUBECONFIG_OUTPUT_FILE}"
+cp $HOME/.kube/config kubeconfig/"${KUBECONFIG_OUTPUT_FILE}"
