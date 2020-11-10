@@ -6,6 +6,9 @@ inputs:
  - name: dps-modules
  - name: kubeconfig
  - name: aksconfig
+ - name: dps-ansible
+ - name: ppdm-config
+   optional: true 
 outputs: 
  - name: k8stoken
 params:
