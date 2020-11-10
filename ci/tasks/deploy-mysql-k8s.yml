@@ -1,0 +1,22 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: dps-modules
+ - name: kubeconfig
+   optional: true 
+
+params:
+  DEBUG: "FALSE"
+  PPDM_K8S_FILE: ppdmk8stoken-$timestamp.json
+  MYSQL_NAMESPACE: mysql
+  MYSQL_SECRET: https://raw.githubusercontent.com/bottkars/dps-modules/master/ci/templates/mysql/mysql-secret.yaml
+  MYSQL_PVC: https://raw.githubusercontent.com/bottkars/dps-modules/master/ci/templates/mysql/mysql-pvc.yaml
+  MYSQL_DEPLOYMENT: https://raw.githubusercontent.com/bottkars/dps-modules/master/ci/templates/mysql/mysql-deployment.yaml
+  PLAYBOOK:
+  AKS_CLUSTER_NAME:
+ 
+
+run:
+  path: dps-modules/ci/scripts/deploy-mysql-k8s.sh
