@@ -1,6 +1,9 @@
 #!/bin/bash
 set -eu
-[[ "${DEBUG}" == "TRUE" ]] && set -x
+if [[ "${DEBUG}" == "TRUE" ]]
+    then set -x
+    export PLAYBOOK="${PLAYBOOK} -vvv"
+fi
 figlet DPS Automation
 source dps-modules/ci/functions/ppdm_functions.sh
 source dps-modules/ci/functions/yaml.sh
