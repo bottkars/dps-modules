@@ -14,8 +14,8 @@ outputs:
 params:
   DEBUG: "FALSE"
   PPDM_K8S_FILE: ppdmk8stoken-$timestamp.json
-  PPDM_RBAC_TEMPLATE: https://raw.githubusercontent.com/bottkars/dps-modules/main/ci/templates/ppdm/ppdm-rbac.yml
-  PPDM_ADMIN_TEMPLATE: https://raw.githubusercontent.com/bottkars/dps-modules/main/ci/templates/ppdm/ppdm-admin.yml
+  PPDM_RBAC_TEMPLATE: dps-modules/ci/templates/ppdm/ppdm-rbac.yml
+  PPDM_ADMIN_TEMPLATE: dps-modules/ci/templates/ppdm/ppdm-admin.yml
   PLAYBOOK:
   AKS_CLUSTER_NAME:
  
