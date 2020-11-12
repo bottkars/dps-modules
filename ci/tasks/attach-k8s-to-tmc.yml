@@ -1,0 +1,21 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: dps-modules
+ - name: kubeconfig
+ - name: aksconfig
+#outputs: 
+ - name: tmcmanifest
+params:
+  DEBUG: "FALSE"
+  TMC_K8S_MANIFEST: k8s-attach-manifest-$timestamp.yaml
+  TMC_TOKEN:
+  TMC_CONTEXT:
+  TMC_CLUSTERGROUP:
+ 
+
+run:
+  path: dps-modules/ci/scripts/attach-k8s-to-tmc.sh
+
