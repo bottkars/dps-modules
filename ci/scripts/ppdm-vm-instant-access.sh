@@ -55,8 +55,7 @@ request=$(start_ppdm-instant_restored-copies \
 
 
 echo $request | jq -r .
-timestamp="$(date '+%Y%m%d.%-H%M.%S')"
-export timestamp
+export timestamp="$(date '+%Y%m%d.%-H%M.%S')"
 
 INSTANT_FILE="$(echo "$INSTANT_FILE" | envsubst)" 
 echo $request | jq -r . >> instant_access/${INSTANT_FILE}
