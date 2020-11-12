@@ -42,11 +42,11 @@ az aks get-credentials --resource-group ${RESOURCE_GROUP} --name ${AKS_CLUSTER_N
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/azuredisk-csi-driver/master/deploy/example/snapshot/storageclass-azuredisk-snapshot.yaml
 
-timestamp="$(date '+%Y%m%d.%-H%M.%S+%Z')"
-export timestamp
+export timestamp="$(date '+%Y%m%d.%-H%M.%S+%Z')"
 
-KUBECONFIG_OUTPUT_FILE="$(echo "$KUBECONFIG_FILE" | envsubst '$timestamp')"
+
+KUBECONFIG_OUTPUT_FILE="$(echo "$KUBECONFIG_FILE" | envsubst )"
 cp $HOME/.kube/config kubeconfig/"${KUBECONFIG_OUTPUT_FILE}"
 
-AKSCONFIG_OUTPUT_FILE="$(echo "$AKSCONFIG_FILE" | envsubst '$timestamp')"
+AKSCONFIG_OUTPUT_FILE="$(echo "$AKSCONFIG_FILE" | envsubst )"
 echo $AKS_CONFIG > aksconfig/"${AKSCONFIG_OUTPUT_FILE}"

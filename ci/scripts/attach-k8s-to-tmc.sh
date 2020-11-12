@@ -19,6 +19,6 @@ tmc cluster attach \
 
 
 kubectl apply -f k8s-attach-manifest.yaml
-timestamp="$(date '+%Y%m%d.%-H%M.%S+%Z')"
-TMC_K8S_MANIFEST_FILE="$(echo "${TMC_K8S_MANIFEST}" | envsubst '$timestamp')"
+export timestamp="$(date '+%Y%m%d.%-H%M.%S+%Z')"
+TMC_K8S_MANIFEST_FILE="$(echo "$TMC_K8S_MANIFEST" | envsubst)"
 cp k8s-attach-manifest.yaml tmcmanifest/${TMC_K8S_MANIFEST_FILE}

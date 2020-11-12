@@ -29,8 +29,8 @@ echo "Refreshing current State"
 # terraform refresh
 terraform output 
 
-timestamp="$(date '+%Y%m%d.%-H%M.%S')"
-export timestamp
+export timestamp="$(date '+%Y%m%d.%-H%M.%S')"
+
 
 
 OUTPUT_FILE="$(echo "$TFSTATE" | envsubst)" 
