@@ -6,7 +6,7 @@ inputs:
  - name: dps-modules
  - name: kubeconfig
  - name: aksconfig
-#outputs: 
+outputs: 
  - name: tmcmanifest
 params:
   DEBUG: "FALSE"
