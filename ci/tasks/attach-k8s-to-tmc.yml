@@ -11,7 +11,7 @@ outputs:
 params:
   DEBUG: "FALSE"
   TMC_K8S_MANIFEST: k8s-attach-manifest-$timestamp.yaml
-  TMC_TOKEN:
+  TMC_API_TOKEN:
   TMC_CONTEXT:
   TMC_CLUSTERGROUP:
  
