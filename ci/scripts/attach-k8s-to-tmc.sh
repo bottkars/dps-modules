@@ -10,7 +10,7 @@ echo "getting KUBECONFIG"
 export KUBECONFIG=${PWD}/kubeconfig/kubeconfig-${KUBECONFIG_VERSION}.json
 K8S_FQDN=$(jq -r .fqdn  ${PWD}/aksconfig/aksconfig-${AKSCONFIG_VERSION}.json)
 export TMC_CLUSTERNAME=$( echo ${K8S_FQDN%%.*}  | tr '[:upper:]' '[:lower:]')
-
+tmc version
 echo "Attaching ${TMC_CLUSTERNAME} to ${TMC_CLUSTERGROUP}"
 tmc login --name ${TMC_CONTEXT} --no-configure
 tmc cluster attach \
