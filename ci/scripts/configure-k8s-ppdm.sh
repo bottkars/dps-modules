@@ -30,10 +30,13 @@ export PPDM_K8S_TOKEN=$(kubectl get secret "$(kubectl -n kube-system get secret 
 -n kube-system --template={{.data.token}} | base64 -d)
 
 
+if [[ $RUN_PPDM_PLAYBOOK == "TRUE" ]]
+then
+{
+    echo "Calling Playbook ${PLAYBOOK}"
+    ansible-playbook ${PLAYBOOK}
+}
 
-echo "Calling Playbook ${PLAYBOOK}"
-
-ansible-playbook ${PLAYBOOK}
 
 export timestamp="$(date '+%Y%m%d.%-H%M.%S+%Z')"
 

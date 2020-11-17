@@ -5,7 +5,6 @@ platform: linux
 inputs:
  - name: dps-modules
  - name: kubeconfig
- - name: aksconfig
 outputs: 
  - name: tmcmanifest
 params:

@@ -17,6 +17,7 @@ params:
   PPDM_RBAC_TEMPLATE: dps-modules/ci/templates/ppdm/ppdm-rbac.yml
   PPDM_ADMIN_TEMPLATE: dps-modules/ci/templates/ppdm/ppdm-admin.yml
   PLAYBOOK:
+  RUN_PPDM_PLAYBOOK: "FALSE"
   AKS_CLUSTER_NAME:
  
 
