@@ -6,7 +6,9 @@ inputs:
  - name: dps-modules
  - name: kubeconfig
  - name: aksconfig
+   optional: true 
  - name: dps-ansible
+   optional: true
  - name: ppdm-config
    optional: true 
 outputs: 

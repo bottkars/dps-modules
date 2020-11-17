@@ -22,7 +22,6 @@ echo
 
 
 export KUBECONFIG=${PWD}/kubeconfig/kubeconfig-${KUBECONFIG_VERSION}.json
-export K8S_FQDN=$(jq -r .fqdn  ${PWD}/aksconfig/aksconfig-${AKSCONFIG_VERSION}.json)
 kubectl apply -f  ${PPDM_ADMIN_TEMPLATE}
 kubectl apply -f  ${PPDM_RBAC_TEMPLATE}
 
@@ -33,6 +32,7 @@ export PPDM_K8S_TOKEN=$(kubectl get secret "$(kubectl -n kube-system get secret 
 if [[ $RUN_PPDM_PLAYBOOK == "TRUE" ]]
 then
 {
+    export K8S_FQDN=$(kubectl config view --minify -o jsonpath='{.clusters[].cluster.server}')
     echo "Calling Playbook ${PLAYBOOK}"
     ansible-playbook ${PLAYBOOK}
 }
