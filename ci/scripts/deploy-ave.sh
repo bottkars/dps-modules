@@ -4,7 +4,15 @@ set -eu
 figlet DPS Automation
 AVE_VERSION=$(cat avamar/version)
 govc about
-echo "preparing avamar ${AVE_VERSION} Virtual Edition for ${AVE_VMNAME}"
+
+
+if [[ $(govc vm.info ${AVE_FOLDER}/${AVE_VMNAME}) ]]
+then
+    echo "VM ${AVE_FOLDER}/${AVE_VMNAME} already exists, nothing to do here"
+
+else
+
+echo "preparing Avamar ${AVE_VERSION} Virtual Edition for ${AVE_VMNAME}"
 
 
 govc import.spec avamar/AVE-${AVE_VERSION}.ova > avamar.json
@@ -95,3 +103,4 @@ done
 govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
 echo "finished DELLEMC Avamar ${AVE_VERSION} Virtual Edition install for ${AVE_VMNAME}"
 
+fi
