@@ -6,7 +6,9 @@ KUBECONFIG_VERSION=$(cat ./kubeconfig/version)
 
 echo "getting KUBECONFIG"
 export KUBECONFIG=${PWD}/kubeconfig/kubeconfig-${KUBECONFIG_VERSION}.json
-export TMC_CLUSTERNAME=$(kubectl config view --minify -o jsonpath='{.clusters[].name}')
+export TMC_CLUSTERNAME=$(kubectl config view --minify -o jsonpath='{.clusters[].cluster.server}')
+TMC_CLUSTERNAME=${TMC_CLUSTERNAME##https://}
+TMC_CLUSTERNAME=${TMC_CLUSTERNAME%%.*}
 tmc version
 echo "Attaching ${TMC_CLUSTERNAME} to ${TMC_CLUSTERGROUP}"
 tmc login --name ${TMC_CONTEXT} --no-configure

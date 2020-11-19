@@ -11,7 +11,7 @@ AVI_TOKEN=$(get_avi_token $AVE_PASSWORD)
 AVP_VERSION=$(cat avamar_client_package/version)
 
 
-printf "Uploading UpgradeClientDownloads-${AVP_VERSION}.avp to $AVE_FQDN"
+printf "Uploading UpgradeClientDownloads-${AVP_VERSION}.avp to $AVE_FQDN \n"
 put_avi_package "avamar_client_package/UpgradeClientDownloads-${AVP_VERSION}.avp"
 export WORKFLOW=upgrade-client-downloads
 
