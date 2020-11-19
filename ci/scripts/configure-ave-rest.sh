@@ -13,7 +13,12 @@ until [[ 200 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/nu
 done
 printf "\n"
 
+printf "Checking if Avamar already Configured \n"
 
+if [[ $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${AVE_FQDN}:443/aui/#/login") ]]
+then
+printf "Avamar already Configured \n"
+else
 AVI_TOKEN=$(get_avi_token $AVE_PASSWORD)
 
 
@@ -68,3 +73,4 @@ done
 
 echo
 echo "Done"
+fi
