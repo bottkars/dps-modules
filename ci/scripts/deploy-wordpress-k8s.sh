@@ -31,7 +31,7 @@ kind: Namespace
 metadata:
   name: ${NAMESPACE}
   labels: 
-    PPDM_POLICY: ${PPDM_POLICY}
+    ppdm_policy: ${PPDM_POLICY}
 
 EOF
 
