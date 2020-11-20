@@ -37,9 +37,6 @@ then
     echo "Calling Playbook ${PLAYBOOK}"
     ansible-playbook ${PLAYBOOK}
 fi
-
 export timestamp="$(date '+%Y%m%d.%-H%M.%S+%Z')"
-
-
 PPDM_K8S_OUTPUT_FILE="$(echo "$PPDM_K8S_FILE" | envsubst )"
 echo $PPDM_K8S_TOKEN > k8stoken/${PPDM_K8S_OUTPUT_FILE}
