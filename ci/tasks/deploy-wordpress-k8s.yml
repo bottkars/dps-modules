@@ -13,5 +13,6 @@ params:
   NAMESPACE: wordpress
   TEMPLATE_PATH: dps-modules/ci/templates/wordpress
   WP_PASSWORD: "Password123!"
+  PPDM_POLICY: "PPDM_GOLD"
 run:
   path: dps-modules/ci/scripts/deploy-wordpress-k8s.sh
