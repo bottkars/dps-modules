@@ -33,7 +33,7 @@ if [[ $RUN_PPDM_PLAYBOOK == "TRUE" ]]
 then
     K8S_FQDN=$(kubectl config view --minify -o jsonpath='{.clusters[].cluster.server}')
     K8S_FQDN=${K8S_FQDN##https://}
-    K8S_FQDN=${K8S_FQDN%:443}
+    export K8S_FQDN=${K8S_FQDN%:443}
     echo "Calling Playbook ${PLAYBOOK}"
     ansible-playbook ${PLAYBOOK}
 fi
