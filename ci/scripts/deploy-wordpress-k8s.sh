@@ -19,4 +19,5 @@ secretGenerator:
   literals:
   - password=${WP_PASSWORD}
 EOF
+kubectl apply -f ./namespace.yaml
 kubectl apply -k ./ --namespace ${NAMESPACE}
