@@ -18,6 +18,19 @@ secretGenerator:
 - name: mysql-pass
   literals:
   - password=${WP_PASSWORD}
+resources:
+  - namespace.yaml  
+  - mysql-deployment.yaml
+  - wordpress-deployment.yaml
+
 EOF
-kubectl apply -f ./namespace.yaml
+
+cat <<EOF >./namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ${NAMESPACE}
+
+EOF
+
 kubectl apply -k ./ --namespace ${NAMESPACE}
