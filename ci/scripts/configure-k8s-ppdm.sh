@@ -31,7 +31,9 @@ export PPDM_K8S_TOKEN=$(kubectl get secret "$(kubectl -n kube-system get secret 
 
 if [[ $RUN_PPDM_PLAYBOOK == "TRUE" ]]
 then
-    export K8S_FQDN=$(kubectl config view --minify -o jsonpath='{.clusters[].cluster.server}')
+    K8S_FQDN=$(kubectl config view --minify -o jsonpath='{.clusters[].cluster.server}')
+    K8S_FQDN=${K8S_FQDN##https://}
+    K8S_FQDN=${K8S_FQDN%:443}
     echo "Calling Playbook ${PLAYBOOK}"
     ansible-playbook ${PLAYBOOK}
 fi
