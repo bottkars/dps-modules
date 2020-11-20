@@ -1,0 +1,17 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: dps-modules
+ - name: kubeconfig
+   optional: true 
+
+params:
+  DEBUG: "FALSE"
+  PPDM_K8S_FILE: ppdmk8stoken-$timestamp.json
+  NAMESPACE: wordpress
+  TEMPLATE_PATH: dps-modules/ci/templates/wordpress
+  WP_PASSWORD: "Password123!"
+run:
+  path: dps-modules/ci/scripts/deploy-wordpress-k8s.sh
