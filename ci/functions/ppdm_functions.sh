@@ -53,6 +53,7 @@ function ppdm_curl {
             ### eval section for return code will be added here
             then
                 local errorlevel=$(echo $result | jq -e '.code' 2> /dev/null) 
+                local reason=$(echo $result | jq -e '.reason' 2> /dev/null) 
                 case $errorlevel in 
                     400|401)
                     echo "access denied" >&2
@@ -71,7 +72,7 @@ function ppdm_curl {
                     sleep 30
                     ;;
                     *)
-                    echo "current State $errorlevel" >&2
+                    echo "current State $errorlevel with $reason" >&2
                     ;;
                 esac    
                 local result=""
@@ -107,6 +108,45 @@ function get_ppdm_configuration {
     -XGET
     -H "Authorization: Bearer ${token}" )
     local response=$(ppdm_curl configurations | jq -r ".content[]" )
+    echo $response
+}
+
+function get_ppdm_upgrade-packages {
+    local token=${99:-$PPDM_TOKEN}
+    ppdm_curl_args=(
+    -XGET
+    -H "Authorization: Bearer ${token}" )
+    local response=$(ppdm_curl upgrade-packages  | jq -r ".content" )
+    echo $response
+}
+
+# POST
+# /api/v2/upgrade-packages/{id}/precheck
+
+
+function precheck_ppdm_upgrade-packages {
+    local token=${99:-$PPDM_TOKEN}
+    local id=${1}
+    ppdm_curl_args=(
+    -XPOST
+    -H "Authorization: Bearer ${token}" )
+    local response=$(ppdm_curl upgrade-packages/${id}/precheck  | jq -r )
+    echo $response
+}
+
+
+# PUT /api/v2/upgrade-packages/{id}
+
+
+function upgrade_ppdm-packages {
+    local token=${99:-$PPDM_TOKEN}
+    local id=${1}
+    local data=${2}
+    ppdm_curl_args=(
+    -XPUT
+    -H "Authorization: Bearer ${token}"
+    -d "${data}" )
+    local response=$(ppdm_curl upgrade-packages/${id}  | jq -r )
     echo $response
 }
 
