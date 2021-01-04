@@ -22,7 +22,7 @@ then
     done
     echo "Setting Package State to Install"
     PACKAGE=$(echo $PACKAGE | jq '.state |= "INSTALLED"')
-
+    upgrade_ppdm-packages $ID $PACKAGE
 
 fi    
 
