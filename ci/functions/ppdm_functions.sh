@@ -179,6 +179,21 @@ function get_ppdm_config_completionstate {
     echo $response
 }
 
+
+function upload_ppdm_upgrade {
+    local token=${99:-$PPDM_TOKEN}
+    local file=${1}
+    ppdm_curl_args=(
+    -XPOST
+    -H "content-Type:multipart/form-data"
+    -H "Authorization: Bearer ${token}"
+    --form file=@${file}
+    )
+    local response=$(ppdm_curl "upgrade-packages" )
+    echo $response
+}
+
+
 function set_ppdm_configurations {
     local token=${3:-$PPDM_TOKEN}
     local configuration_id=${1}
