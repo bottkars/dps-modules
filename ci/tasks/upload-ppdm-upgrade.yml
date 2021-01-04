@@ -11,7 +11,7 @@ params:
   
 
 run:
-  path: dps-modules/ci/scripts/upgrade-ppdm.sh
+  path: dps-modules/ci/scripts/upload-ppdm-upgrade.sh
 
 
 # test with 

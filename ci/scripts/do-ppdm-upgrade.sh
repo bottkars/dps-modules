@@ -7,9 +7,6 @@ source dps-modules/ci/functions/ppdm_functions.sh
 PPDM_VERSION=$(cat powerprotect-upgrade/version)
 if PPDM_TOKEN=$(get_ppdm_token "${PPDM_PASSWORD}")
 then 
-    printf "uploading Upgrade"
-    UPGRADE=$(upload_ppdm_upgrade powerprotect-upgrade/dellemc-ppdm-upgrade-sw-${PPDM_VERSION}.pkg)
-    echo $UPGRADE | jq .
     PACKAGES=$(get_ppdm_upgrade-packages) 
     PACKAGE=$(echo "${PACKAGES//\\}"| jq --arg version "${PPDM_VERSION}" '.[] | select(.packageVersion == $version)')
     ID=$(echo $PACKAGE | jq -r .id)
