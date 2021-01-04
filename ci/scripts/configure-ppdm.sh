@@ -24,6 +24,11 @@ done
 
 echo "Appliance https://${PPDM_FQDN}:8443/api/v2 ready for Configuration"
 
+echo "requesting API token for Changed Password to see if password already configured ...."
+
+
+
+
 echo "requesting API token for initial setup"
 
 source dps-modules/ci/functions/ppdm_functions.sh
@@ -66,6 +71,13 @@ echo "Retrieving initial appliance configuration Template"
     done
     printf "\r100%%\n"
     echo "You can now login to the Appliance https://${PPDM_FQDN} with your Username and Password"
-else
-    echo "Cannot connect using initial password, Appliance already configured"
+elif PPDM_TOKEN=$(get_ppdm_token "${PPDM_PASSWORD}")
+then 
+    if [[ "true" != $(get_ppdm_configuration | jq .gettingStartedCompleted ) ]]
+    then
+            printf "something went wrong\n"
+            exit 1
+    else
+        printf "Appliance already configured \n"
+    fi
 fi    
