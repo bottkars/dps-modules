@@ -27,14 +27,9 @@ echo "Appliance https://${PPDM_FQDN}:8443/api/v2 ready for Configuration"
 echo "requesting API token for Changed Password to see if password already configured ...."
 
 
-
-
-echo "requesting API token for initial setup"
-
 source dps-modules/ci/functions/ppdm_functions.sh
 if PPDM_TOKEN=$(get_ppdm_token "${PPDM_SETUP_PASSWORD}")
 then
-
 accept_ppdm_eula
 
 echo "Retrieving initial appliance configuration Template"
