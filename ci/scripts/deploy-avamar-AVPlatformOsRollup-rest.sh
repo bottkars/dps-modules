@@ -12,8 +12,8 @@ AVP_VERSION=$(cat avamar_package/version)
 
 
 printf "Uploading AvPlatformOsRollup_${AVP_VERSION}.avp to $AVE_FQDN \n"
-put_avi_package "avamar__package/AvPlatformOsRollup_${AVP_VERSION}.avp"
-export WORKFLOW=upgrade-client-downloads
+put_avi_package "avamar_package/AvPlatformOsRollup_${AVP_VERSION}.avp"
+export WORKFLOW=AvPlatformOsRollup_${AVP_VERSION}
 
 
 
@@ -27,7 +27,7 @@ done
 
 
 data="{}"
-set_avi_config $data upgrade-client-downloads | jq -r .
+set_avi_config $data $WORKFLOW | jq -r .
 
 
 until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]]
