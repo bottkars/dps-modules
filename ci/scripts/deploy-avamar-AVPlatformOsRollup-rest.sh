@@ -26,7 +26,7 @@ done
 
 
 
-data="{}"
+data='{"linux_root_password":"'${AVE_PASSWORD}'"}'
 set_avi_config $data $WORKFLOW | jq -r .
 
 
