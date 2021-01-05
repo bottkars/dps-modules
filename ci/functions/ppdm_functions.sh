@@ -141,12 +141,12 @@ function precheck_ppdm_upgrade-packages {
 function upgrade_ppdm-packages {
     local token=${99:-$PPDM_TOKEN}
     local id=${1}
-    local data=${2}
+    local data="${2}"
     ppdm_curl_args=(
     -XPUT
     -H "Authorization: Bearer ${token}"
     -d "${data}" )
-    local response=$(ppdm_curl upgrade-packages/${id}  | jq -r )
+    local response=$(ppdm_curl "upgrade-packages/${id}?forceUpgrade=true"  | jq -r )
     echo $response
 }
 

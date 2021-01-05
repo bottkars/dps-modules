@@ -18,8 +18,10 @@ then
         echo "${PRECHECK//\\}" | jq '.validationDetails[] | select(.resultType == "WARNING") | .message'
     done
     echo "Setting Package State to Install"
-    PACKAGE=$(echo $PACKAGE | jq '.state |= "INSTALLED"')
-    upgrade_ppdm-packages $ID $PACKAGE
+    PACKAGE=$(echo ${PRECHECK//\\} | jq -c '.state |= "INSTALLED"')
+    PACKAGE=$(echo $PACKAGE | jq -c --arg passphrase ${PPDM_PASSWORD} '.lockboxPassphrase |= $passphrase')
+    PACKAGE=$(echo $PACKAGE | jq -c --arg token ${PPDM_TOKEN} '.upgradeToken |= $token')
+    upgrade_ppdm-packages $ID "${PACKAGE}"
 
 fi    
 
