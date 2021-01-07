@@ -29,17 +29,18 @@ TITLE=$(get_avi_packages | jq -r 'select(.title | contains(env.WORKFLOW)).title'
 
 set_avi_config $DATA "${TITLE}" | jq -r .
 
-COUNTER=0
+i=0
 until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]]
     do
-    if [[ $COUNTER == 10 ]]
+    if [[ "$i" -gt 10 ]]
     then
         printf "Reconnecting AVE \n"
-        COUNTER=0
+        i=0
         AVI_TOKEN=$(get_avi_token $AVI_PASSWORD)
     fi    
     get_avi_messages  | jq -r  '.[-1] | [.timestamp, .status, .taskId, .taskName, .content] | @tsv'
     sleep 10
-    (( COUNTER++ ))
+    echo try: $i
+    ((i++))
 done
 
