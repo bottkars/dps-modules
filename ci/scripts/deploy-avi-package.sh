@@ -13,7 +13,6 @@ AVP_VERSION=$(cat avi_package/version)
 
 printf "Uploading ${AVI_PACKAGE}-${AVP_VERSION}.avp to $AVI_FQDN"
 put_avi_package "avi_package/${AVI_PACKAGE}-${AVP_VERSION}.avp"
-export WORKFLOW=${AVI_PACKAGE}-${AVP_VERSION//-/.}
 
 
 
