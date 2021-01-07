@@ -15,7 +15,7 @@ params:
   AVI_PACKAGE:
   AVI_URL:
   WORKFLOW:
-
+  DATA: "{}"
   
 
 run:

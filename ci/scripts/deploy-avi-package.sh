@@ -11,21 +11,24 @@ AVI_TOKEN=$(get_avi_token $AVI_PASSWORD)
 AVP_VERSION=$(cat avi_package/version)
 
 
-printf "Uploading ${AVI_PACKAGE}-${AVP_VERSION}.avp to $AVI_FQDN"
+printf "Uploading ${AVI_PACKAGE}-${AVP_VERSION}.avp to $AVI_FQDN \n"
 put_avi_package "avi_package/${AVI_PACKAGE}-${AVP_VERSION}.avp"
 
 
-
-until [[ $(get_avi_packages | jq -e -r 'select(.title==env.WORKFLOW).status == "ready"' 2>/dev/null)  ]]
+printf "waiting for  ${AVI_PACKAGE} to become ready \n"
+until [[ $(get_avi_packages | jq -e -r 'select(.title | contains(env.WORKFLOW)).status == "ready"' 2>/dev/null)  ]]
 do
 sleep 5
 printf "."
 done
 
+TITLE=$(get_avi_packages | jq -r 'select(.title | contains(env.WORKFLOW)).title')
 
 
-data="{}"
-set_avi_config $data "${WORKFLOW}" | jq -r .
+
+
+
+set_avi_config $DATA "${TITLE}" | jq -r .
 
 
 until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]]

@@ -187,7 +187,7 @@ function get_avi_info {
     -XGET
     -H 'content-type: application/json' 
     )
-    local response=$(avi_curl infog  | jq -r '.')
+    local response=$(avi_curl info | jq -r '.')
     echo $response
 }
 
