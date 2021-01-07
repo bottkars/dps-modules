@@ -14,6 +14,7 @@ params:
   AVI_PASSWORD:
   AVI_PACKAGE:
   AVI_URL:
+  WORKFLOW:
 
   
 
