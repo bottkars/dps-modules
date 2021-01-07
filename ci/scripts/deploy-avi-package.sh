@@ -35,11 +35,11 @@ until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /
     if [[ $COUNTER == 10 ]]
     then
         printf "Reconnecting AVE \n"
-        let COUNTER=0
+        COUNTER=0
         AVI_TOKEN=$(get_avi_token $AVI_PASSWORD)
     fi    
     get_avi_messages  | jq -r  '.[-1] | [.timestamp, .status, .taskId, .taskName, .content] | @tsv'
     sleep 10
-    let COUNTER++
+    (( COUNTER++ ))
 done
 
