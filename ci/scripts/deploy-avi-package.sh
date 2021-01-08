@@ -32,15 +32,15 @@ set_avi_config $DATA "${TITLE}" | jq -r .
 i=0
 until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]]
     do
-    if [[ "$i" -gt 10 ]]
-    then
+#    if [[ "$i" -gt 10 ]]
+#    then
         printf "Reconnecting AVE \n"
-        i=0
-        AVI_TOKEN=$(get_avi_token $AVI_PASSWORD)
-    fi    
+#        i=0
+    AVI_TOKEN=$(get_avi_token $AVI_PASSWORD)
+#    fi    
     get_avi_messages  | jq -r  '.[-1] | [.timestamp, .status, .taskId, .taskName, .content] | @tsv'
-    sleep 10
-    echo try: $i
-    ((i++))
+    sleep 20
+#    echo try: $i
+#    ((i++))
 done
 
