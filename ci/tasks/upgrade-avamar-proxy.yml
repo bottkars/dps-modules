@@ -1,0 +1,29 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: dps-modules
+
+
+params:
+  DEBUG: false
+  VCENTER_NAME:
+  AVAMAR_FQDN:
+  AVE_PASSWORD:
+  AVE_USERNAME:
+  DATACENTER_NAME:
+  GOVC_INSECURE:
+  GOVC_PASSWORD:
+  GOVC_URL:
+  GOVC_USERNAME:  
+
+  
+
+run:
+  path: dps-modules/ci/scripts/upgrade-avamar-proxy.sh
+
+
+# test with 
+# echo "<preset variable yml>" > vars.yml
+# while IFS=": " read -r field1 field2; do     export $field1=$field2; done < vars.yml

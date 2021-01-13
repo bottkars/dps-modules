@@ -34,7 +34,7 @@ until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /
     do
 #    if [[ "$i" -gt 10 ]]
 #    then
-        printf "Reconnecting AVE \n"
+        printf "Reconnecting to AVE \n"
 #        i=0
     AVI_TOKEN=$(get_avi_token $AVI_PASSWORD)
 #    fi    
@@ -44,3 +44,14 @@ until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /
 #    ((i++))
 done
 
+
+
+
+DATA='{
+  "autoDsMapping": '$(echo $PROXY | jq '.autoDsMapping')',
+  "contact":'$(echo $PROXY | jq '.contact')',
+  "domain": '$(echo $PROXY | jq '.domainFqdn')',
+  "maxActiveJobs": '$(echo $PROXY | jq '.maxActiveJobs')',
+  "name": '$(echo $PROXY | jq '.name')',
+  "vcs": '$(echo $PROXY | jq '.vcs')'
+}'
