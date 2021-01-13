@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
-set -eu
+set -e
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
-
+govc about
 source dps-modules/ci/functions/avamar_rest_client.sh
 
 AVAMAR_TOKEN=$(get_avamar_token $AVE_PASSWORD)
-
+echo "Reading Proxies from ${AVAMAR_FQDN}"
 PROXIES=$(get_avamar_proxies)
+echo "Reading vCenters from ${AVAMAR_FQDN}"
+VCENTERS=$(get_avamar_virtualcenters)
 export length=$(echo $PROXIES | jq '. | length') 
-govc about
-
-
 
 ### we will build the loop once single proxy works
 if [[ "$length" -gt 0 ]]
@@ -20,9 +19,7 @@ PROXY=$(echo $PROXIES | jq '.[(env.length|tonumber)-1]')
 ID=$(echo $PROXY | jq -r '.id')
 UUID=$(echo $PROXY | jq -r '.biosUuid')
 VCENTER_ID=$(echo $VCENTERS | jq -r  '. | select(.name==env.VCENTER_NAME).cid')
-
 PROXY_FQDN=$(echo $PROXY | jq -r .name)
-
 echo "getting instance UUID from vCenter"
 INSTANCE_UUID=$(govc vm.info -vm.dns ${PROXY_FQDN} --json | jq -r '.VirtualMachines[].Config.InstanceUuid')
 
