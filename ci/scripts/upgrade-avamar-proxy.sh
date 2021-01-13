@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eu
+set -e
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
 govc about
