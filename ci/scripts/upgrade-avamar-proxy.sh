@@ -17,7 +17,6 @@ if [[ "$length" -gt 0 ]]
 then
 PROXY=$(echo $PROXIES | jq '.[(env.length|tonumber)-1]')
 ID=$(echo $PROXY | jq -r '.id')
-UUID=$(echo $PROXY | jq -r '.biosUuid')
 VCENTER_ID=$(echo $VCENTERS | jq -r  '. | select(.name==env.VCENTER_NAME).cid')
 PROXY_FQDN=$(echo $PROXY | jq -r .name)
 echo "getting instance UUID from vCenter"
