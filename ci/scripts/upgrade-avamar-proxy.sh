@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
 govc about
@@ -28,5 +28,8 @@ RECOMMEND=$(get_avamar_virtualcenters_proxies_recommend ${VCENTER_ID} ${DATACENT
 
 update_avamar_proxies $VCENTER_ID $INSTANCE_UUID
 
+else
+    echo "No Proxies found or registered"
+    exit 1
 fi
 
