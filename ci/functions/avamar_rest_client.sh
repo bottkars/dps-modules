@@ -122,8 +122,8 @@ function create_avamar_oauth_client {
 
 
 function get_avamar_clients {
-    local apiver=${1:-"v1"}
-    local domain=${2:-"./"}
+    local domain=${1:-"./"}
+    local apiver=${2:-"v1"}
     local avamar_token=${3:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
