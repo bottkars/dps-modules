@@ -5,9 +5,14 @@ figlet DPS Automation
 govc about
 source dps-modules/ci/functions/avamar_rest_client.sh
 
-AVAMAR_TOKEN=$(get_avamar_token $AVE_PASSWORD)
+until [[ AVAMAR_TOKEN=$(get_avamar_token $AVE_PASSWORD) ]]
+do
+sleep 5
+done
+
+
 echo "Reading Proxies from ${AVAMAR_FQDN}"
-PROXIES=$(get_avamar_proxies)
+PROXIES=$(get_avamar_proxies | jq .content)
 echo "Reading vCenters from ${AVAMAR_FQDN}"
 VCENTERS=$(get_avamar_virtualcenters)
 export length=$(echo $PROXIES | jq '. | length') 

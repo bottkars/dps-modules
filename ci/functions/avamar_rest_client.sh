@@ -152,32 +152,20 @@ function get_avamar_client {
 }
 
 function get_avamar_proxies {
-    local apiver=${1:-"v1"}
-    local avamar_token=${2:-$AVAMAR_TOKEN}
-    avi_curl_args=(
-    -XGET
-    -H "accept: application/json" 
-    -H "authorization: Bearer $avamar_token"
-    )
-    local response=$(avamar_curl api/${apiver}/proxies)
-    echo $response | jq .content
-}
-
-
-function get_avamar_proxy {
-    local cid=${1}
+    local cid=${1#/}
     local apiver=${2:-"v1"}
     local avamar_token=${3:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
-    --data-urlencode domain=$domain
-    --data-urlencode recursive=false
     )
     local response=$(avamar_curl api/${apiver}/proxies/${cid})
     echo $response | jq .
 }
+
+
+
 function get_avamar_tasks {
     local cid=${1}
     local apiver=${2:-"v1"}
