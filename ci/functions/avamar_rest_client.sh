@@ -390,7 +390,22 @@ function add_avamar_vcenter {
 
 }
 
-
+# event controller
+function get_avamar_events {
+    local id=${1}
+    local domain=${2:-"./"}
+    local apiver=${3:-"v1"}
+    local avamar_token=${4:-$AVAMAR_TOKEN}
+    avi_curl_args=(
+    -XGET
+    -H "accept: application/json" 
+    -H "authorization: Bearer $avamar_token"
+    --data-urlencode domain=$domain
+    --data-urlencode recursive=false
+    )
+    local response=$(avamar_curl api/${apiver}/events/${id#/})
+    echo $response  | jq -r 
+}
 # Profile Controller
 
 function get_avamar_profiles {
@@ -428,7 +443,8 @@ function get_avamar_profiles {
 
 function disable_avamar_systemevent {
     local eventcode=${1}
-    local avamar_token=${4:-$AVAMAR_TOKEN}
+    local apiver=${2:-"v1"}    
+    local avamar_token=${3:-$AVAMAR_TOKEN}
     local data='[
   {
     "ack": false,
