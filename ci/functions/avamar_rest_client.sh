@@ -405,6 +405,44 @@ function get_avamar_profiles {
     --data-urlencode domain=$domain
     --data-urlencode recursive=false
     )
-    local response=$(avamar_curl api/${apiver}/profiles/${id})
+    local response=$(avamar_curl api/${apiver}/profiles/${id#/})
+    echo $response  | jq -r 
+}
+
+
+function get_avamar_profiles {
+    local id=${1}
+    local domain=${2:-"./"}
+    local apiver=${3:-"v1"}
+    local avamar_token=${4:-$AVAMAR_TOKEN}
+    avi_curl_args=(
+    -XGET
+    -H "accept: application/json" 
+    -H "authorization: Bearer $avamar_token"
+    --data-urlencode domain=$domain
+    --data-urlencode recursive=false
+    )
+    local response=$(avamar_curl api/${apiver}/profiles/${id#/})
+    echo $response  | jq -r 
+}
+
+function disable_avamar_systemevent {
+    local eventcode=${1}
+    local avamar_token=${4:-$AVAMAR_TOKEN}
+    local data='[
+  {
+    "ack": false,
+    "alert": false,
+    "eventCode": '${eventcode}'
+  }
+]'
+    avi_curl_args=(
+    -XPUT
+    -H "Content-type: application/json" 
+    -H "accept: application/json" 
+    -H "authorization: Bearer $avamar_token"
+    -d "${data}"
+    )
+    local response=$(avamar_curl api/${apiver}/profiles/system)
     echo $response  | jq -r 
 }
