@@ -27,7 +27,7 @@ TITLE=$(get_avi_packages | jq -r 'select(.title | contains(env.WORKFLOW)).title'
 
 printf "Starting ${AVI_PACKAGE}${AVP_VERSION}  Workflow \n"
 set_avi_config "${DATA}" "${TITLE}" | jq -r .
-printf "Waiting for Installatation Start of ${AVI_PACKAGE} \n"
+printf "Waiting for Installatation Start of ${AVI_PACKAGE}${AVP_VERSION} \n"
 until  [[ $(get_avi_messages | jq -r '. | length') -gt 0 ]]
 do
 printf "."
@@ -35,7 +35,7 @@ sleep 5
 done
 printf "\n"
 
-until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed"))' 2> /dev/null) ]] || [[ $(get_avi_messages | jq -r '. | length') == "1" ]]
+until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed"))' 2> /dev/null) ]] || [[ $(get_avi_messages | jq -r '. | length') == "0" ]]
     do
 #    if [[ "$i" -gt 10 ]]
 #    then
