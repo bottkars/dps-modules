@@ -11,10 +11,10 @@ AVI_TOKEN=$(get_avi_token $AVI_PASSWORD)
 AVP_VERSION=$(cat avi_package/version)
 
 
-printf "Uploading ${AVI_PACKAGE}-${AVP_VERSION}.avp to $AVI_FQDN \n"
-put_avi_package "avi_package/${AVI_PACKAGE}-${AVP_VERSION}.avp"
+printf "Uploading ${AVI_PACKAGE}${AVP_VERSION}.avp to $AVI_FQDN \n"
+put_avi_package "avi_package/${AVI_PACKAGE}${AVP_VERSION}.avp"
 
-printf "waiting for  ${AVI_PACKAGE} to become ready \n"
+printf "waiting for ${AVI_PACKAGE} to become ready \n"
 until [[ $(get_avi_packages | jq -e -r 'select(.title | contains(env.WORKFLOW)).status == "ready"' 2>/dev/null)  ]]
 do
 sleep 5
@@ -25,7 +25,7 @@ printf "\n"
 
 TITLE=$(get_avi_packages | jq -r 'select(.title | contains(env.WORKFLOW)).title')
 
-printf "Starting ${AVI_PACKAGE} to Workflow \n"
+printf "Starting ${AVI_PACKAGE}  Workflow \n"
 set_avi_config $DATA "${TITLE}" | jq -r .
 printf "Waiting for Installatation Start of ${AVI_PACKAGE} \n"
 until  [[ $(get_avi_messages | jq -r '. | length') -gt 0 ]]
@@ -50,13 +50,3 @@ until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed"))' 2> 
 done
 
 
-
-
-DATA='{
-  "autoDsMapping": '$(echo $PROXY | jq '.autoDsMapping')',
-  "contact":'$(echo $PROXY | jq '.contact')',
-  "domain": '$(echo $PROXY | jq '.domainFqdn')',
-  "maxActiveJobs": '$(echo $PROXY | jq '.maxActiveJobs')',
-  "name": '$(echo $PROXY | jq '.name')',
-  "vcs": '$(echo $PROXY | jq '.vcs')'
-}'

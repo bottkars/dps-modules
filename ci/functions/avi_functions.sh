@@ -177,8 +177,8 @@ function get_avi_messages {
     -H 'content-type: application/json' 
     -b "JSESSIONID=${token}" 
     )
-    local response=$(avi_curl messages  | jq -r '.messages')
-    echo $response | jq -e .
+    local response=$(avi_curl messages)  
+    echo $response | jq   '.messages'
 }
 
 function get_avi_info {
