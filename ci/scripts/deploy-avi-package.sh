@@ -30,7 +30,7 @@ TITLE=$(get_avi_packages | jq -r 'select(.title | contains(env.WORKFLOW)).title'
 set_avi_config $DATA "${TITLE}" | jq -r .
 
 i=0
-until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]]
+until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]] || [[ $(get_avi_messages | jq -e '.[] | length ' == "") ]]
     do
 #    if [[ "$i" -gt 10 ]]
 #    then

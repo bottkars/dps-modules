@@ -390,3 +390,21 @@ function add_avamar_vcenter {
 
 }
 
+
+# Profile Controller
+
+function get_avamar_profiles {
+    local id=${1}
+    local domain=${2:-"./"}
+    local apiver=${3:-"v1"}
+    local avamar_token=${4:-$AVAMAR_TOKEN}
+    avi_curl_args=(
+    -XGET
+    -H "accept: application/json" 
+    -H "authorization: Bearer $avamar_token"
+    --data-urlencode domain=$domain
+    --data-urlencode recursive=false
+    )
+    local response=$(avamar_curl api/${apiver}/profiles/${id})
+    echo $response  | jq -r 
+}
