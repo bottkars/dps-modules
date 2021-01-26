@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
-set -e
+set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
 govc about
 source dps-modules/ci/functions/avamar_rest_client.sh
 
-until [[ AVAMAR_TOKEN=$(get_avamar_token $AVE_PASSWORD) ]]
-do
-sleep 5
-done
+AVAMAR_TOKEN=$(get_avamar_token $AVE_PASSWORD)
+
 
 
 echo "Reading Proxies from ${AVAMAR_FQDN}"
