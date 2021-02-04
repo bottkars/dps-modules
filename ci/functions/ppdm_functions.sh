@@ -738,6 +738,7 @@ function add_ppdm_protection_engine_proxy {
 		"Credential": {
 			"Type": "ObjectId"
 		},
+        "SkipRegistration": true,
 		"AdvancedOptions": {
 			"TransportSessions": {
 				"Mode": "HotaddPreferred",

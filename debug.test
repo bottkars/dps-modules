@@ -1,0 +1,74 @@
+                      "UserName": "",
+2021-02-03T17:24:21Z INFO:                       "UserPassword": "",
+2021-02-03T17:24:21Z INFO:                       "ThumbPrint": "EA:3C:41:C0:42:64:B3:13:88:DC:34:68:BC:41:2D:35:EF:48:9D:02",
+2021-02-03T17:24:21Z INFO:                       "HypervisorMode": ""
+2021-02-03T17:24:21Z INFO:                   }
+2021-02-03T17:24:21Z INFO:               },
+2021-02-03T17:24:21Z INFO:               "HostName": "ppproxy.avstesting.ad",
+2021-02-03T17:24:21Z INFO:               "InstanceUuid": "",
+2021-02-03T17:24:21Z INFO:               "MORef": "",
+2021-02-03T17:24:21Z INFO:               "Credential": {
+2021-02-03T17:24:21Z INFO:                   "Type": "ObjectId",
+2021-02-03T17:24:21Z INFO:                   "ObjectId": "",
+2021-02-03T17:24:21Z INFO:                   "UserName": "",
+2021-02-03T17:24:21Z INFO:                   "Password": ""
+2021-02-03T17:24:21Z INFO:               },
+2021-02-03T17:24:21Z INFO:               "HealthCheckInterval": 1,
+2021-02-03T17:24:21Z INFO:               "UpdateCredentials": false,
+2021-02-03T17:24:21Z INFO:               "Operation": "",
+2021-02-03T17:24:21Z INFO:               "ApplicationData": {},
+2021-02-03T17:24:21Z INFO:               "SupportedProtectionTypes": [
+2021-02-03T17:24:21Z INFO:                   "VM"
+2021-02-03T17:24:21Z INFO:               ],
+2021-02-03T17:24:21Z INFO:               "Port": 9090,
+2021-02-03T17:24:21Z INFO:               "ProxyType": "External",
+2021-02-03T17:24:21Z INFO:               "DeployProxy": true,
+2021-02-03T17:24:21Z INFO:               "ProxyDeploymentConfig": {
+2021-02-03T17:24:21Z INFO:                   "VMName": "ppproxy.avstesting.ad",
+2021-02-03T17:24:21Z INFO:                   "Fqdn": "ppproxy.avstesting.ad",
+2021-02-03T17:24:21Z INFO:                   "MultiVlanEnabled": false,
+2021-02-03T17:24:21Z INFO:                   "IpAddress": "10.10.230.64",
+2021-02-03T17:24:21Z INFO:                   "Gateway": "10.10.230.1",
+2021-02-03T17:24:21Z INFO:                   "NetMask": "255.255.255.0",
+2021-02-03T17:24:21Z INFO:                   "Vlans": null,
+2021-02-03T17:24:21Z INFO:                   "MacAddress": "",
+2021-02-03T17:24:21Z INFO:                   "NetworkMoref": "network-o51",
+2021-02-03T17:24:21Z INFO:                   "IPProtocol": "IPv4",
+2021-02-03T17:24:21Z INFO:                   "InterfaceName": "",
+2021-02-03T17:24:21Z INFO:                   "AdditionalVMNetworks": null,
+2021-02-03T17:24:21Z INFO:                   "Dns": "10.2.0.9,168.63.129.16",
+2021-02-03T17:24:21Z INFO:                   "NTPServer": "",
+2021-02-03T17:24:21Z INFO:                   "RootCredential": {
+2021-02-03T17:24:21Z INFO:                       "Type": "",
+2021-02-03T17:24:21Z INFO:                       "ObjectId": "",
+2021-02-03T17:24:21Z INFO:                       "UserName": "",
+2021-02-03T17:24:21Z INFO:                       "Password": ""
+2021-02-03T17:24:21Z INFO:                   },
+2021-02-03T17:24:21Z INFO:                   "Timezone": "America/New_York",
+2021-02-03T17:24:21Z INFO:                   "OvaFile": "",
+2021-02-03T17:24:21Z INFO:                   "Location": {
+2021-02-03T17:24:21Z INFO:                       "DatastoreMoref": "datastore-11",
+2021-02-03T17:24:21Z INFO:                       "ResourcePoolMoref": "",
+2021-02-03T17:24:21Z INFO:                       "ClusterMoref": "domain-c7",
+2021-02-03T17:24:21Z INFO:                       "HostMoref": "",
+2021-02-03T17:24:21Z INFO:                       "FolderMoref": "",
+2021-02-03T17:24:21Z INFO:                       "NetworkMoref": "network-o51"
+2021-02-03T17:24:21Z INFO:                   }
+2021-02-03T17:24:21Z INFO:               },
+2021-02-03T17:24:21Z INFO:               "AdvancedOptions": {
+2021-02-03T17:24:21Z INFO:                   "TransportSessions": {
+2021-02-03T17:24:21Z INFO:                       "UserDefined": true,
+2021-02-03T17:24:21Z INFO:                       "Mode": "HotaddOnly",
+2021-02-03T17:24:21Z INFO:                       "UseSsl": false
+2021-02-03T17:24:21Z INFO:                   },
+2021-02-03T17:24:21Z INFO:                   "Datastores": null,
+2021-02-03T17:24:21Z INFO:                   "CapacityPercentage": 100
+2021-02-03T17:24:21Z INFO:               },
+2021-02-03T17:24:21Z INFO:               "SkipRegistration": false,
+2021-02-03T17:24:21Z INFO:               "AutoUpdateConfig": false
+2021-02-03T17:24:21Z INFO:           }
+
+
+
+add_ppdm_protection_engine_proxy ea4ee684-b690-42b3-ab37-3b78505a480f network-o51 domain-c7 datastore-11 "" ppproxy.avstesting.ad "10.10.230.64" "255.255.255.0" "10.10.230.1" "10.2.0.9,168.63.129.16" IPv4 ppproxy.avstesting.ad 66d07ee5-0179-5e7f-a6fd-d87237b3246b
+
