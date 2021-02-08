@@ -6,6 +6,9 @@ source dps-modules/ci/functions/ppdm_functions.sh
 source dps-modules/ci/functions/yaml.sh
 
 export PPDM_TOKEN=$(get_ppdm_token $PPDM_PASSWORD)
+
+
+echo "Querying activities with Query '${PPDM_QUERY}' and Filter '${PPDM_FILTER}'"
 activities=$(query_ppdm_activities "'${PPDM_QUERY}'" "'${PPDM_FILTER}'")
 echo $activities | jq -r '.[]'
 
