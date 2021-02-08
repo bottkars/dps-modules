@@ -28,7 +28,7 @@ if [[ "${DEPLOY}" == "true" ]]
     printf "\n"
 
 
-    TITLE=$(get_avi_packages | jq -r 'select(.title | contains(env.WORKFLOW)).title')
+    export TITLE=$(get_avi_packages | jq -r 'select(.title | contains(env.WORKFLOW)).title')
 
     printf "Starting ${TITLE}  Workflow \n"
     set_avi_config "${DATA}" "${TITLE}" | jq -r .
