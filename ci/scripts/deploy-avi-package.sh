@@ -40,7 +40,7 @@ if [[ "${DEPLOY}" == "true" ]]
     #done
     #printf "\n"
 
-    until   [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]] #  || [[ $(get_avi_messages | jq -r '. | length') == "0"  ]]
+    until   [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]] || [[ $(get_avi_messages | jq -r '. | length') == "0"  ]]
         do
     #    if [[ "$i" -gt 10 ]]
     #    then
