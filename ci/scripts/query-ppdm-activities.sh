@@ -14,7 +14,7 @@ export timestamp="$(date '+%Y%m%d.%-H%M.%S')"
 
 CDRA_STATE_FILE="$(echo "$CDRA_STATE_FILE" | envsubst)" 
 
-if  [[ $(echo $activities| jq -r '.[].state == "RUNNING"') == true ]] 
+if  [[ "$(echo $activities| jq -r '.[].state == "RUNNING"')" == "true" ]] 
 then
     echo "Cloud Desaster Recovery Backup Running ! at ${timestamp}"
     echo $activities | jq -r . >> cdra-state/${CDRA_STATE_FILE}
