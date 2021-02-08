@@ -11,7 +11,7 @@ export PPDM_TOKEN=$(get_ppdm_token $PPDM_PASSWORD)
 
 while   [[ $(query_ppdm_activities 'MYSQL1' 'parentId eq null and category in ("CLOUD_PROTECT") and state in ("RUNNING")' | jq -r '.[].state == "RUNNING"') ]] 
 do
-    echo "CloudDR Replication running"
+    echo "$(query_ppdm_activities '*' 'asset.type eq "VMWARE_VIRTUAL_MACHINE" and category in ("CLOUD_PROTECT") and state in ("RUNNING")'  | jq '.[].name')"
     sleep 60
 done 
 
