@@ -33,14 +33,11 @@ if [[ "${DEPLOY}" == "true" ]]
     printf "Starting ${TITLE}  Workflow \n"
     set_avi_config "${DATA}" "${TITLE}" | jq -r .
     printf "Waiting for Installatation Start of ${AVI_PACKAGE}${AVP_VERSION} \n"
-    #until  [[ $(get_avi_messages | jq -r '. | length') -gt 0 ]]
-    #do
-    #printf "."
-    #sleep 5
-    #done
-    #printf "\n"
 
+
+    # checking if package completetd or title in history as completed. do this as a av-installer restart clears current log
     until   [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]] || [[ $(get_avi_packages_history | jq '.[] | select(.title | contains(env.TITLE)).status == "completed"') == true ]]
+
     #    until   [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]] || [[ $(get_avi_messages | jq -r '. | length') == "0"  ]]
         do
     #    if [[ "$i" -gt 10 ]]
