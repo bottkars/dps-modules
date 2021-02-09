@@ -29,27 +29,19 @@ if [[ "${DEPLOY}" == "true" ]]
 
 
     export TITLE=$(get_avi_packages | jq -r 'select(.title | contains(env.WORKFLOW)).title')
-
+    export VERSION=$(get_avi_packages | jq -r 'select(.title | contains(env.WORKFLOW)).version')    
     printf "Starting ${TITLE}  Workflow \n"
     set_avi_config "${DATA}" "${TITLE}" | jq -r .
     printf "Waiting for Installatation Start of ${AVI_PACKAGE}${AVP_VERSION} \n"
 
 
     # checking if package completetd or title in history as completed. do this as a av-installer restart clears current log
-    until   [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]] || [[ $(get_avi_packages_history | jq '.[] | select(.title | contains(env.TITLE)).status == "completed"') == true ]]
-
-    #    until   [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]] || [[ $(get_avi_messages | jq -r '. | length') == "0"  ]]
+    until   [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]] || [[ $(get_avi_packages_history | jq '.[] | select(.title | contains(env.TITLE)) |select(.version | contains(env.VESRION)).status == "completed"') == true ]]
         do
-    #    if [[ "$i" -gt 10 ]]
-    #    then
             printf "Reconnecting to AVE \n"
-    #        i=0
         AVI_TOKEN=$(get_avi_token $AVI_PASSWORD)
-    #    fi    
         get_avi_messages  | jq -r  '.[-1] | [.timestamp, .status, .taskId, .taskName, .content] | @tsv'
         sleep 20
-    #    echo try: $i
-    #    ((i++))
     done
 fi
 
