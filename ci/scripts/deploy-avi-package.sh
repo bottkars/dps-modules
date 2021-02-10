@@ -47,4 +47,4 @@ if [[ "${DEPLOY}" == "true" ]]
 fi
 
 
-printf "${AVI_PACKAGE} deployed \n"
+printf "${AVI_PACKAGE}${AVP_VERSION} deployed \n"
