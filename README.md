@@ -96,3 +96,10 @@ CONFIGURATION=$(echo $CONFIGURATION | jq 'del(._links)')
 
 echo $CONFIGURATION | jq -r
 ```
+
+
+
+TEMP_DEB="$(mktemp)" &&
+wget -O "$TEMP_DEB" 'http://path.to/my.deb' &&
+sudo dpkg -i "$TEMP_DEB"
+rm -f "$TEMP_DEB"
