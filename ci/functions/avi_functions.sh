@@ -215,7 +215,6 @@ function delete_avi_package {
     -XDELETE
     -H 'content-type: application/json' 
     -b "JSESSIONID=${token}"
-    -F name=@${file}
     )
     local response=$(avi_curl packages/$title/$version  | jq -r '.message')
     echo $response
