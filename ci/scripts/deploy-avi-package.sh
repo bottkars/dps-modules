@@ -36,17 +36,13 @@ if [[ "${DEPLOY}" == "true" ]]
     if [[ $(get_avi_repository | jq -r '.[] | select(.filename | contains(env.AVI_FILENAME)).status == "Rejected"') ]]
     then
         printf "Package already deployed, deleting from repo"
-        delete_avi_package ${AVI_PACKAGE:0:-1}
+        delete_avi_package ${AVI_FILENAME}
     else    
         export TITLE=$(get_avi_packages | jq -r 'select(.title | contains(env.WORKFLOW)).title')
         export VERSION=$(get_avi_packages | jq -r 'select(.title | contains(env.WORKFLOW)).version')    
         printf "Starting ${TITLE}  Workflow \n"
         set_avi_config "${DATA}" "${TITLE}" | jq -r .
         printf "Waiting for Installatation Start of ${AVI_PACKAGE}${AVP_VERSION} \n"
-
-
-        # checking if package completetd or title in history as completed. do this as a av-installer restart clears current log
-        
         until   [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]] || [[ $(get_avi_packages_history | jq '.[] | select(.title | contains(env.TITLE)) | select(.version | contains(env.VERSION)).status == "completed"' 2> /dev/null) == true  ]]
             do
                 printf "Reconnecting to AVE \n"
