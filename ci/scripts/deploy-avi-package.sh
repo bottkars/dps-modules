@@ -21,7 +21,6 @@ if [[ "${DEPLOY}" == "true" ]]
 
     if [[ $(get_avi_repository | jq -r '.[] | select(.filename | contains(env.AVI_FILENAME)).status == "Rejected"') ]]
     then
-        DEBUG=TRUE
         printf "Package already deployed, deleting from repo \n"
         delete_avi_package "${AVI_FILENAME}"
     else    
