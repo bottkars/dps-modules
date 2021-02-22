@@ -206,3 +206,17 @@ function put_avi_package {
     echo $response
 }
 
+function delete_avi_package {
+    local title=$1
+    local version=$2
+    local token=${99:-$AVI_TOKEN}
+    local avi_adminuser=${AVE_ROOT:-root}
+    avi_curl_args=(
+    -XDELETE
+    -H 'content-type: application/json' 
+    -b "JSESSIONID=${token}"
+    -F name=@${file}
+    )
+    local response=$(avi_curl packages/$title/$version  | jq -r '.message')
+    echo $response
+}
