@@ -36,6 +36,7 @@ if [[ "${DEPLOY}" == "true" ]]
             get_avi_messages  | jq -r  '.[-1] | [.timestamp, .status, .taskId, .taskName, .content] | @tsv'
             sleep 20
         done
+        printf "${AVI_PACKAGE}${AVP_VERSION} deployed \n"
     fi    
 fi
-printf "${AVI_PACKAGE}${AVP_VERSION} deployed \n"
+
