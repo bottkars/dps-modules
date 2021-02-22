@@ -37,7 +37,7 @@ if [[ "${DEPLOY}" == "true" ]]
 
     # checking if package completetd or title in history as completed. do this as a av-installer restart clears current log
     
-    until   [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]] || [[ $(get_avi_packages_history | jq '.[] | select(.title | contains(env.TITLE)) | select(.version | contains(env.VESRION)).status == "completed"' 2> /dev/null) == true  ]]
+    until   [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]] || [[ $(get_avi_packages_history | jq '.[] | select(.title | contains(env.TITLE)) | select(.version | contains(env.VERSION)).status == "completed"' 2> /dev/null) == true  ]]
         do
             printf "Reconnecting to AVE \n"
         AVI_TOKEN=$(get_avi_token $AVI_PASSWORD)
