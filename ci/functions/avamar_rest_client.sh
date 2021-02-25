@@ -122,15 +122,16 @@ function create_avamar_oauth_client {
 
 
 function get_avamar_clients {
-    local domain=${1:-"./"}
+    local domain=${1:-"/"}
     local apiver=${2:-"v1"}
     local avamar_token=${3:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
+    -G
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
-    --data-urlencode domain=$domain
-    --data-urlencode recursive=false
+    --data-urlencode "domain=$domain"
+    --data-urlencode recursive=true
     )
     local response=$(avamar_curl api/${apiver}/clients)
     echo $response
@@ -138,10 +139,11 @@ function get_avamar_clients {
 function get_avamar_client {
     local cid=${1}
     local apiver=${2:-"v1"}
-    local domain=${3:-"./"}
+    local domain=${3:-"/"}
     local avamar_token=${4:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
+    -G
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
     --data-urlencode domain=$domain
@@ -157,6 +159,7 @@ function get_avamar_proxies {
     local avamar_token=${3:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
+    -G
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
     )
@@ -172,6 +175,7 @@ function get_avamar_tasks {
     local avamar_token=${3:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
+    -G
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
     --data-urlencode domain=$domain
@@ -190,6 +194,7 @@ function get_avamar_status {
     local avamar_token=${2:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
+    -G
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
     --data-urlencode domain=$domain
@@ -205,6 +210,7 @@ function get_avamar_about-information
     local avamar_token=${2:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
+    -G
     -H "accept: application/json" 
     --data-urlencode domain=$domain
     --data-urlencode recursive=false
@@ -219,6 +225,7 @@ function get_avamar_basic-info {
     local avamar_token=${2:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
+    -G
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
     --data-urlencode domain=$domain
@@ -230,11 +237,12 @@ function get_avamar_basic-info {
 
 function get_avamar_virtualcenters {
     local cid=${1}
-    local domain=${2:-"./"}
+    local domain=${2:-"/"}
     local apiver=${3:-"v1"}
     local avamar_token=${4:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
+    -G
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
     --data-urlencode domain=$domain
@@ -249,11 +257,12 @@ function get_avamar_virtualcenters {
 
 function get_avamar_virtualcenters_entities {
     local cid=${1}
-    local domain=${2:-"./"}
+    local domain=${2:-"/"}
     local apiver=${3:-"v1"}
     local avamar_token=${4:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
+    -G
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
     --data-urlencode domain=$domain
@@ -266,11 +275,12 @@ function get_avamar_virtualcenters_entities {
 
 function get_avamar_virtualcenters_clients {
     local cid=${1}
-    local domain=${2:-"./"}
+    local domain=${2:-"/"}
     local apiver=${3:-"v1"}
     local avamar_token=${4:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
+    -G
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
     --data-urlencode domain=$domain
@@ -318,6 +328,7 @@ function get_avamar_certificates {
     local avamar_token=${1:-$AVAMAR_TOKEN}    
     avi_curl_args=(
     -XGET
+    -G
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
     --data-urlencode domain=$domain
@@ -381,11 +392,12 @@ function add_avamar_vcenter {
 # event controller
 function get_avamar_events {
     local id=${1}
-    local domain=${2:-"./"}
+    local domain=${2:-"/"}
     local apiver=${3:-"v1"}
     local avamar_token=${4:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
+    -G
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
     --data-urlencode domain=$domain
@@ -398,11 +410,12 @@ function get_avamar_events {
 
 function get_avamar_profiles {
     local id=${1}
-    local domain=${2:-"./"}
+    local domain=${2:-"/"}
     local apiver=${3:-"v1"}
     local avamar_token=${4:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
+    -G
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
     --data-urlencode domain=$domain
@@ -415,14 +428,15 @@ function get_avamar_profiles {
 
 function get_avamar_profiles {
     local id=${1}
-    local domain=${2:-"./"}
+    local domain=${2:-"/"}
     local apiver=${3:-"v1"}
     local avamar_token=${4:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
+    -G
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
-    --data-urlencode domain=$domain
+    --data-urlencode "domain=$domain"
     --data-urlencode recursive=false
     )
     local response=$(avamar_curl api/${apiver}/profiles/${id#/})
