@@ -15,23 +15,23 @@ function avamar_curl {
         do
         if [[ $retry -gt $retries ]]
             then
-            echo "exceeded max retries of $retries" >&2
+            printf 'exceeded max retries of %s \n' "${retries}" >&2
             break
         fi
-        [[ "${DEBUG}" == "TRUE" ]] && echo $url ${avi_curl_args[@]} >&2
+        [[ "${DEBUG}" == "TRUE" ]] && echo "$url" "${avi_curl_args[@]}" >&2
         result=$(curl -ks "$url" \
         "${avi_curl_args[@]}" "$@"
         )
         return_code=$?
-        [[ "${DEBUG}" == "TRUE" ]] && echo $return_code >&2
-        [[ "${DEBUG}" == "TRUE" ]] && echo $result >&2
-        [[ "${DEBUG}" == "TRUE" ]] && echo $retry >&2
+        [[ "${DEBUG}" == "TRUE" ]] && printf $return_code >&2
+        [[ "${DEBUG}" == "TRUE" ]] && printf $result >&2
+        [[ "${DEBUG}" == "TRUE" ]] && printf $retry >&2
         ((retry++))
 
-        if [[ $(echo $result | jq -e 'select(.code != null)' 2> /dev/null) ]]
+        if [[ $(printf $result | jq -e 'select(.code != null)' 2> /dev/null) ]]
             ### eval section for return code will be added here
             then
-                local errorlevel=$(echo $result | jq -e '.code' 2> /dev/null) 
+                local errorlevel=$(printf '%s' "${result}" | jq -e '.code' 2> /dev/null) 
                 case $errorlevel in 
                     400|401)
                     echo "access denied" >&2
@@ -54,7 +54,7 @@ function avamar_curl {
             sleep $sleep_seconds    
         fi
     done 
-    echo ${result//\\//} | jq -e . 2>/dev/null
+    printf '%s' "${result}"   | jq -e . 2>/dev/null
 }
 
 
@@ -73,8 +73,9 @@ function get_avamar_token {
     --data-urlencode "username=$av_user"
     --data-urlencode "password=$av_password"
 )
-    local response=$(avamar_curl api/${apiver}/oauth/swagger)
-    echo $response | jq -r '.access_token'
+    local response
+    response=$(avamar_curl api/${apiver}/oauth/swagger)
+    printf '%s' "${response}" | jq -r '.access_token'
 }
 
 #    -F "username=root"
@@ -113,8 +114,9 @@ function create_avamar_oauth_client {
             }'
 
     )
-    local response=$(avamar_curl api/v1/oauth2/clients  | jq -r '.')
-    echo $response
+    local response
+    response=$(avamar_curl api/v1/oauth2/clients  | jq -r '.')
+    printf '%s' "${response}"
 }
 
 
@@ -133,8 +135,9 @@ function get_avamar_clients {
     --data-urlencode "domain=$domain"
     --data-urlencode recursive=true
     )
-    local response=$(avamar_curl api/${apiver}/clients)
-    echo $response
+    local response
+    response=$(avamar_curl api/${apiver}/clients)
+    printf '%s' "${response}"
 }
 function get_avamar_client {
     local cid=${1}
@@ -149,8 +152,9 @@ function get_avamar_client {
     --data-urlencode domain=$domain
     --data-urlencode recursive=false
     )
-    local response=$(avamar_curl api/${apiver}/clients/${cid})
-    echo $response
+    local response
+    response=$(avamar_curl api/${apiver}/clients/${cid})
+    printf '%s' "${response}"
 }
 
 function get_avamar_proxies {
@@ -163,8 +167,9 @@ function get_avamar_proxies {
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
     )
-    local response=$(avamar_curl api/${apiver}/proxies/${cid})
-    echo $response | jq .
+    local response
+    response=$(avamar_curl api/${apiver}/proxies/${cid})
+    printf '%s' "${response}" | jq .
 }
 
 
@@ -172,7 +177,8 @@ function get_avamar_proxies {
 function get_avamar_tasks {
     local cid=${1}
     local apiver=${2:-"v1"}
-    local avamar_token=${3:-$AVAMAR_TOKEN}
+    local domain=${3:-"/"}
+    local avamar_token=${4:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
     -G
@@ -181,8 +187,9 @@ function get_avamar_tasks {
     --data-urlencode domain=$domain
     --data-urlencode recursive=false
     )
-    local response=$(avamar_curl api/${apiver}/tasks/${cid})
-    echo $response | jq .
+    local response
+    response=$(avamar_curl api/${apiver}/tasks/${cid})
+    printf '%s' "${response}" | jq .
 }
 
 
@@ -198,10 +205,11 @@ function get_avamar_status {
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
     --data-urlencode domain=$domain
-    --data-urlencode recursive=false
+    --data-urlencode recursive=true
     )
-    local response=$(avamar_curl api/${apiver}/system/status)
-    echo $response | jq .
+    local response
+    response=$(avamar_curl api/${apiver}/system/status)
+    printf '%s' "${response}" | jq .
 }
 
 function get_avamar_about-information
@@ -215,8 +223,9 @@ function get_avamar_about-information
     --data-urlencode domain=$domain
     --data-urlencode recursive=false
     )
-    local response=$(avamar_curl api/${apiver}/system/about-information)
-    echo $response | jq .
+    local response
+    response=$(avamar_curl api/${apiver}/system/about-information)
+    printf '%s' "${response}" | jq .
 }
 
 # /v1/system/basic-info
@@ -231,8 +240,9 @@ function get_avamar_basic-info {
     --data-urlencode domain=$domain
     --data-urlencode recursive=false
     )
-    local response=$(avamar_curl api/${apiver}/system/basic-info)
-    echo $response | jq .
+    local response
+    response=$(avamar_curl api/${apiver}/system/basic-info)
+    printf '%s' "${response}" | jq .
 }
 
 function get_avamar_virtualcenters {
@@ -248,8 +258,9 @@ function get_avamar_virtualcenters {
     --data-urlencode domain=$domain
     --data-urlencode recursive=false
     )
-    local response=$(avamar_curl api/${apiver}/virtualcenters/${cid})
-    echo $response | jq '.content[]'
+    local response
+    response=$(avamar_curl api/${apiver}/virtualcenters/${cid})
+    printf '%s' "${response}" | jq '.content[]'
 }
 
 
@@ -268,8 +279,9 @@ function get_avamar_virtualcenters_entities {
     --data-urlencode domain=$domain
     --data-urlencode recursive=false
     )
-    local response=$(avamar_curl api/${apiver}/virtualcenters/${cid}/entities)
-    echo $response | jq '.content[]'
+    local response
+    response=$(avamar_curl api/${apiver}/virtualcenters/${cid}/entities)
+    printf '%s' "${response}" | jq '.content[]'
 }
 
 
@@ -286,8 +298,9 @@ function get_avamar_virtualcenters_clients {
     --data-urlencode domain=$domain
     --data-urlencode recursive=false
     )
-    local response=$(avamar_curl api/${apiver}/virtualcenters/${cid}/clients)
-    echo $response | jq '.content[]'
+    local response
+    response=$(avamar_curl api/${apiver}/virtualcenters/${cid}/clients)
+    printf '%s' "${response}" | jq '.content[]'
 }
 
 
@@ -306,8 +319,9 @@ function get_avamar_virtualcenters_proxies_recommend {
     -H "authorization: Bearer $avamar_token"
     -d '{"backupWindowMins": 720,"changeRate": 0.12,"datacenter": "'${datacenter}'","includeLocalDisks": false}'
     )
-    local response=$(avamar_curl api/${apiver}/virtualcenters/${cid}/proxies/recommend)
-    echo $response | jq -r .
+    local response
+    response=$(avamar_curl api/${apiver}/virtualcenters/${cid}/proxies/recommend)
+    printf '%s' "${response}" | jq -r .
 }
 #   # /v1/virtualcenters/{cid}/proxies/{uuid}
 # Update Proxy
@@ -321,8 +335,9 @@ function update_avamar_proxies {
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
     )
-    local response=$(avamar_curl api/${apiver}/virtualcenters/${cid}/proxies/${uuid})
-    echo $response | jq .
+    local response
+    response=$(avamar_curl api/${apiver}/virtualcenters/${cid}/proxies/${uuid})
+    printf '%s' "${response}" | jq .
 }
 function get_avamar_certificates {
     local avamar_token=${1:-$AVAMAR_TOKEN}    
@@ -334,8 +349,9 @@ function get_avamar_certificates {
     --data-urlencode domain=$domain
     --data-urlencode recursive=false
     )
-    local response=$(avamar_curl acm/api/keystore/certificates)
-    echo $response
+    local response
+    response=$(avamar_curl acm/api/keystore/certificates)
+    printf '%s' "${response}"
 }
 
 ## /v1/virtualcenters/{cid}/sync
@@ -350,8 +366,9 @@ function sync_avamar_virtualcenters {
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
     )
-    local response=$(avamar_curl api/${apiver}/virtualcenters/${cid}/sync)
-    echo $response | jq .
+    local response
+    response=$(avamar_curl api/${apiver}/virtualcenters/${cid}/sync)
+    printf '%s' "${response}" | jq .
 }
 
 function add_avamar_vcenter {
@@ -384,16 +401,18 @@ function add_avamar_vcenter {
     -H "authorization: Bearer $avamar_token"
     -d $data    
     )
-    local response=$(avamar_curl api/v1/virtualcenters)
-    echo $response
+    local response
+    response=$(avamar_curl api/v1/virtualcenters)
+    printf '%s' "${response}"
 
 }
 
 # event controller
 function get_avamar_events {
-    local id=${1}
+    local unack=${1:-""}
     local domain=${2:-"/"}
-    local apiver=${3:-"v1"}
+    local category=${3:-""}
+    local apiver=${4:-"v1"}
     local avamar_token=${4:-$AVAMAR_TOKEN}
     avi_curl_args=(
     -XGET
@@ -401,10 +420,13 @@ function get_avamar_events {
     -H "accept: application/json" 
     -H "authorization: Bearer $avamar_token"
     --data-urlencode domain=$domain
-    --data-urlencode recursive=false
+    --data-urlencode recursive=true
+    --data-urlencode category=$category
+    --data-urlencode unack=$unack
     )
-    local response=$(avamar_curl api/${apiver}/events/${id#/})
-    echo $response  | jq -r 
+    local response
+    response=$(avamar_curl api/${apiver}/events)
+    printf '%s' "${response}"  | jq -r '.'
 }
 # Profile Controller
 
@@ -421,27 +443,12 @@ function get_avamar_profiles {
     --data-urlencode domain=$domain
     --data-urlencode recursive=false
     )
-    local response=$(avamar_curl api/${apiver}/profiles/${id#/})
-    echo $response  | jq -r 
+    local response
+    response=$(avamar_curl api/${apiver}/profiles/${id#/})
+    printf '%s' "${response}"  | jq -r '.content'
+
 }
 
-
-function get_avamar_profiles {
-    local id=${1}
-    local domain=${2:-"/"}
-    local apiver=${3:-"v1"}
-    local avamar_token=${4:-$AVAMAR_TOKEN}
-    avi_curl_args=(
-    -XGET
-    -G
-    -H "accept: application/json" 
-    -H "authorization: Bearer $avamar_token"
-    --data-urlencode "domain=$domain"
-    --data-urlencode recursive=false
-    )
-    local response=$(avamar_curl api/${apiver}/profiles/${id#/})
-    echo $response  | jq -r 
-}
 
 function disable_avamar_systemevent {
     local eventcode=${1}
@@ -461,6 +468,7 @@ function disable_avamar_systemevent {
     -H "authorization: Bearer $avamar_token"
     -d "${data}"
     )
-    local response=$(avamar_curl api/${apiver}/profiles/system)
-    echo $response  | jq -r 
+    local response
+    response=$(avamar_curl api/${apiver}/profiles/system)
+    printf '%s' "${response}"  | jq -r 
 }
