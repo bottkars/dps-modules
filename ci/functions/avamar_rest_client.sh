@@ -31,7 +31,8 @@ function avamar_curl {
         if [[ $(printf $result | jq -e 'select(.code != null)' 2> /dev/null) ]]
             ### eval section for return code will be added here
             then
-                local errorlevel=$(printf '%s' "${result}" | jq -e '.code' 2> /dev/null) 
+                local errorlevel
+                errorlevel="$(printf '%s' "${result}" | jq -e '.code' 2> /dev/null)"
                 case $errorlevel in 
                     400|401)
                     echo "access denied" >&2

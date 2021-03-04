@@ -29,7 +29,7 @@ az extension add --name aks-preview
 AKS_CONFIG=$(az aks create -g ${RESOURCE_GROUP} \
   -n ${AKS_CLUSTER_NAME} \
   --network-plugin azure \
-  --kubernetes-version 1.17.11 \
+  --kubernetes-version ${AKS_KUBERNETES_VERSION} \
   --aks-custom-headers EnableAzureDiskFileCSIDriver=true \
   --subscription ${AZURE_SUBSCRIPTION_ID} \
   --generate-ssh-keys \
