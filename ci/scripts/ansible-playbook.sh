@@ -22,7 +22,6 @@ echo "Calling Playbook ${PLAYBOOK}"
 
 ansible-playbook ${PLAYBOOK}
 
-echo "You can now login to the Appliance https://${PPDM_FQDN} with your Username and Password"
 
 
 
