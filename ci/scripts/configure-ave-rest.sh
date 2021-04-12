@@ -15,7 +15,7 @@ printf "\n"
 
 printf "Checking if Avamar already Configured \n"
 
-if [[ $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${AVE_FQDN}:443/aui/#/login") ]]
+if [[ $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${AVE_FQDN}:443/api/v1/system/about-information")  == "200" ]]
 then
 printf "Avamar already Configured \n"
 else
