@@ -63,7 +63,7 @@ data='{"timezone_name":"'${AVE_TIMEZONE}'",
 data=$(echo "${data}" | jq -c .)
 set_avi_config $data ave-config | jq -r .
 
-until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]]
+until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]] || [[ $(get_avi_packages_history | jq '.[] | select(.title | contains(env.WORKFLOW)).status == "completed"' 2> /dev/null) == true  ]]
     do
     get_avi_messages  | jq -r  '.[-1] | [.timestamp, .status, .taskId, .taskName, .content] | @tsv'
     sleep 10
