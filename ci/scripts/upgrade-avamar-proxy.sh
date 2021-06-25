@@ -33,6 +33,5 @@ update_avamar_proxies $VCENTER_ID $INSTANCE_UUID
 
 else
     echo "No Proxies found or registered"
-    exit 1
 fi
 
