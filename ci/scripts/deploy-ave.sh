@@ -45,7 +45,7 @@ govc vm.network.change -vm.ipath ${GOVC_VM_IPATH} -net=VLAN250 ethernet-0
 case "${AVE_SIZE}" in
     "0.5TB")       
     AVE_CPU=2
-    AVE_MEM=6144
+    AVE_MEM=8192
     AVE_DISK_SIZE=250G
     AVE_DISK_COUNT=3
     ;;
