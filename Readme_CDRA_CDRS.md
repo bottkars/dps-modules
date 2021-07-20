@@ -1,7 +1,7 @@
 #
 
 load functions
-
+```bash
 source ci/functions/crda_rest_client.sh
 source ci/functions/crds_rest_client.sh 
 CDRA_FQDN=cdra.home.labbuildr.com
@@ -17,5 +17,5 @@ get_cdrs_vms_asset_details
 get_cdrs_client_policies
 # what? am i protected 
 get_cdrs_protected_vms
-
+```
 
