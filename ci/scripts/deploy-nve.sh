@@ -2,10 +2,19 @@
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
+
+govc about
+
+if [[ $(govc vm.info ${NVE_FOLDER}/${NVE_VMNAME}) ]]
+then
+    echo "VM ${NVE_FOLDER}/${NVE_VMNAME} already exists, nothing to do here"
+
+else
+
 NVE_VERSION=$(cat networker/version)
 echo "preparing networker ${NVE_VERSION} nve"
 
-govc about
+
 govc import.spec networker/NVE-${NVE_VERSION}.ova > networker.json
 echo "configuring appliance (vami) settings"
 
@@ -37,3 +46,4 @@ done
 echo
 echo "Appliance https://${NVE_FQDN}:443/avi/avigui.html is ready for Configuration with root:changeme"
 
+fi

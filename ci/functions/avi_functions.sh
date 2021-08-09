@@ -125,7 +125,7 @@ function get_avi_packages_history {
     -XGET  
     -H 'content-type: application/json' 
     -b "JSESSIONID=${token}" )
-    local response=$(avi_curl packages/history  | jq -r .histories )
+    local response=$(avi_curl packages/history  | jq -r '.histories[]' )
     echo $response
 }
 

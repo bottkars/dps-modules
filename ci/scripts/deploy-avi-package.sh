@@ -29,7 +29,7 @@ if [[ "${DEPLOY}" == "true" ]]
         printf "Starting ${TITLE}  Workflow \n"
         set_avi_config "${DATA}" "${TITLE}" | jq -r .
         printf "Waiting for Installatation Start of ${AVI_PACKAGE}${AVP_VERSION} \n"
-        until   [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]] || [[ $(get_avi_packages_history | jq '.[] | select(.title | contains(env.TITLE)) | select(.version | contains(env.VERSION)).status == "completed"' 2> /dev/null) == true  ]]
+        until   [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]] || [[ $(get_avi_packages_history | jq 'select(.title | contains(env.TITLE)) | select(.version | contains(env.VERSION)).status == "completed"' 2> /dev/null) == true  ]]
         do
             printf "Reconnecting to AVE \n"
             AVI_TOKEN=$(get_avi_token $AVI_PASSWORD)
