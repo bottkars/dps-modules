@@ -4,11 +4,17 @@ set -e
 figlet DPS Automation
 
 source dps-modules/ci/functions/avi_functions.sh
-NVE_VERSION=$(cat networker/version)
+
+export WORKFLOW=NveConfig
+
+
+
+if $(test -d ./deployment)
+then
+printf "we are on an azurerm deployment\n"
 DEPLOYMENT_VERSION=$(cat deployment/version)
-export WORKFLOW=NveConfig-${NVE_VERSION}
-export BASEFLOW=NveConfig
 export NVE_PASSWORD=$(jq -r .properties.outputs.nvePasswd.value "deployment/deployment-${DEPLOYMENT_VERSION}.json")
+fi
 printf "Configuring Networker Virtual Edition\n"
 printf "testing we can resolve the AVI at %s" "${AVI_FQDN}"
 until dig +short -t srv "${AVI_FQDN}"; do
@@ -25,8 +31,8 @@ printf "\n"
 
 
 AVI_TOKEN=$(get_avi_token "${NVE_PASSWORD}")
-get_avi_packages_history | jq -r 'select(.title | contains(env.BASEFLOW))| .status == "completed"'
-if [[ $(get_avi_packages_history | jq -r 'select(.title | contains(env.BASEFLOW))| .status == "completed"') == true ]]
+get_avi_packages_history | jq -r 'select(.title | contains(env.WORKFLOW))| .status == "completed"'
+if [[ $(get_avi_packages_history | jq -r 'select(.title | contains(env.WORKFLOW))| .status == "completed"') == true ]]
 then
     printf "${WORKFLOW)} already deployed configured, nothing to do"
 else  
