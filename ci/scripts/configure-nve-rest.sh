@@ -13,7 +13,7 @@ if $(test -d ./deployment)
 then
 printf "we are on an azurerm deployment\n"
 DEPLOYMENT_VERSION=$(cat deployment/version)
-export NVE_ROOT_PASSWORD=$(jq -r .properties.outputs.nvePasswd.value "deployment/deployment-${DEPLOYMENT_VERSION}.json")
+export NVE_ROOT_PASSWORD_OS=$(jq -r .properties.outputs.nvePasswd.value "deployment/deployment-${DEPLOYMENT_VERSION}.json")
 fi
 printf "Configuring Networker Virtual Edition\n"
 printf "testing we can resolve the AVI at %s" "${AVI_FQDN}"
@@ -31,7 +31,7 @@ done
 printf "\n"
 
 
-AVI_TOKEN=$(get_avi_token "${NVE_ROOT_PASSWORD}")
+AVI_TOKEN=$(get_avi_token "${NVE_ROOT_PASSWORD_OS}")
 get_avi_packages_history | jq -r 'select(.title | contains(env.WORKFLOW))| .status == "completed"'
 if [[ $(get_avi_packages_history | jq -r 'select(.title | contains(env.WORKFLOW))| .status == "completed"') == true ]]
 then
