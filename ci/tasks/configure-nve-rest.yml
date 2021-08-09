@@ -5,7 +5,9 @@ platform: linux
 inputs:
  - name: dps-modules
  - name: networker
+   optional: true
  - name: deployment
+   optional: true
 
 
 params:
