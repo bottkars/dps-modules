@@ -59,8 +59,7 @@ export PPDM_FQDN=40.79.30.118
 export PPDM_NTP_SERVER=40.119.6.228
 
 export PPDM_PASSWORD="Change_Me12345_"
- export PPDM_FQDN=40.79.30.118
-ping time.windows.com
+export PPDM_FQDN=40.79.30.118
 export PPDM_NTP_SERVER=40.119.6.228
 PPDM_TOKEN=$(get_ppdm_token "${PPDM_SETUP_PASSWORD}")
 
@@ -96,10 +95,3 @@ CONFIGURATION=$(echo $CONFIGURATION | jq 'del(._links)')
 
 echo $CONFIGURATION | jq -r
 ```
-
-
-
-TEMP_DEB="$(mktemp)" &&
-wget -O "$TEMP_DEB" 'http://path.to/my.deb' &&
-sudo dpkg -i "$TEMP_DEB"
-rm -f "$TEMP_DEB"
