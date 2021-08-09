@@ -17,10 +17,11 @@ export NVE_PASSWORD=$(jq -r .properties.outputs.nvePasswd.value "deployment/depl
 fi
 printf "Configuring Networker Virtual Edition\n"
 printf "testing we can resolve the AVI at %s" "${AVI_FQDN}"
-until dig +short -t srv "${AVI_FQDN}"; do
-    printf '.'
-    sleep 5
-done
+# need to add dig to image
+#until dig +short -t srv "${AVI_FQDN}"; do
+#    printf '.'
+#    sleep 5
+#done
 
 printf "Waiting for AVI System to become ready"
 until [[ 200 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${AVI_FQDN}:443/avi/avigui.html") ]] ; do
