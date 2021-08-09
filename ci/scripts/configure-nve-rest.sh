@@ -7,6 +7,7 @@ source dps-modules/ci/functions/avi_functions.sh
 NVE_VERSION=$(cat networker/version)
 DEPLOYMENT_VERSION=$(cat deployment/version)
 export WORKFLOW=NveConfig-${NVE_VERSION}
+export BASEFLOW=NveConfig
 export NVE_PASSWORD=$(jq -r .properties.outputs.nvePasswd.value "deployment/deployment-${DEPLOYMENT_VERSION}.json")
 printf "Configuring Networker Virtual Edition\n"
 printf "testing we can resolve the AVI at %s" "${AVI_FQDN}"
@@ -24,8 +25,8 @@ printf "\n"
 
 
 AVI_TOKEN=$(get_avi_token "${NVE_PASSWORD}")
-
-if [[ $(get_avi_packages_history | jq -r 'select(.title | contains(env.WORKFLOW))| .status == "completed"') == true ]]
+get_avi_packages_history | jq -r 'select(.title | contains(env.BASEFLOW))| .status == "completed"'
+if [[ $(get_avi_packages_history | jq -r 'select(.title | contains(env.BASEFLOW))| .status == "completed"') == true ]]
 then
     printf "${WORKFLOW)} already deployed configured, nothing to do"
 else  
