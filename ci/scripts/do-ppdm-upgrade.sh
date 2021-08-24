@@ -11,12 +11,12 @@ then
     PACKAGE=$(echo "${PACKAGES//\\}"| jq --arg version "${PPDM_VERSION}" '.[] | select(.packageVersion == $version)')
     ID=$(echo $PACKAGE | jq -r .id)
     PRECHECK=$(precheck_ppdm_upgrade-packages $ID)
-    until [[ "$(echo "${PRECHECK//\\}" | jq -r '.validationDetails[] | select(.resultType == "WARNING") | .message')" == "Ensure that you have a VM snapshot per documentation before starting to upgrade." ]]
-    do
-        sleep 5
-        PRECHECK=$(precheck_ppdm_upgrade-packages $ID)
-        echo "${PRECHECK//\\}" | jq '.validationDetails[] | select(.resultType == "WARNING") | .message'
-    done
+    #until [[ "$(echo "${PRECHECK//\\}" | jq -r '.validationDetails[] | select(.resultType == "WARNING") | .message')" == "Ensure that you have a VM snapshot per documentation before starting to upgrade." ]]
+    #do
+    #    sleep 5
+    #    PRECHECK=$(precheck_ppdm_upgrade-packages $ID)
+        echo "${PRECHECK//\\}" | jq '.validationDetails[]' # | select(.resultType == "WARNING") | .message'
+    #done
     echo "Setting Package State to Install"
     PACKAGE=$(echo ${PRECHECK//\\} | jq -c '.state |= "INSTALLED"')
     PACKAGE=$(echo $PACKAGE | jq -c --arg passphrase ${PPDM_PASSWORD} '.lockboxPassphrase |= $passphrase')
