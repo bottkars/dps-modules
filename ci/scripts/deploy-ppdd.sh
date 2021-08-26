@@ -7,8 +7,6 @@ echo "preparing ddve ${PPDD_VERSION} base install"
 
 govc about
 
-echo "checking for jq...."
-DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 govc import.spec ddve/ddve-${PPDD_VERSION}.ova > ddve.json
 source dps-modules/ci/functions/govc_functions.sh
 
