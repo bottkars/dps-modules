@@ -20,7 +20,7 @@ ddsh storage add tier cloud dev4
 echo "Creating Filesystem"
 ddsh filesys create
 ddsh filesys enable
-wcho "Configuring DDBoost"
+echo "Configuring DDBoost"
 ddsh ddboost enable
 # ddsh cloud enable
 ddsh mtree create ${PPDD_NFS_PATH}
