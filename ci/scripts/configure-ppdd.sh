@@ -4,7 +4,8 @@ set -eu
 figlet DPS Automation
 source dps-modules/ci/functions/ddsh_functions.sh
 export PPDD_DOMAIN=$(echo $PPDD_FQDN | cut -d'.' -f2-)
-
+echo "Configuring Datadomain using VMware Guest Utils"
+echo "Configuring Network"
 ddsh net config ${PPDD_INTERFACE} dhcp no
 ddsh net config ${PPDD_INTERFACE} type fixed ${PPDD_ADDRESS} netmask ${PPDD_NETMASK}
 ddsh net route add gateway ${PPDD_GATEWAY}
@@ -12,11 +13,14 @@ ddsh net set dns ${PPDD_DNS}
 ddsh net set hostname ${PPDD_FQDN}
 ddsh net set searchdomain  ${PPDD_DOMAIN}
 ddsh elicense reset restore-evaluation
+echo "Configuring Storage"
 ddsh disk rescan
 ddsh storage add tier active dev3
 ddsh storage add tier cloud dev4
+echo "Creating Filesystem"
 ddsh filesys create
 ddsh filesys enable
+wcho "Configuring DDBoost"
 ddsh ddboost enable
 # ddsh cloud enable
 ddsh mtree create ${PPDD_NFS_PATH}
