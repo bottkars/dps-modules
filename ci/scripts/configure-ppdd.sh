@@ -2,7 +2,6 @@
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
-DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 source dps-modules/ci/functions/ddsh_functions.sh
 export PPDD_DOMAIN=$(echo $PPDD_FQDN | cut -d'.' -f2-)
 
