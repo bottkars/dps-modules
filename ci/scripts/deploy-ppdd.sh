@@ -30,4 +30,4 @@ until [[ 301 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/nu
     printf '.'
     sleep 5
 done
-
+echo ${PPDD_ININTIAL_IP} > /
