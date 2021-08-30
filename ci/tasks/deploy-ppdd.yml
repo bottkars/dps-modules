@@ -6,7 +6,7 @@ inputs:
  - name: dps-modules
  - name: ddve
 outputs:
-
+ - name: ddve_ip
 
 params:
   GOVC_INSECURE: 

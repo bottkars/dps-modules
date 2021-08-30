@@ -24,10 +24,10 @@ create_disk cloud_tier 1T
 govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
 echo "finished DELLEMC PowerProtectDD ${PPDD_VERSION} base install"
 echo "Waiting for Appliance IP"
-export PPDD_ININTIAL_IP=$(govc vm.ip -vm.ipath ${GOVC_VM_IPATH})
+export PPDD_INITIAL_IP=$(govc vm.ip -vm.ipath ${GOVC_VM_IPATH})
 echo "Waiting for Appliance Fresh Install to become ready, this can take up to 10 Minutes"
-until [[ 301 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${PPDD_ININTIAL_IP}:443/ddem") ]] ; do
+until [[ 301 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${PPDD_INITIAL_IP}:443/ddem") ]] ; do
     printf '.'
     sleep 5
 done
-echo ${PPDD_ININTIAL_IP} > /
+echo ${PPDD_INITIAL_IP} > ddve_ip/PPDD_IPADDRESS

@@ -18,6 +18,12 @@ then
 fi
 echo
 
+if [[ -d ddve_ip ]]
+then
+    export PPDD_FQDN=https://$(cat ddve_ip/PPDD_IP_ADDRESS)
+fi
+
+
 echo "Calling Playbook ${PLAYBOOK}"
 
 ansible-playbook ${PLAYBOOK}

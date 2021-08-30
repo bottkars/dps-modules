@@ -7,6 +7,8 @@ inputs:
  - name: dps-ansible
  - name: ppdm-config
    optional: true
+ - name: ddve_ip
+   optional: true  
 params:
   PLAYBOOK:
   
