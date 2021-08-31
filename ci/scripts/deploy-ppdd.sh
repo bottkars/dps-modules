@@ -26,12 +26,13 @@ govc vm.change -vm.ipath ${GOVC_VM_IPATH} -m=32768 -mem.reservation=32768
 
 IFS="," read -ra DiskArray <<< "$PPDD_ACTIVETIER_DISKS"
 # reads a csv string into array. Note: bash -ra, zsh -rA
+# see https://stackoverflow.com/questions/60746331/simplest-way-to-split-a-csv-string-into-an-array-that-works-for-both-bash-zsh
 index=0
 for DISK in "${DiskArray[@]}"
 do
     echo "Creating ActiveTier disk $index with size $DISK"
     create_disk active_tier${index} $DISK
-    index++
+    ((index++))
 done
 unset DiskArray
 IFS="," read -ra DiskArray <<< "$PPDD_CLOUDTIER_DISKS"
@@ -40,7 +41,7 @@ for DISK in "${DiskArray[@]}"
 do
     echo "Creating CloudTier disk $index with size $DISK"
     create_disk active_tier${index} $DISK
-    index++
+    ((index++))
 done
 
 govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
