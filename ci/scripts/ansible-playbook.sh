@@ -29,7 +29,7 @@ fi
 
 echo "Calling Playbook ${PLAYBOOK}"
 
-ansible-playbook ${PLAYBOOK}
+ansible-playbook "${PLAYBOOK}"
 
 
 
