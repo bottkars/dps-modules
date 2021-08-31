@@ -18,9 +18,12 @@ then
 fi
 echo
 
-if [[ -d ddve_ip ]]
+if [[ -d vars ]]
 then
-    export PPDD_FQDN=https://$(cat ddve_ip/PPDD_IP_ADDRESS)
+    while IFS=": " read -r field1 field2
+    do
+         export $field1=$field2
+    done < vars/vars.yml
 fi
 
 
