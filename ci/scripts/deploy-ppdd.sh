@@ -35,7 +35,6 @@ do
     index=$((index+1))
     # we use set -e, hence index++ would fail !
     # https://stackoverflow.com/questions/7247279/bash-set-e-and-i-0let-i-do-not-agree
-    echo $index 
 done
 unset DiskArray
 IFS="," read -ra DiskArray <<< "$PPDD_CLOUDTIER_DISKS"
@@ -45,7 +44,6 @@ do
     echo "Creating disk cloud_tier${index} with size $DISK"
     create_disk cloud_tier${index} $DISK
     index=$((index+1))
-    echo $index
 done
 
 govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
