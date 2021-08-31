@@ -23,8 +23,23 @@ echo "importing ddve ${PPDD_VERSION} template"
 govc import.ova -name ${PPDD_VMNAME} -folder=${PPDD_FOLDER} -options=./ddve.json ddve/ddve-${PPDD_VERSION}.ova
 govc vm.network.change -vm.ipath ${GOVC_VM_IPATH} -net=VLAN250 ethernet-0
 govc vm.change -vm.ipath ${GOVC_VM_IPATH} -m=32768 -mem.reservation=32768
-create_disk local_tier 200G
-create_disk cloud_tier 1T
+
+IFS="," read -ra DiskArray <<< "$PPDD_ACTIVETIER_DISKS"
+index=0
+for DISK in "${DiskArray[@]}"
+do
+    echo "Creating ActiveTier disk $index with size $DISK"
+    create_disk active_tier${index} $DISK
+done
+unset DiskArray
+IFS="," read -ra DiskArray <<< "$PPDD_CLOUDTIER_DISKS"
+index=0
+for DISK in "${DiskArray[@]}"
+do
+    echo "Creating CloudTier disk $index with size $DISK"
+    create_disk active_tier${index} $DISK
+done
+
 govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
 echo "finished DELLEMC PowerProtectDD ${PPDD_VERSION} base install"
 fi
