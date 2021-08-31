@@ -6,6 +6,10 @@ PPDD_VERSION=$(cat ddve/version)
 echo "preparing ddve ${PPDD_VERSION} base install"
 
 govc about
+if [[ $(govc vm.info -vm.ipath "${GOVC_VM_IPATH}")  ]]
+then 
+ echo "vm ${GOVC_VM_IPATH} already exists, nothing to do here"
+else
 
 govc import.spec ddve/ddve-${PPDD_VERSION}.ova > ddve.json
 source dps-modules/ci/functions/govc_functions.sh
@@ -23,6 +27,7 @@ create_disk local_tier 200G
 create_disk cloud_tier 1T
 govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
 echo "finished DELLEMC PowerProtectDD ${PPDD_VERSION} base install"
+fi
 echo "Waiting for Appliance IP"
 export PPDD_INITIAL_IP=$(govc vm.ip -vm.ipath ${GOVC_VM_IPATH})
 echo "Waiting for Appliance Fresh Install to become ready, this can take up to 10 Minutes"
@@ -30,4 +35,6 @@ until [[ 301 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/nu
     printf '.'
     sleep 5
 done
-echo ${PPDD_INITIAL_IP} > vars/vars.yml
+
+echo "Storing initial IP"
+echo "DDVE_PUBLIC_FQDN: ${PPDD_INITIAL_IP}" > vars/vars.yml
