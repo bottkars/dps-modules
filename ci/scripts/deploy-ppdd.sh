@@ -32,16 +32,18 @@ for DISK in "${DiskArray[@]}"
 do
     echo "Creating  disk active_tier${index} with size $DISK"
     create_disk active_tier${index} $DISK
-    ((index++))
+    (( index++ ))
+    echo $index 
 done
 unset DiskArray
 IFS="," read -ra DiskArray <<< "$PPDD_CLOUDTIER_DISKS"
 index=0
 for DISK in "${DiskArray[@]}"
 do
-    echo "Creating disk cloud_tier${index}index with size $DISK"
+    echo "Creating disk cloud_tier${index} with size $DISK"
     create_disk cloud_tier${index} $DISK
-    ((index++))
+    (( index++ ))
+    echo $index
 done
 
 govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
