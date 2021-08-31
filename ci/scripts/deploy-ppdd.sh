@@ -32,7 +32,9 @@ for DISK in "${DiskArray[@]}"
 do
     echo "Creating  disk active_tier${index} with size $DISK"
     create_disk active_tier${index} $DISK
-    (( index++ ))
+    index=$((index+1))
+    # we use set -e, hence index++ would fail !
+    # https://stackoverflow.com/questions/7247279/bash-set-e-and-i-0let-i-do-not-agree
     echo $index 
 done
 unset DiskArray
@@ -42,7 +44,7 @@ for DISK in "${DiskArray[@]}"
 do
     echo "Creating disk cloud_tier${index} with size $DISK"
     create_disk cloud_tier${index} $DISK
-    (( index++ ))
+    index=$((index+1))
     echo $index
 done
 
