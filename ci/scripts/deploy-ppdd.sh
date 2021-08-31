@@ -30,7 +30,7 @@ IFS="," read -ra DiskArray <<< "$PPDD_ACTIVETIER_DISKS"
 index=0
 for DISK in "${DiskArray[@]}"
 do
-    echo "Creating ActiveTier disk $index with size $DISK"
+    echo "Creating  disk active_tier${index} with size $DISK"
     create_disk active_tier${index} $DISK
     ((index++))
 done
@@ -39,8 +39,8 @@ IFS="," read -ra DiskArray <<< "$PPDD_CLOUDTIER_DISKS"
 index=0
 for DISK in "${DiskArray[@]}"
 do
-    echo "Creating CloudTier disk $index with size $DISK"
-    create_disk active_tier${index} $DISK
+    echo "Creating disk cloud_tier${index}index with size $DISK"
+    create_disk cloud_tier${index} $DISK
     ((index++))
 done
 
