@@ -15,7 +15,6 @@ govc import.spec ddve/ddve-${PPDD_VERSION}.ova > ddve.json
 source dps-modules/ci/functions/govc_functions.sh
 
 echo "configuring appliance (vami) settings for a ${PPDD_TYPE} PowerProtect DD"
-InjectOvfEnv
 jq  '(.InjectOvfEnv |= true)' ddve.json  > "tmp" && mv "tmp" ddve.json
 jq  '(.DiskProvisioning |= thin)' ddve.json  > "tmp" && mv "tmp" ddve.json
 jq  '(.Deployment |= env.PPDD_TYPE)' ddve.json  > "tmp" && mv "tmp" ddve.json
