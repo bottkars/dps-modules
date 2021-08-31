@@ -16,10 +16,14 @@ source dps-modules/ci/functions/govc_functions.sh
 
 echo "configuring appliance (vami) settings for a ${PPDD_TYPE} PowerProtect DD"
 jq  '(.InjectOvfEnv |= true)' ddve.json  > "tmp" && mv "tmp" ddve.json
-jq  '(.DiskProvisioning |= thin)' ddve.json  > "tmp" && mv "tmp" ddve.json
+jq  '(.DiskProvisioning |= "thin")' ddve.json  > "tmp" && mv "tmp" ddve.json
 jq  '(.Deployment |= env.PPDD_TYPE)' ddve.json  > "tmp" && mv "tmp" ddve.json
 jq  '(.NetworkMapping[].Name |= env.PPDD_NETWORK)' ddve.json  > "tmp" && mv "tmp" ddve.json
-jq  '(.Properties.ipAddress |= env.PPDD_ADDRESS)' ddve.json  > "tmp" && mv "tmp" ddve.json
+jq  '(.PropertyMapping  += [{"Key": "ipAddress", "Value": env.PPDD_ADDRESS}])' ddve.json  > "tmp" && mv "tmp" ddve.json
+jq  '(.PropertyMapping  += [{"Key": "gateway", "Value": env.PPDD_GATEWAY}])' ddve.json  > "tmp" && mv "tmp" ddve.json
+jq  '(.PropertyMapping  += [{"Key": "gateway", "Value": env.PPDD_NETWMASK}])' ddve.json  > "tmp" && mv "tmp" ddve.json
+jq  '(.PropertyMapping  += [{"Key": "hostame", "Value": env.PPDD_FQDN}])' ddve.json  > "tmp" && mv "tmp" ddve.json
+jq  '(.PropertyMapping  += [{"Key": "dnsServer1", "Value": env.PPDD_DNS}])' ddve.json  > "tmp" && mv "tmp" ddve.json
 
 echo "importing ddve ${PPDD_VERSION} template"
 govc import.ova -name ${PPDD_VMNAME} -folder=${PPDD_FOLDER} -options=./ddve.json ddve/ddve-${PPDD_VERSION}.ova
