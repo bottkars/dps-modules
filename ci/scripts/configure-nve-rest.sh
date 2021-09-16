@@ -47,10 +47,12 @@ else
     printf "."
     done
     printf "\n"
-    printf "Installation System ready, now configuring AVE \n"
+    printf "Installation System ready, now configuring NVE \n"
     printf "This might take up to 40 Minutes\n"
 
-
+    export TITLE=$(get_avi_packages | jq -r 'select(.title | contains(env.WORKFLOW)).title')
+    export VERSION=$(get_avi_packages | jq -r 'select(.title | contains(env.WORKFLOW)).version')    
+    printf "Starting ${TITLE}  Workflow \n"
     data='{"timezone_name":"'${NVE_TIMEZONE}'", 
     "admin_password_os":"'${NVE_ADMIN_PASSWORD_OS}'" ,
     "root_password_os":"'${NVE_ROOT_PASSWORD_OS}'" ,
@@ -69,7 +71,7 @@ else
     "add_datadomain_config":"'${NVE_ADD_DATDOMAIN_CONFIG}'"
     }'
     data=$(echo "${data}" | jq -c .)
-    set_avi_config "${data}" "${WORKFLOW}" | jq -r .
+    set_avi_config "${data}" "${TITLE}" | jq -r .
 
     until  [[  $(get_avi_messages | jq -r 'select(.[-1].status == "completed")' 2> /dev/null) ]]
         do
