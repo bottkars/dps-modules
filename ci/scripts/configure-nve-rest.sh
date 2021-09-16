@@ -31,7 +31,7 @@ done
 printf "\n"
 
 
-AVI_TOKEN=$(get_avi_token "${NVE_ROOT_PASSWORD_OS}")
+AVI_TOKEN=$(get_avi_token "${NVE_SETUP_PASSWORD}")
 get_avi_packages_history | jq -r 'select(.title | contains(env.WORKFLOW))| .status == "completed"'
 if [[ $(get_avi_packages_history | jq -r 'select(.title | contains(env.WORKFLOW))| .status == "completed"') == true ]]
 then
