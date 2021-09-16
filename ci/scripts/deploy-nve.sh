@@ -34,7 +34,7 @@ jq  '(.InjectOvfEnv |= true)' networker.json  > "tmp" && mv "tmp" networker.json
 
 echo "importing networker ${NVE_VERSION} NVE template"
 govc import.ova -name ${NVE_VMNAME} -folder=${NVE_FOLDER}  -options=networker.json networker/NVE-${NVE_VERSION}.ova
-govc vm.network.change -vm.ipath ${GOVC_VM_IPATH} -net=VLAN250 ethernet-0
+govc vm.network.change -vm.ipath ${GOVC_VM_IPATH} -net=${NVE_NETWORK} ethernet-0
 
 govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
 echo "finished DELLEMC Networker  ${NVE_VERSION} NVE install"
