@@ -39,7 +39,9 @@ then
 else  
     echo "waiting for ${WORKFLOW} to become ready"
 
-    until [[ $(get_avi_packages | jq -r 'select(.title==env.WORKFLOW).status == "ready"')  ]]
+#    until [[ $(get_avi_packages | jq -r 'select(.title==env.WORKFLOW).status == "ready"')  ]]
+    until [[ $(get_avi_packages | jq -e -r 'select(.title | contains(env.WORKFLOW)).status == "ready"' 2>/dev/null) ]] 
+
     do
     sleep 5
     printf "."
