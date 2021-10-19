@@ -14,7 +14,7 @@ params:
   DEVICELOGIN: "FALSE"
 
 run:
-  path: dps-modules/ci/tasks/destroy-azure-rg.sh
+  path: dps-modules/ci/scripts/destroy-azure-rg.sh
 
 
 # test with 
