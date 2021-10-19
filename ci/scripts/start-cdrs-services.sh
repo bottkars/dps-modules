@@ -11,7 +11,9 @@ az login --service-principal \
 az account set --subscription ${AZURE_SUBSCRIPTION_ID}  
 
 echo "Getting MySQL Server Status"
-
+CDRS_MYSQL_ID=$(az mysql server list \
+    --resource-group ${CDRS_RESOURCE_GROUP} \
+    --output tsv --query "[0].id")
 CDRS_MYSQL_STATE=$(az mysql server show  \
     --ids ${CDRS_MYSQL_ID} \
     --output tsv --query "userVisibleState"
@@ -38,7 +40,15 @@ case  $CDRS_MYSQL_STATE  in
 esac
 echo "Waiting 2 Minutes before starting CDRS VM"
 sleep 120
+
 echo "Getting CDRS VM State"
+echo "Getting CDRS Server ID"
+CDRS_SERVER_ID=$(az vm show \
+    --name ${CDRS_INSTANCE_NAME} \
+    --resource-group ${CDRS_RESOURCE_GROUP} \
+    --output tsv \
+    --query "id")
+
 CDRS_SERVER_STATE=$(az vm show  \
     --ids ${CDRS_SERVER_ID} \
     --show-details \

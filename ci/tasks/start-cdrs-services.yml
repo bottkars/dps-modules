@@ -8,8 +8,8 @@ inputs:
 #outputs:
 # - name: cdrs-state
 params:
-  CDRS_SERVER_ID: 
-  CDRS_MYSQL_ID:
+  CDRS_INSTANCE_NAME: CDRS-Instance 
+  CDRS_RESOURCE_GROUP: CDRS-ResourceGroup
 run:
   path: dps-modules/ci/scripts/start-cdrs-services.sh
 
