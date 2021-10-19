@@ -12,7 +12,11 @@ az login --service-principal \
     --output tsv
 az account set --subscription ${AZURE_SUBSCRIPTION_ID}  
 
-
+CDRS_SERVER_ID=$(az vm show \
+    --name ${CDRS_INSTANCE_NAME} \
+    --resource-group ${CDRS_RESOURCE_GROUP} \
+    --output tsv \
+    --query "id")
 echo "Getting CDRS VM State"
 CDRS_SERVER_STATE=$(az vm show  \
     --ids ${CDRS_SERVER_ID} \
@@ -56,7 +60,9 @@ echo "Done Deallocating"
 
 echo "Stopping CDRS VM and Database"
 echo "Getting MySQL Server Status"
-
+CDRS_MYSQL_ID=$(az mysql server list \
+    --resource-group ${CDRS_RESOURCE_GROUP} \
+    --output tsv --query "[0].id")
 CDRS_MYSQL_STATE=$(az mysql server show  \
     --ids ${CDRS_MYSQL_ID} \
     --output tsv --query "userVisibleState"
