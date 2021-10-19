@@ -6,6 +6,7 @@ inputs:
  - name: dps-modules
 
 params:
+  DEBUG: "FALSE"
   AZURE_TENANT_ID:
   AZURE_CLIENT_ID:
   AZURE_CLIENT_SECRET:
