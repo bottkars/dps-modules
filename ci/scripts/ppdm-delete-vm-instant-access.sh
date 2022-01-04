@@ -2,7 +2,7 @@
 set -eu
 [[ "${DEBUG}" == "TRUE" ]] && set -x
 figlet DPS Automation
-DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
+# DEBIAN_FRONTEND=noninteractive apt-get install -qq jq < /dev/null > /dev/null
 source dps-modules/ci/functions/ppdm_functions.sh
 source dps-modules/ci/functions/yaml.sh
 
