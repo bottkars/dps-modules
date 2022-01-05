@@ -5,6 +5,8 @@ platform: linux
 inputs:
  - name: dps-modules
  - name: dps-ansible
+ - name: files
+   optional: true 
  - name: ppdm-config
    optional: true
  - name: vars
