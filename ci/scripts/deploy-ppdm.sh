@@ -22,7 +22,7 @@ else
     jq  '(.NetworkMapping[].Name |= env.PPDM_NETWORK)' powerprotect.json  > "tmp" && mv "tmp" powerprotect.json
     echo "importing powerprotect ${PPDM_VERSION} template"
     govc import.ova -name ${PPDM_VMNAME} -folder=${PPDM_FOLDER} -options=powerprotect.json powerprotect/dellemc-ppdm-sw-${PPDM_VERSION}.ova
-    govc vm.network.change -vm.ipath ${GOVC_VM_IPATH} -net=VLAN250 ethernet-0
+    govc vm.network.change -vm.ipath ${GOVC_VM_IPATH} -net=${PPDM_NETWORK} ethernet-0
 
     govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
     echo "finished DELLEMC PowerProtect ${PPDM_VERSION} base install"
