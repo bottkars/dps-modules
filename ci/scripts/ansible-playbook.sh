@@ -23,13 +23,23 @@ then
     while IFS=": " read -r field1 field2
     do
          export $field1=$field2
-    done < vars/*.yml
+    done < vars/vars.yml
+fi
+
+if [[ -d varsfile ]]
+then
+    VARS_URL=$(cat ./varsfile/url) 
+    VARS_FILE=${VARS_URL##*/}
+    echo "Found vars file ${VARS_FILE} at varsfile/"
+    echo "Calling Playbook ${PLAYBOOK}"
+    ansible-playbook ${PLAYBOOK} --extra-vars "@varsfile/${VARS_FILE}"
+elif
+    ansible-playbook ${PLAYBOOK}
 fi
 
 
-echo "Calling Playbook ${PLAYBOOK}"
 
-ansible-playbook ${PLAYBOOK}
+
 
 
 
