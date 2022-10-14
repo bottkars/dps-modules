@@ -33,7 +33,7 @@ then
     echo "Found vars file ${VARS_FILE} at varsfile/"
     echo "Calling Playbook ${PLAYBOOK}"
     ansible-playbook ${PLAYBOOK} --extra-vars "@varsfile/${VARS_FILE}"
-elif
+else
     ansible-playbook ${PLAYBOOK}
 fi
 
