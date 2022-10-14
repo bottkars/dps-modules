@@ -11,6 +11,8 @@ inputs:
    optional: true
  - name: vars
    optional: true  
+ - name: varsfile
+   optional: true    
 params:
   PLAYBOOK:
   
