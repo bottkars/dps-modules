@@ -23,7 +23,7 @@ then
     while IFS=": " read -r field1 field2
     do
          export $field1=$field2
-    done < vars/vars.yml
+    done < vars/*.yml
 fi
 
 
