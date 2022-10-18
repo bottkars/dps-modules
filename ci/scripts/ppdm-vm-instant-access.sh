@@ -29,9 +29,10 @@ printf "evaluating Moref for ${sourced_vsphere_folder} ... "
 folderMoref=$(govc folder.info -json "${sourced_vsphere_folder}"  | jq -r '.Folders[].Self.Value')
 echo $folderMoref
 
-export PPDM_TOKEN=$(get_ppdm_token $PPDM_PASSWORD)
-export vmName=$sourced_vm_name
+export PPDM_TOKEN=$(get_ppdm_token ${PPDM_PASSWORD})
+export vmName=${sourced_vm_name}
 
+printf "evaluating assetID for ${vmName} ... "
 
 assetId=$(get_ppdm_assets  | jq -r 'select(.name == env.vmName).id')
 echo "==>using Asset ID ${assetId}"
