@@ -30,7 +30,7 @@ folderMoref=$(govc folder.info -json "${sourced_vsphere_folder}"  | jq -r '.Fold
 echo $folderMoref
 
 export PPDM_TOKEN=$(get_ppdm_token $PPDM_PASSWORD)
-export vmName=$sourced_VMName
+export vmName=$sourced_vm_name
 
 
 assetId=$(get_ppdm_assets  | jq -r 'select(.name == env.vmName).id')
