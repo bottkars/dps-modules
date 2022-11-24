@@ -1,0 +1,107 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: powerprotect
+  labels:
+    app.kubernetes.io/part-of: powerprotect.dell.com
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: ppdm-custom-config-resources
+  namespace: powerprotect
+data:
+  Namespace: powerprotect
+  ClusterRoleBinding: powerprotect:cluster-role-binding
+  ServiceAccount: ppdm-serviceaccount
+---
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: ppdm-discovery-serviceaccount
+  namespace: powerprotect
+  labels:
+    app.kubernetes.io/part-of: powerprotect.dell.com
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: powerprotect:discovery-clusterrole
+  labels:
+    app.kubernetes.io/part-of: powerprotect.dell.com
+rules:
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["clusterrolebindings"]
+    verbs: ["get", "list"]
+    resourceNames: ["powerprotect:cluster-role-binding"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["create"]
+    resourceNames: ["powerprotect"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list","watch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list"]
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list"]
+  - apiGroups: ["apiextensions.k8s.io"]
+    resources: ["customresourcedefinitions"]
+    verbs: ["create", "delete", "get", "list", "update", "patch"]
+  - apiGroups: ["powerprotect.dell.com"]
+    resources: ['*']
+    verbs: ['*']
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: powerprotect:discovery-cluster-rolebinding
+  labels:
+    app.kubernetes.io/part-of: powerprotect.dell.com
+subjects:
+  - kind: ServiceAccount
+    name: ppdm-discovery-serviceaccount
+    namespace: powerprotect
+roleRef:
+  kind: ClusterRole
+  name: powerprotect:discovery-clusterrole
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ppdm-discovery-role
+  namespace: powerprotect
+  labels:
+    app.kubernetes.io/part-of: powerprotect.dell.com
+rules:
+- apiGroups:
+  - '*'
+  resources:
+  - '*'
+  verbs:
+  - '*'
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ppdm-discovery-rolebinding
+  namespace: powerprotect
+  labels:
+    app.kubernetes.io/part-of: powerprotect.dell.com
+roleRef:
+  kind: Role
+  name: ppdm-discovery-role
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: ppdm-discovery-serviceaccount
+  namespace: powerprotect
