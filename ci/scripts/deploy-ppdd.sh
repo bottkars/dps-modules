@@ -28,8 +28,8 @@ jq  '(.PropertyMapping  += [{"Key": "dnsServer1", "Value": env.PPDD_DNS}])' ddve
 
 echo "importing ddve ${PPDD_VERSION} template"
 govc import.ova -name ${PPDD_VMNAME} -folder=${PPDD_FOLDER} -options=./ddve.json ddve/ddve-${PPDD_VERSION}.ova
-govc vm.network.change -vm.ipath ${GOVC_VM_IPATH} -net=VLAN250 ethernet-0
-govc vm.change -vm.ipath ${GOVC_VM_IPATH} -m=32768 -mem.reservation=32768
+govc vm.network.change -vm.ipath ${GOVC_VM_IPATH} -net=VAULT_VLAN ethernet-0
+govc vm.change -vm.ipath ${GOVC_VM_IPATH} -m=8192 -mem.reservation=8192
 
 IFS="," read -ra DiskArray <<< "$PPDD_ACTIVETIER_DISKS"
 # reads a csv string into array. Note: bash -ra, zsh -rA
