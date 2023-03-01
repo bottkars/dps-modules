@@ -1,0 +1,50 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: dps-modules
+ - name: networker
+outputs:
+
+
+params:
+  DEBUG: "FALSE"
+  GOVC_INSECURE: 
+  GOVC_PASSWORD: 
+  GOVC_URL: 
+  GOVC_USERNAME: Administrator@vsphere.local
+  GOVC_RESOURCE_POOL: 
+  GOVC_DATASTORE: 
+  GOVC_DATACENTER:   
+  GOVC_NETWORK: 
+  GOVC_VM_IPATH:
+  VPROXY_DNS:
+  VPROXY_SEARCHDOMAIN:
+  VPROXY_FQDN:
+  VPROXY_IP0:
+  VPROXY_NETMASK0: 
+  VPROXY_GATEWAY: 
+  VPROXY_FQDN1:
+  VPROXY_IP1:
+  VPROXY_NETMASK1:
+  VPROXY_GATEWAY1:
+  VPROXY_TIMEZONE:
+  VPROXY_NTP:
+  VPROXY_ROOT_PASSWORD:
+  VPROXY_ADMIN_PASSWORD:
+  VPROXY_FOLDER:
+  VPROXY_NETWORK: 
+  VPROXY_VMNAME:
+
+
+   
+  
+
+run:
+  path: dps-modules/ci/scripts/deploy-nw-vproxy.sh
+
+
+# test with 
+# echo "<preset variable yml>" > vars.yml
+# while IFS=": " read -r field1 field2; do     export $field1=$field2; done < vars.yml
