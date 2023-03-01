@@ -11,11 +11,11 @@ then
 
 else
 
-VPROXY_VERSION=$(cat vProxy/version)
-echo "preparing vProxy ${VPROXY_VERSION} VPROXY"
+VPROXY_VERSION=$(cat vproxy/version)
+echo "preparing vproxy ${VPROXY_VERSION} VPROXY"
 
 
-govc import.spec vProxy/vProxy-installer-${VPROXY_VERSION}.ova > vProxy.json
+govc import.spec vproxy/vProxy-installer-${VPROXY_VERSION}.ova > vProxy.json
 echo "configuring appliance (vami) settings"
 jq  '(.PropertyMapping[] | select(.Key == "vami.DNS.vProxy") | .Value) |= env.VPROXY_DNS' vProxy.json  > "tmp" && mv "tmp" vProxy.json
 jq  '(.PropertyMapping[] | select(.Key == "vami.searchDomain.vProxy") | .Value) |= env.VPROXY_SEARCHDOMAIN' vProxy.json > "tmp" && mv "tmp" vProxy.json

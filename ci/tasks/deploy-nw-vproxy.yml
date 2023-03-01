@@ -4,7 +4,7 @@ platform: linux
 
 inputs:
  - name: dps-modules
- - name: vProxy
+ - name: vproxy
 outputs:
 
 
