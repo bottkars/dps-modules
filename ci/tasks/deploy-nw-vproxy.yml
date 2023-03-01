@@ -4,7 +4,7 @@ platform: linux
 
 inputs:
  - name: dps-modules
- - name: networker
+ - name: vProxy
 outputs:
 
 
@@ -25,17 +25,17 @@ params:
   VPROXY_IP0:
   VPROXY_NETMASK0: 
   VPROXY_GATEWAY: 
-  VPROXY_FQDN1:
-  VPROXY_IP1:
-  VPROXY_NETMASK1:
-  VPROXY_GATEWAY1:
+  VPROXY_FQDN1: ""
+  VPROXY_IP1: ""
+  VPROXY_NETMASK1: ""
+  VPROXY_GATEWAY1: ""
   VPROXY_TIMEZONE:
   VPROXY_NTP:
   VPROXY_ROOT_PASSWORD:
   VPROXY_ADMIN_PASSWORD:
   VPROXY_FOLDER:
   VPROXY_NETWORK0: 
-  VPROXY_NETWORK1: 
+  VPROXY_NETWORK1: ""
   VPROXY_VMNAME:
 
 
