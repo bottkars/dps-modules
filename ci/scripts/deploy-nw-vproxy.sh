@@ -48,18 +48,15 @@ jq  '(.PowerOn |= false)' vProxy.json  > "tmp" && mv "tmp" vProxy.json
 jq  '(.DiskProvisioning |= "thin")' vProxy.json  > "tmp" && mv "tmp" vProxy.json
 jq  '(.InjectOvfEnv |= true)' vProxy.json  > "tmp" && mv "tmp" vProxy.json
 
-echo "importing vProxy ${VPROXY_VERSION} VPROXY template"
+echo "importing vProxy ${VPROXY_VERSION} template"
 govc import.ova -name ${VPROXY_VMNAME} -folder=${VPROXY_FOLDER}  -options=vProxy.json vproxy/vproxy-installer-${VPROXY_VERSION}.ova
 govc vm.network.change -vm.ipath ${GOVC_VM_IPATH} -net=${VPROXY_NETWORK0} ethernet-0
 
 govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
 echo "finished DELLEMC Networker  ${VPROXY_VERSION} VPROXY install"
 echo "Waiting for VPROXY to bevome ready, this can take up to 5 Minutes"
-until [[ 200 == $(curl -k --write-out "%{http_code}\n" --silent --output /dev/null "https://${VPROXY_FQDN}:443") ]] ; do
-    printf '.'
-    sleep 5
-done
+timeout 180 bash -c "</dev/tcp/${VPROXY_FQDN}/22"
 echo
-echo "VPROXY https://${VPROXY_FQDN}:443 is ready for Configuration"
+echo "VPROXY ${VPROXY_FQDN} is ready for Configuration"
 
 fi
