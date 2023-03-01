@@ -50,7 +50,7 @@ jq  '(.InjectOvfEnv |= true)' vProxy.json  > "tmp" && mv "tmp" vProxy.json
 
 echo "importing vProxy ${VPROXY_VERSION} VPROXY template"
 govc import.ova-name ${VPROXY_VMNAME} -folder=${VPROXY_FOLDER}  -options=vProxy.json vproxy/vproxy-installer-${VPROXY_VERSION}.ova
-govc vm.network.change -vm.ipath ${GOVC_VM_IPATH} -net=${VPROXY_NETWORK} ethernet-0
+govc vm.network.change -vm.ipath ${GOVC_VM_IPATH} -net=${VPROXY_NETWORK0} ethernet-0
 
 govc vm.power -on=true -vm.ipath ${GOVC_VM_IPATH}
 echo "finished DELLEMC Networker  ${VPROXY_VERSION} VPROXY install"
