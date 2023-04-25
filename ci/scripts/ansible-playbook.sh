@@ -21,6 +21,8 @@ then
     then
         echo "found dps-terraform config metadata"   
         eval $(jq -r 'to_entries|map("export \(.key)=\"\(.value|tostring)\"")|.[]' ppdm-config/metadata)
+    else 
+    echo "no config found"    
     fi
 fi
 echo
