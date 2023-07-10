@@ -27,6 +27,13 @@ then
 fi
 echo
 
+if [[ -z $KUBE_CONFIG ]]
+then
+    echo "Setting Kube Config"
+    mkdir -p $HOME/.kube
+    echo $KUBE_CONFIG > $HOME/.kube/config
+fir 
+
 if [[ -d vars ]]
 then
     while IFS=": " read -r field1 field2
