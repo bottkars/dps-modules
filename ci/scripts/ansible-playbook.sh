@@ -51,16 +51,20 @@ then
     export PLAYBOOK="${PLAYBOOK} --extra-vars='@varsfile/${VARS_FILE}'"
 fi
 
-if [[  -v EXTRA_VARS ]]  
-    then
-    # echo "Found Extra Vars ${EXTRA_VARS}"
-    export PLAYBOOK="${PLAYBOOK} --extra-vars=\"${EXTRA_VARS}\""
-fi
+
 
 if [[  -v EXTRA_VARS_JSON ]]  
     then
     # echo "Found Extra Vars ${EXTRA_VARS}"
     export PLAYBOOK="${PLAYBOOK} --extra-vars='${EXTRA_VARS_JSON}'" 
 fi
-echo "Running ${PLAYBOOK}"
-ansible-playbook ${PLAYBOOK}
+
+if [[  -v EXTRA_VARS ]]  
+    then
+    # echo "Found Extra Vars ${EXTRA_VARS}"
+    ansible-playbook ${PLAYBOOK} --extra-vars="${EXTRA_VARS}"
+    else
+    ansible-playbook ${PLAYBOOK}
+fi
+
+
