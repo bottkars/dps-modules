@@ -27,7 +27,7 @@ then
 fi
 echo
 
-if [[ -z $KUBE_CONFIG ]]
+if [[ ! -z $KUBE_CONFIG ]]
 then
     echo "Setting Kube Config"
     mkdir -p $HOME/.kube
