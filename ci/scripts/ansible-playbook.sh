@@ -56,6 +56,7 @@ then
     fi
 elif [[ ! -z $EXTRA_VARS ]]  
     ansible-playbook ${PLAYBOOK} --extra-vars "${EXTRA_VARS}" 
+fi    
 else
     ansible-playbook ${PLAYBOOK}
 fi
