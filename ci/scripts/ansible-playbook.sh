@@ -56,7 +56,7 @@ fi
 if [[  -v EXTRA_VARS_JSON ]]  
     then
     # echo "Found Extra Vars ${EXTRA_VARS}"
-    export PLAYBOOK="${PLAYBOOK} --extra-vars='${EXTRA_VARS_JSON}'" 
+    export PLAYBOOK="${PLAYBOOK} --extra-vars=${EXTRA_VARS_JSON}" 
 fi
 
 if [[  -v EXTRA_VARS ]]  
