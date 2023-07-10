@@ -32,7 +32,7 @@ then
     echo "Setting Kube Config"
     mkdir -p $HOME/.kube
     echo $KUBE_CONFIG > $HOME/.kube/config
-fir 
+fi
 
 if [[ -d vars ]]
 then
@@ -52,11 +52,4 @@ then
 else
     ansible-playbook ${PLAYBOOK}
 fi
-
-
-
-
-
-
-
 
