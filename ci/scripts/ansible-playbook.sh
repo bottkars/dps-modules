@@ -27,7 +27,7 @@ then
 fi
 echo
 
-if [[ ! -z $KUBE_CONFIG ]]
+if [[ -v KUBE_CONFIG ]]
 then
     echo "Setting Kube Config"
     mkdir -p $HOME/.kube
@@ -48,13 +48,13 @@ then
     VARS_FILE=${VARS_URL##*/}
     echo "Found vars file ${VARS_FILE} at varsfile/"
     echo "Calling Playbook ${PLAYBOOK}"
-    if [[ ! -z $EXTRA_VARS ]]  
+    if [[  -v EXTRA_VARS ]]  
     then
         ansible-playbook ${PLAYBOOK} --extra-vars "${EXTRA_VARS}" --extra-vars "@varsfile/${VARS_FILE}"
     else
         ansible-playbook ${PLAYBOOK} --extra-vars "@varsfile/${VARS_FILE}"
     fi
-elif [[ ! -z $EXTRA_VARS ]] 
+elif [[  -v EXTRA_VARS ]] 
     then
     ansible-playbook ${PLAYBOOK} --extra-vars "${EXTRA_VARS}" 
 else
