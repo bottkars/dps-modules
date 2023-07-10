@@ -54,9 +54,9 @@ then
     else
         ansible-playbook ${PLAYBOOK} --extra-vars "@varsfile/${VARS_FILE}"
     fi
-elif [[ ! -z $EXTRA_VARS ]]  
+elif [[ ! -z $EXTRA_VARS ]] 
+    then
     ansible-playbook ${PLAYBOOK} --extra-vars "${EXTRA_VARS}" 
-fi    
 else
     ansible-playbook ${PLAYBOOK}
 fi
