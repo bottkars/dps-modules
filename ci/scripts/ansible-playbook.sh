@@ -47,17 +47,14 @@ then
     VARS_URL=$(cat ./varsfile/url) 
     VARS_FILE=${VARS_URL##*/}
     echo "Found vars file ${VARS_FILE} at varsfile/"
-    echo "Calling Playbook ${PLAYBOOK}"
-    if [[  -v EXTRA_VARS ]]  
-    then
-        ansible-playbook ${PLAYBOOK} --extra-vars "${EXTRA_VARS}" --extra-vars "@varsfile/${VARS_FILE}"
-    else
-        ansible-playbook ${PLAYBOOK} --extra-vars "@varsfile/${VARS_FILE}"
-    fi
-elif [[  -v EXTRA_VARS ]] 
-    then
-    ansible-playbook ${PLAYBOOK} --extra-vars "${EXTRA_VARS}" 
-else
-    ansible-playbook ${PLAYBOOK}
+    echo "Adding Vars file to Playbook ${PLAYBOOK}"
+    export PLAYBOOK="${PLAYBOOK} --extra-vars \"@varsfile/${VARS_FILE}\""
 fi
 
+if [[  -v EXTRA_VARS ]]  
+    then
+    echo "Found Extra Vars ${EXTRA_VARS}"
+    export PLAYBOOK="${PLAYBOOK} --extra-vars \"${EXTRA_VARS}\""   
+fi
+echo "Running ${PLAYBOOK}"
+ansible-playbook ${PLAYBOOK}
