@@ -1,0 +1,24 @@
+---
+# this simple tasksm get´s running vm´s of an azurestack subscription
+platform: linux
+
+inputs:
+ - name: dps-modules
+ - name: avi_package
+
+
+params:
+  DEBUG: false
+  AVE_FQDN:
+  AVE_USERNAME:
+  AVE_PASSWORD:
+
+  
+
+run:
+  path: dps-modules/ci/scripts/deploy-avamar-NvePlatformOsRollup-rest.sh
+
+
+# test with 
+# echo "<preset variable yml>" > vars.yml
+# while IFS=": " read -r field1 field2; do     export $field1=$field2; done < vars.yml
